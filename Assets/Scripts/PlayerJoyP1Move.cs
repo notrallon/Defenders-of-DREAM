@@ -25,6 +25,7 @@ public class PlayerJoyP1Move : MonoBehaviour
         float v = Input.GetAxis("JoyP1VerticalL");
         float d = Input.GetAxis("JoyP1HorizontalR");
         float u = Input.GetAxis("JoyP1VerticalR");
+        
 
 
         Move(h, v, d, u);
