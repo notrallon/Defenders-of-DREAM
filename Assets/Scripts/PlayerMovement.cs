@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float rotSpeed = 10f;
 
     Vector3 movement;
-    Vector3 Rot;
+    Vector3 mousePos;
     Rigidbody playerRigidBody;
     int floorMask;
     float camRayLength = 100f;
@@ -16,40 +16,38 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         floorMask = LayerMask.GetMask("Floor");
-        //anim = GetComponent<Animator>();
         playerRigidBody = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
     {
+        
+        mousePos = Input.mousePosition;
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-        float u = Input.GetAxis("Mouse X");
-        float d = Input.GetAxis("Mouse Y");
-
-
-        Move(h, v, u, d);
+        float d = mousePos.y;
+        float u = mousePos.x;
         
+        
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.rigidbody != playerRigidBody)
+                transform.rotation = Quaternion.LookRotation(hit.point - transform.position);
+            
+            //transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, transform.rotation.z);
+        }
+
+        Move(h, v);
 
     }
 
-    void Move(float h, float v,float u, float d)
+    void Move(float h, float v)
     {
         movement.Set(h, 0f, v);
         movement = movement.normalized * speed * Time.deltaTime;
 
-        Rot.Set(u, 0f, d);
-        Rot = Rot.normalized * speed * Time.deltaTime;
-
-        playerRigidBody.transform.rotation = Quaternion.LookRotation(Rot);
-
         playerRigidBody.MovePosition(transform.position + movement);
     }
-
-
-
-
-
-
-    
 }
