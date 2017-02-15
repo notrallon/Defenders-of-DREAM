@@ -25,9 +25,6 @@ public class PlayerMovement : MonoBehaviour
         mousePos = Input.mousePosition;
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-        float d = mousePos.y;
-        float u = mousePos.x;
-        
         
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
