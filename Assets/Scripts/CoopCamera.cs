@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CoopCamera : MonoBehaviour {
     private Transform[] m_PlayerTransforms;
@@ -8,22 +6,17 @@ public class CoopCamera : MonoBehaviour {
     public float OffsetY = 2.0f;
     public float MinDistance = 7.5f;
 
+    [SerializeField]
     private float m_CameraMaxDistance = 20.0f;
     [SerializeField]
     private float m_CameraDistanceDivider = 1.5f;
     [SerializeField]
     private float m_CameraSmoothing = 10.0f;
-
-    private Transform m_MinTransformX;
-    private Transform m_MaxTransformX;
-    private Transform m_MinTransformZ;
-    private Transform m_MaxTransformZ;
-
+    
     private float m_MinX;
     private float m_MaxX;
     private float m_MinZ;
     private float m_MaxZ;
-
 
     private void Start() {
         var allPlayers = GameObject.FindGameObjectsWithTag("Player");
@@ -44,18 +37,14 @@ public class CoopCamera : MonoBehaviour {
         for (var i = 1; i < m_PlayerTransforms.Length; i++) {
             if (m_PlayerTransforms[i].position.x < m_MinX) {
                 m_MinX = m_PlayerTransforms[i].position.x;
-                m_MinTransformX = m_PlayerTransforms[i];
             } else if (m_PlayerTransforms[i].position.x > m_MaxX) {
                 m_MaxX = m_PlayerTransforms[i].position.x;
-                m_MaxTransformX = m_PlayerTransforms[i];
             }
 
             if (m_PlayerTransforms[i].position.z < m_MinZ) {
                 m_MinZ = m_PlayerTransforms[i].position.z;
-                m_MinTransformZ = m_PlayerTransforms[i];
             } else if (m_PlayerTransforms[i].position.z > m_MaxZ) {
                 m_MaxZ = m_PlayerTransforms[i].position.z;
-                m_MaxTransformZ = m_PlayerTransforms[i];
             }
         }
 
@@ -71,7 +60,7 @@ public class CoopCamera : MonoBehaviour {
         
         distance /= m_CameraDistanceDivider;
 
-        var targetCamPos = new Vector3(xMiddle, distance, zMiddle - distance);
+        Vector3 targetCamPos = new Vector3(xMiddle, distance, zMiddle - distance);
 
         transform.position = Vector3.Lerp(transform.position, targetCamPos, m_CameraSmoothing * Time.deltaTime);
     }
