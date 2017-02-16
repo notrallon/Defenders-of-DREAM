@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerInput : MonoBehaviour {
     [SerializeField] private ControllerInputs_t m_PlayerInput;
@@ -74,17 +73,14 @@ public class PlayerInput : MonoBehaviour {
             transform.rotation = Quaternion.LookRotation(rotation);
         }
         
-        movement = Vector3.ClampMagnitude(movement, m_Speed);
-        movement.y -= 9.8f;
-        movement *= Time.deltaTime;
-        m_PlayerController.Move(movement);
-
-
         Vector3 pos = Camera.main.WorldToViewportPoint(transform.position);
         pos.x = Mathf.Clamp(pos.x, 0.1f, 0.9f);
         pos.y = Mathf.Clamp(pos.y, 0.1f, 0.9f);
         transform.position = Camera.main.ViewportToWorldPoint(pos);
 
-        Debug.Log(transform.position);
+        movement = Vector3.ClampMagnitude(movement, m_Speed);
+        movement.y -= 9.8f;
+        movement *= Time.deltaTime;
+        m_PlayerController.Move(movement);
     }
 }
