@@ -39,6 +39,13 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyP4HorizontalR";
                 m_RightJoyVert = "JoyP4VerticalR";
             } break;
+            case ControllerInputs_t.KEYBOARD: {
+                m_LeftJoyHor = "JoyKeyboardHorizontalL";
+                m_LeftJoyVert = "JoyKeyboardVerticalL";
+                m_RightJoyHor = "JoyKeyboardHorizontalR";
+                m_RightJoyVert = "JoyKeyboardVerticalR";
+            } break;
+
             default: {
                 
             } break;
