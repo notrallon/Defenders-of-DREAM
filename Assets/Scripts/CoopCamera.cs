@@ -19,12 +19,7 @@ public class CoopCamera : MonoBehaviour {
     private float m_MaxZ;
 
     private void Start() {
-        var allPlayers = GameObject.FindGameObjectsWithTag("Player");
-        m_PlayerTransforms = new Transform[allPlayers.Length];
-
-        for (var i = 0; i < allPlayers.Length; i++) {
-            m_PlayerTransforms[i] = allPlayers[i].transform;
-        }
+        UpdatePlayers();
     }
 
     private void LateUpdate() {
@@ -63,5 +58,15 @@ public class CoopCamera : MonoBehaviour {
         Vector3 targetCamPos = new Vector3(xMiddle, distance, zMiddle - distance);
 
         transform.position = Vector3.Lerp(transform.position, targetCamPos, m_CameraSmoothing * Time.deltaTime);
+    }
+
+    public void UpdatePlayers() {
+        var allPlayers = GameObject.FindGameObjectsWithTag("Player");
+        m_PlayerTransforms = new Transform[allPlayers.Length];
+
+        for (var i = 0; i < allPlayers.Length; i++)
+        {
+            m_PlayerTransforms[i] = allPlayers[i].transform;
+        }
     }
 }
