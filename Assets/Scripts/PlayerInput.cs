@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class PlayerInput : MonoBehaviour {
@@ -14,6 +15,9 @@ public class PlayerInput : MonoBehaviour {
     private bool m_Debug = false;
 
     private CharacterController m_PlayerController;
+    private PlayerStates_t m_PlayerState;
+
+    private Animator m_Animator;
 
 	// Use this for initialization
     private void Start () {
@@ -58,16 +62,43 @@ public class PlayerInput : MonoBehaviour {
             } break;
         }
 
+        m_PlayerState = PlayerStates_t.IDLE;
+        m_Animator = GetComponent<Animator>();
         m_PlayerController = GetComponent<CharacterController>();
 	}
 	
 	// Update is called once per frame
     private void Update () {
+
+        PlayerMove();
+
+        // TODO (richard): Make a state machine
+        switch (m_PlayerState) {
+            case PlayerStates_t.IDLE: {
+            } break;
+
+            case PlayerStates_t.RUNNING: {
+            } break;
+
+            case PlayerStates_t.RUN_SHOOTING: {
+            } break;
+
+            case PlayerStates_t.STAND_SHOOTING: {
+                
+            } break;
+
+            default: {
+                
+            } break;
+        }
+    }
+
+    private void PlayerMove() {
         var deltaMoveX = Input.GetAxis(m_LeftJoyHor) * m_Speed;
         var deltaMoveZ = Input.GetAxis(m_LeftJoyVert) * m_Speed;
         var deltaRotX = Input.GetAxis(m_RightJoyHor);
         var deltaRotZ = Input.GetAxis(m_RightJoyVert);
-        
+
         var movement = new Vector3(deltaMoveX, 0, deltaMoveZ);
 
         // Rotate based on movement/aim
@@ -80,9 +111,10 @@ public class PlayerInput : MonoBehaviour {
             rotation = movement;
             transform.rotation = Quaternion.LookRotation(rotation);
         }
+        m_Animator.SetFloat("Velocity", movement.magnitude);
 
         movement = Vector3.ClampMagnitude(movement, m_Speed);
-        movement.y -= 9.8f;
+        //movement.y -= 9.8f;
         movement *= Time.deltaTime;
 
         var pos = Camera.main.WorldToViewportPoint(transform.position + movement);
