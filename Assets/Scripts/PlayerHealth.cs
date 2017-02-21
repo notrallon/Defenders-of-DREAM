@@ -33,6 +33,11 @@ public class PlayerHealth : MonoBehaviour {
         
     }
 
+    public void TakeDamage(float amount)
+    {
+        PlayerHP -= amount;
+    }
+
     void DeathTrigger ()
     {
         if(GetPlayerHealth <= DEATH_TRIGGER)
