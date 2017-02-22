@@ -86,6 +86,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
         {
             Destroy(gameObject);
         }
+
         switch (EnemyState)
         {
             case EnemyStates_t.IDLE:

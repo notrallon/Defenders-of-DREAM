@@ -27,28 +27,28 @@ public class PlayerInput : MonoBehaviour {
                 m_LeftJoyVert = "JoyP1VerticalL";
                 m_RightJoyHor = "JoyP1HorizontalR";
                 m_RightJoyVert = "JoyP1VerticalR";
-            } break;
+                } break;
 
             case ControllerInputs_t.PLAYER_2: {
                 m_LeftJoyHor = "JoyP2HorizontalL";
                 m_LeftJoyVert = "JoyP2VerticalL";
                 m_RightJoyHor = "JoyP2HorizontalR";
                 m_RightJoyVert = "JoyP2VerticalR";
-            } break;
+                } break;
 
             case ControllerInputs_t.PLAYER_3: {
                 m_LeftJoyHor = "JoyP3HorizontalL";
                 m_LeftJoyVert = "JoyP3VerticalL";
                 m_RightJoyHor = "JoyP3HorizontalR";
                 m_RightJoyVert = "JoyP3VerticalR";
-            } break;
+                } break;
 
             case ControllerInputs_t.PLAYER_4: {
                 m_LeftJoyHor = "JoyP4HorizontalL";
                 m_LeftJoyVert = "JoyP4VerticalL";
                 m_RightJoyHor = "JoyP4HorizontalR";
                 m_RightJoyVert = "JoyP4VerticalR";
-            } break;
+                } break;
 
             case ControllerInputs_t.KEYBOARD: {
                 m_LeftJoyHor = "JoyKeyboardHorizontalL";
