@@ -1,124 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class FireProjectile : MonoBehaviour
-{
-    [SerializeField] private ControllerInputs_t m_PlayerInput;
-    private CharacterController m_PlayerController;
-
-    private string m_RightTrigger;
-
+public class FireProjectile : MonoBehaviour {
     //set the Emitter
     public GameObject ProjectileEmitter;
 
     //set projectile in Unity
-    public GameObject projectile;
+    public GameObject Projectile;
 
     //set velocity in Unity
-    public float projectileVelocity;
-
-    // bool to see if your shoot-button is already in use
-    private bool m_isAxisInUse = false;
+    public float ProjectileVelocity;
 
     // cooldown variables
-    private float NextFire;
+    private float m_NextFire;
     public float FireRate = 1;
 
+    public void Shoot() {
+        if (!(m_NextFire < Time.time)) return;
+        // Instantiate projectile
+        var temporaryProjectile = Instantiate(Projectile, ProjectileEmitter.transform.position, ProjectileEmitter.transform.rotation);
 
-    private void Start()
-    {
-        switch (m_PlayerInput)
-        {
-            case ControllerInputs_t.PLAYER_1:
-                {
-                    m_RightTrigger = "JoyP1TriggerR";
-                }
-                break;
+        //Projectiles may appear rotated  incorrectly due to the way its pivot was set from original model
+        //Corrected here if needed:
+        temporaryProjectile.transform.Rotate(Vector3.left * 270);
 
-            case ControllerInputs_t.PLAYER_2:
-                {
-                    m_RightTrigger = "JoyP2TriggerR";
-                }
-                break;
+        //Retrieve Rigidbody from instantiated projectile and control it
+        var temporaryRb = temporaryProjectile.GetComponent<Rigidbody>();
 
-            case ControllerInputs_t.PLAYER_3:
-                {
-                    m_RightTrigger = "JoyP3TriggerR";
-                }
-                break;
+        //Give the projectile a velocity
+        temporaryRb.AddForce(transform.forward * ProjectileVelocity);
 
-            case ControllerInputs_t.PLAYER_4:
-                {
-                    m_RightTrigger = "JoyP4TriggerR";
-                }
-                break;
+        //Destroy projectile after 2 sec
+        Destroy(temporaryProjectile, 2.0f);
 
-            case ControllerInputs_t.KEYBOARD:
-                {
-                    m_RightTrigger = "JoyKeyboardTriggerR";
-                }
-                break;
-
-            default:
-                {
-
-                }
-                break;
-        }
-        m_PlayerController = GetComponent<CharacterController>();
+        m_NextFire = Time.time + FireRate;
     }
-
-
-        // Update is called once per frame
-    void Update()
-    {
-        //when button is pressed, you fire a projectile
-        if (Input.GetAxisRaw(m_RightTrigger) != 0)
-        {
-            GetComponent<Animator>().SetBool("Shoot", true);
-            if (NextFire <= Time.time)
-            {
-                m_isAxisInUse = true;
-
-                // Instantiate projectile
-                GameObject TemporaryProjectile;
-                TemporaryProjectile = Instantiate(projectile, ProjectileEmitter.transform.position, ProjectileEmitter.transform.rotation) as GameObject;
-
-                //Projectiles may appear rotated  incorrectly due to the way its pivot was set from original model
-                //Corrected here if needed:
-                TemporaryProjectile.transform.Rotate(Vector3.left * 270);
-
-                //Retrieve Rigidbody from instantiated projectile and control it
-                Rigidbody Temporary_rb;
-                Temporary_rb = TemporaryProjectile.GetComponent<Rigidbody>();
-
-                //Give the projectile a velocity
-                Temporary_rb.AddForce(transform.forward * projectileVelocity);
-
-                //Destroy projectile after 2 sec
-                Destroy(TemporaryProjectile, 2.0f);
-
-                NextFire = Time.time + FireRate;
-            }
-        }
-        else {
-            GetComponent<Animator>().SetBool("Shoot", false);
-        }
-
-    }
-
 }
-
-
-/*
-    if (Input.GetAxisRaw(m_RightTrigger) != 0)
-    {
-        m_isAxisInUse = true;
-    }
-    
-    if (Input.GetAxisRaw(m_RightTrigger) == 0)
-        {
-            m_isAxisInUse = false;
-        }
-*/

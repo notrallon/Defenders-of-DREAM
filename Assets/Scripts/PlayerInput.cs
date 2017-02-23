@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class PlayerInput : MonoBehaviour {
     [SerializeField] private ControllerInputs_t m_PlayerInput;
@@ -10,9 +9,10 @@ public class PlayerInput : MonoBehaviour {
     private string m_RightJoyVert;
     private string m_LeftJoyHor;
     private string m_LeftJoyVert;
+    private string m_ShootTrigger;
 
     [SerializeField]
-    private bool m_Debug = false;
+    private bool m_Debug;
 
     private CharacterController m_PlayerController;
     private PlayerStates_t m_PlayerState;
@@ -27,6 +27,7 @@ public class PlayerInput : MonoBehaviour {
                 m_LeftJoyVert = "JoyP1VerticalL";
                 m_RightJoyHor = "JoyP1HorizontalR";
                 m_RightJoyVert = "JoyP1VerticalR";
+                m_ShootTrigger = "JoyP1TriggerR";
                 } break;
 
             case ControllerInputs_t.PLAYER_2: {
@@ -34,27 +35,32 @@ public class PlayerInput : MonoBehaviour {
                 m_LeftJoyVert = "JoyP2VerticalL";
                 m_RightJoyHor = "JoyP2HorizontalR";
                 m_RightJoyVert = "JoyP2VerticalR";
-                } break;
+                m_ShootTrigger = "JoyP2TriggerR";
+            } break;
 
             case ControllerInputs_t.PLAYER_3: {
                 m_LeftJoyHor = "JoyP3HorizontalL";
                 m_LeftJoyVert = "JoyP3VerticalL";
                 m_RightJoyHor = "JoyP3HorizontalR";
                 m_RightJoyVert = "JoyP3VerticalR";
-                } break;
+                m_ShootTrigger = "JoyP3TriggerR";
+                }
+                break;
 
             case ControllerInputs_t.PLAYER_4: {
                 m_LeftJoyHor = "JoyP4HorizontalL";
                 m_LeftJoyVert = "JoyP4VerticalL";
                 m_RightJoyHor = "JoyP4HorizontalR";
                 m_RightJoyVert = "JoyP4VerticalR";
-                } break;
+                m_ShootTrigger = "JoyP4TriggerR";
+            } break;
 
             case ControllerInputs_t.KEYBOARD: {
                 m_LeftJoyHor = "JoyKeyboardHorizontalL";
                 m_LeftJoyVert = "JoyKeyboardVerticalL";
                 m_RightJoyHor = "JoyKeyboardHorizontalR";
                 m_RightJoyVert = "JoyKeyboardVerticalR";
+                m_ShootTrigger = "JoyKeyboardTriggerR";
             } break;
 
             default: {
@@ -69,9 +75,8 @@ public class PlayerInput : MonoBehaviour {
 	
 	// Update is called once per frame
     private void Update () {
-
         PlayerMove();
-
+        return;
         // TODO (richard): Make a state machine
         switch (m_PlayerState) {
             case PlayerStates_t.IDLE: {
@@ -138,9 +143,15 @@ public class PlayerInput : MonoBehaviour {
             pos.x >= 0.9f && movement.x > 0) {
             movement.x = 0;
         }
-
-        //GetComponent<NavMeshAgent>().destination = Camera.main.ViewportToWorldPoint(pos);
-
+        
         m_PlayerController.Move(movement);
+
+        // Shooting
+        if (Math.Abs(Input.GetAxisRaw(m_ShootTrigger)) > 0) {
+            GetComponent<Animator>().SetBool("Shoot", true);
+            GetComponent<FireProjectile>().Shoot();
+        } else {
+            GetComponent<Animator>().SetBool("Shoot", false);
+        }
     }
 }
