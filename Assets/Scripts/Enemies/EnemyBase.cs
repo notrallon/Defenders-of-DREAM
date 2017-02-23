@@ -53,6 +53,9 @@ public class EnemyBase : MonoBehaviour, IEnemy
     {
 
         var allPlayers = GameObject.FindGameObjectsWithTag("Player");
+
+        if (allPlayers.Length == 0) return;
+
         m_PlayerTransforms = new GameObject[allPlayers.Length];
 
         for (var i = 0; i < allPlayers.Length; i++)

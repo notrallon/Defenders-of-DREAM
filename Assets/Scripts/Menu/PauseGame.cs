@@ -34,6 +34,8 @@ public class PauseGame : MonoBehaviour {
     }
     public void LoadScene(string name)
     {
+        canvas.gameObject.SetActive(false);
+        Time.timeScale = 1;
         Application.LoadLevel(name);
     }
 }
