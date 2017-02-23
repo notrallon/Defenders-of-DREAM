@@ -76,6 +76,7 @@ public class FireProjectile : MonoBehaviour
         //when button is pressed, you fire a projectile
         if (Input.GetAxisRaw(m_RightTrigger) != 0)
         {
+            GetComponent<Animator>().SetBool("Shoot", true);
             if (NextFire <= Time.time)
             {
                 m_isAxisInUse = true;
@@ -100,6 +101,9 @@ public class FireProjectile : MonoBehaviour
 
                 NextFire = Time.time + FireRate;
             }
+        }
+        else {
+            GetComponent<Animator>().SetBool("Shoot", false);
         }
 
     }
