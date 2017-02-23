@@ -112,8 +112,10 @@ public class PlayerInput : MonoBehaviour {
             transform.rotation = Quaternion.LookRotation(rotation);
         }
 
-        var dot = Vector3.Dot(transform.forward, movement);
-        m_Animator.SetFloat("Velocity", dot);
+        var dotForward = Vector3.Dot(transform.forward, movement);
+        var dotRight = Vector3.Dot(transform.right, movement);
+        m_Animator.SetFloat("VelocityZ", dotForward);
+        m_Animator.SetFloat("VelocityX", dotRight);
 
         movement = Vector3.ClampMagnitude(movement, m_Speed);
         //movement.y -= 9.8f;
