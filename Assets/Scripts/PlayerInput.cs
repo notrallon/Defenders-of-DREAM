@@ -113,7 +113,6 @@ public class PlayerInput : MonoBehaviour {
         }
 
         var dot = Vector3.Dot(transform.forward, movement);
-        Debug.Log(dot);
         m_Animator.SetFloat("Velocity", dot);
 
         movement = Vector3.ClampMagnitude(movement, m_Speed);
