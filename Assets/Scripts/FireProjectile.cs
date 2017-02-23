@@ -87,7 +87,7 @@ public class FireProjectile : MonoBehaviour
 
                 //Projectiles may appear rotated  incorrectly due to the way its pivot was set from original model
                 //Corrected here if needed:
-                TemporaryProjectile.transform.Rotate(Vector3.left * 90);
+                TemporaryProjectile.transform.Rotate(Vector3.left * 270);
 
                 //Retrieve Rigidbody from instantiated projectile and control it
                 Rigidbody Temporary_rb;
