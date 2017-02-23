@@ -36,13 +36,14 @@ public class PlayerHealth : MonoBehaviour {
     public void TakeDamage(float amount)
     {
         PlayerHP -= amount;
+        Debug.Log("I lost HP.");
     }
 
     void DeathTrigger ()
     {
         if(GetPlayerHealth <= DEATH_TRIGGER)
         {
-
+            
         }
 
     }
