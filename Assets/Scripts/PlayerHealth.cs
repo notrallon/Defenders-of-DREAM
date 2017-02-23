@@ -24,6 +24,11 @@ public class PlayerHealth : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+        if(PlayerHP <= 0)
+        {
+            gameObject.SetActive(false); // deactivate the player object if health reaches 0
+        }
+
 	}
 
     void PickUpHealth ()
@@ -36,6 +41,7 @@ public class PlayerHealth : MonoBehaviour {
     public void TakeDamage(float amount)
     {
         PlayerHP -= amount;
+
         Debug.Log("I took damage. I now have " + PlayerHP + " HP");
     }
 
@@ -43,7 +49,7 @@ public class PlayerHealth : MonoBehaviour {
     {
         if(GetPlayerHealth <= DEATH_TRIGGER)
         {
-
+            
         }
 
     }
