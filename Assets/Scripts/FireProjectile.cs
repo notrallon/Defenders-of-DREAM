@@ -76,6 +76,7 @@ public class FireProjectile : MonoBehaviour
         //when button is pressed, you fire a projectile
         if (Input.GetAxisRaw(m_RightTrigger) != 0)
         {
+            GetComponent<Animator>().SetBool("Shoot", true);
             if (NextFire <= Time.time)
             {
                 m_isAxisInUse = true;
@@ -86,7 +87,7 @@ public class FireProjectile : MonoBehaviour
 
                 //Projectiles may appear rotated  incorrectly due to the way its pivot was set from original model
                 //Corrected here if needed:
-                TemporaryProjectile.transform.Rotate(Vector3.left * 90);
+                TemporaryProjectile.transform.Rotate(Vector3.left * 270);
 
                 //Retrieve Rigidbody from instantiated projectile and control it
                 Rigidbody Temporary_rb;
@@ -100,6 +101,9 @@ public class FireProjectile : MonoBehaviour
 
                 NextFire = Time.time + FireRate;
             }
+        }
+        else {
+            GetComponent<Animator>().SetBool("Shoot", false);
         }
 
     }
