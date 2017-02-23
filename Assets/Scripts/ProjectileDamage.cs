@@ -6,6 +6,7 @@ public class ProjectileDamage : MonoBehaviour
 {
 
     public float damage;
+    public GameObject explosion;
     
     GameObject enemyObject;
 
@@ -20,6 +21,8 @@ public class ProjectileDamage : MonoBehaviour
     {
 
     }
+
+
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.tag == "Enemy")
@@ -29,6 +32,8 @@ public class ProjectileDamage : MonoBehaviour
             script.TakeDamage(damage);
 
             Destroy(gameObject);
+
+            GameObject splat = Instantiate(explosion, enemyObject.transform.position, enemyObject.transform.rotation) as GameObject;
         }
     }
 
