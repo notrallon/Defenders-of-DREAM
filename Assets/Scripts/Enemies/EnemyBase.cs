@@ -23,7 +23,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     //damage variables
     float damage = 10;
     private float NextFire;
-    float FireRate = 2;
+    float FireRate = 1.5f;
     GameObject playerObject;
 
 
@@ -149,7 +149,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
         NextFire = Time.time + FireRate;
 
-        Debug.Log("Attacked once every 2s");
+        Debug.Log("Attacked once every 1,5s");
         }
     }
 
