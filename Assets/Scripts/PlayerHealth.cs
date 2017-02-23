@@ -24,6 +24,11 @@ public class PlayerHealth : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+        if(PlayerHP <= 0)
+        {
+            gameObject.SetActive(false); // deactivate the player object if health reaches 0
+        }
+
 	}
 
     void PickUpHealth ()
