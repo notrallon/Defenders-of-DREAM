@@ -35,7 +35,7 @@ public class ProjectileDamage : MonoBehaviour
 
             GameObject splat = Instantiate(explosion, enemyObject.transform.position, enemyObject.transform.rotation) as GameObject;
 
-            Debug.Log("Enemy is damaged!");
+            //Debug.Log("Enemy is damaged!");
         }
     }
 

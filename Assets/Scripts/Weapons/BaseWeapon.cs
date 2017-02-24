@@ -28,7 +28,6 @@ public class BaseWeapon : MonoBehaviour, IWeapon, IProjectileWeapon {
 	}
 
     public void Attack(Vector3 dir) {
-        Debug.Log("Base Weapon Attack");
         if (!(m_NextFire < Time.time)) return;
         // Instantiate projectile
         var temporaryProjectile = Instantiate(Projectile, ProjectileEmitter.transform.position, ProjectileEmitter.transform.rotation);
@@ -49,34 +48,11 @@ public class BaseWeapon : MonoBehaviour, IWeapon, IProjectileWeapon {
         m_NextFire = Time.time + FireRate;
     }
 
-    public void ShootProjectile(Vector3 dir) {
-        Debug.Log("Base weapon shoot");
-
-        if (!(m_NextFire < Time.time)) return;
-        // Instantiate projectile
-        var temporaryProjectile = Instantiate(Projectile, ProjectileEmitter.transform.position, ProjectileEmitter.transform.rotation);
-
-        //Projectiles may appear rotated  incorrectly due to the way its pivot was set from original model
-        //Corrected here if needed:
-        temporaryProjectile.transform.Rotate(Vector3.left * 270);
-
-        //Retrieve Rigidbody from instantiated projectile and control it
-        var temporaryRb = temporaryProjectile.GetComponent<Rigidbody>();
-
-        //Give the projectile a velocity
-        temporaryRb.AddForce(transform.forward * ProjectileVelocity);
-
-        //Destroy projectile after 2 sec
-        Destroy(temporaryProjectile, 2.0f);
-
-        m_NextFire = Time.time + FireRate;
-    }
-
     public void ShootProjectile() {
         throw new System.NotImplementedException();
     }
 
-    public void SetPlacement() {
+    public virtual void SetPlacement() {
         transform.localPosition = new Vector3(-0.098f, 0.038f, 0.087f);
         var rot = new Vector3(-8.337001f, 177.759f, 149.026f);
         transform.localRotation = Quaternion.Euler(rot);

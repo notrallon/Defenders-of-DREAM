@@ -160,7 +160,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
         NextFire = Time.time + FireRate;
 
-        Debug.Log("Attacked once every 1,5s");
+        //Debug.Log("Attacked once every 1,5s");
         }
     }
 
@@ -175,7 +175,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
             NextFire = Time.deltaTime + FireRate;
 
-            Debug.Log("Attacked once every 1s");
+            //Debug.Log("Attacked once every 1s");
         }
 
     }
