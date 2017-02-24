@@ -31,6 +31,14 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
     private NavMeshAgent m_EnemyAgent;
 
+    // Flash when damaged
+    public float flashLength;   // set time length
+    private float flashCounter; // countdown timer
+
+    private Renderer rend; // this will render the flash
+    private Color storedColor; // store current color
+
+
     // Use this for initialization
     private void Start()
     {
@@ -46,6 +54,9 @@ public class EnemyBase : MonoBehaviour, IEnemy
         {
             m_PlayerTransforms[i] = allPlayers[i];
         }
+
+        rend = GetComponentInChildren<Renderer>(); // get renderer of first child
+        storedColor = rend.material.GetColor("_Color");
     }
 
     // Update is called once per frame
@@ -88,6 +99,16 @@ public class EnemyBase : MonoBehaviour, IEnemy
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
+        }
+
+        // Flash when damaged
+        if (flashCounter > 0) // if flashcounter is more than 0
+        {
+            flashCounter -= Time.deltaTime; // start counting down
+            if (flashCounter <= 0)  // when count down is finished
+            {
+                rend.material.SetColor("_Color", storedColor); // reset the color to original
+            }
         }
     }
 
@@ -148,6 +169,9 @@ public class EnemyBase : MonoBehaviour, IEnemy
     public void TakeDamage(float amount)
     {
         HealthPoints -= amount;
+
+        flashCounter = flashLength; // count down timer is set
+        rend.material.SetColor("_Color", Color.red); // set material color to red
     }
 
     public void Attack()
