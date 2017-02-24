@@ -11,7 +11,7 @@ public class Spawner : MonoBehaviour
     public KeyCode spawnButton;
     public KeyCode spawnKey;
 
-    void Update()
+    private void Update()
     {
         //If Player presses Start button, the player gets spawned
         if ((Input.GetKeyDown(spawnButton)) || (Input.GetKeyDown(spawnKey)))
@@ -19,14 +19,14 @@ public class Spawner : MonoBehaviour
             //Only if prefab doesn't exists.
             if (whatToSpawnClone == null)
             {
-                spawnPlayer();
-                Camera.main.GetComponent<CoopCamera>().UpdatePlayers();
+                SpawnPlayer();
+                GameController.Instance.UpdatePlayers();
             }
         }
     }
     //Spawn Player prefab at spawnLocation and sets it's rotation.
-    void spawnPlayer()
+    void SpawnPlayer()
     {
-        whatToSpawnClone = Instantiate(whatToSpawnPrefab[0], spawnLocation[0].transform.position, Quaternion.Euler(0, 0, 0)) as GameObject;
+        whatToSpawnClone = Instantiate(whatToSpawnPrefab[0], spawnLocation[0].transform.position, Quaternion.Euler(0, 0, 0));
     }
 }

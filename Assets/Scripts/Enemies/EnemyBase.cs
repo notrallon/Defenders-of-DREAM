@@ -18,7 +18,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     private float m_AttackRange = 500;
     [SerializeField]
     private float m_AggroRange;
-    private GameObject m_ClosestPlayer;
+    private Transform m_ClosestPlayer;
 
     //damage variables
     float damage = 10;
@@ -60,30 +60,36 @@ public class EnemyBase : MonoBehaviour, IEnemy
     }
 
     // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
 
-        var allPlayers = GameObject.FindGameObjectsWithTag("Player");
+//        var allPlayers = GameObject.FindGameObjectsWithTag("Player");
+//
+//        if (allPlayers.Length == 0) return;
+//
+//        m_PlayerTransforms = new GameObject[allPlayers.Length];
+//
+//        for (var i = 0; i < allPlayers.Length; i++)
+//        {
+//            m_PlayerTransforms[i] = allPlayers[i];
+//        }
 
-        if (allPlayers.Length == 0) return;
-
-        m_PlayerTransforms = new GameObject[allPlayers.Length];
-
-        for (var i = 0; i < allPlayers.Length; i++)
-        {
-            m_PlayerTransforms[i] = allPlayers[i];
+        var allPlayers = GameController.Instance.PlayerInstances;
+        if (allPlayers == null ||
+            allPlayers.Length == 0) {
+            m_ClosestPlayer = null;
+            return;
         }
 
-        m_ClosestPlayer = m_PlayerTransforms[0];
+        m_ClosestPlayer = GameController.Instance.PlayerInstances[0];
 
-        for (var i = 1; i < m_PlayerTransforms.Length; i++)
-        {
-            if (Vector3.Distance(m_PlayerTransforms[i].transform.position, transform.position) <
-                Vector3.Distance(m_ClosestPlayer.transform.position, transform.position))
-            {
-                m_ClosestPlayer = m_PlayerTransforms[i];
+        for (var i = 1; i < allPlayers.Length; i++) {
+            if (Vector3.Distance(allPlayers[i].position, transform.position) <
+                Vector3.Distance(m_ClosestPlayer.position, transform.position)) {
+                m_ClosestPlayer = allPlayers[i];
             }
         }
+
         CheckState();
 
         switch (EnemyState)
@@ -176,31 +182,26 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
     public void Attack()
     {
-        if (NextFire <= Time.time)
-        {
-        playerObject = m_ClosestPlayer;
+        if (!(NextFire <= Time.time)) return;
+        playerObject = m_ClosestPlayer.gameObject;
         var script = playerObject.GetComponent<PlayerHealth>();
         script.TakeDamage(damage);
 
         NextFire = Time.time + FireRate;
 
         //Debug.Log("Attacked once every 1,5s");
-        }
     }
 
     //damage player
-    void OnCollisionEnter(Collision col)
+    private void OnCollisionEnter(Collision col)
     {
-        if ((col.gameObject.tag == "Player"))
-        {
-            playerObject = col.gameObject;
-            var script = playerObject.GetComponent<PlayerHealth>();
-            script.TakeDamage(damage);
+        if (!col.gameObject.CompareTag("Player")) return;
+        playerObject = col.gameObject;
+        var script = playerObject.GetComponent<PlayerHealth>();
+        script.TakeDamage(damage);
 
-            NextFire = Time.deltaTime + FireRate;
+        NextFire = Time.deltaTime + FireRate;
 
-            //Debug.Log("Attacked once every 1s");
-        }
-
+        //Debug.Log("Attacked once every 1s");
     }
 }

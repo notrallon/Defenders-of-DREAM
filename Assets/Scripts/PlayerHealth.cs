@@ -23,21 +23,14 @@ public class PlayerHealth : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    private void Start () {
 
         rend = GetComponentInChildren<Renderer>(); // get renderer of first child
         storedColor = rend.material.GetColor("_Color");
     }
 	
 	// Update is called once per frame
-	void Update () {
-		
-        if(PlayerHP <= 0)
-        {
-            gameObject.SetActive(false); // deactivate the player object if health reaches 0
-            Camera.main.GetComponent<CoopCamera>().UpdatePlayers();
-        }
-
+    private void Update () {
         if (flashCounter > 0) // if flashcounter is more than 0
         {
             flashCounter -= Time.deltaTime; // start counting down
@@ -48,7 +41,7 @@ public class PlayerHealth : MonoBehaviour {
         }
     }
 
-    void PickUpHealth ()
+    private void PickUpHealth ()
     {
         if (PlayerHP > MAX_HEALTH)
             PlayerHP = MAX_HEALTH;
@@ -59,10 +52,14 @@ public class PlayerHealth : MonoBehaviour {
     {
         PlayerHP -= amount;
 
+        if (PlayerHP <= 0)
+        {
+            gameObject.SetActive(false); // deactivate the player object if health reaches 0
+            GameController.Instance.UpdatePlayers();
+        }
+
         flashCounter = flashLength; // count down timer is set
         rend.material.SetColor("_Color", Color.red); // set material color to red
-
-        Debug.Log("I took damage. I now have " + PlayerHP + " HP");
     }
 
     void DeathTrigger ()

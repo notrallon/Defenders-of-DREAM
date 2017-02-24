@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 
 public class CoopCamera : MonoBehaviour {
-    private Transform[] m_PlayerTransforms;
-
     public float OffsetY = 2.0f;
     public float MinDistance = 7.5f;
 
@@ -19,27 +17,29 @@ public class CoopCamera : MonoBehaviour {
     private float m_MaxZ;
 
     private void Start() {
-        UpdatePlayers();
+        GameController.Instance.UpdatePlayers();
     }
 
     private void LateUpdate() {
-        if (m_PlayerTransforms.Length == 0) {
+        var allPlayers = GameController.Instance.PlayerInstances;
+        if (allPlayers == null ||
+            allPlayers.Length == 0) {
             return;
         }
-        m_MinX = m_MaxX = m_PlayerTransforms[0].position.x;
-        m_MinZ = m_MaxZ = m_PlayerTransforms[0].position.z;
+        m_MinX = m_MaxX = allPlayers[0].position.x;
+        m_MinZ = m_MaxZ = allPlayers[0].position.z;
 
-        for (var i = 1; i < m_PlayerTransforms.Length; i++) {
-            if (m_PlayerTransforms[i].position.x < m_MinX) {
-                m_MinX = m_PlayerTransforms[i].position.x;
-            } else if (m_PlayerTransforms[i].position.x > m_MaxX) {
-                m_MaxX = m_PlayerTransforms[i].position.x;
+        for (var i = 1; i < allPlayers.Length; i++) {
+            if (allPlayers[i].position.x < m_MinX) {
+                m_MinX = allPlayers[i].position.x;
+            } else if (allPlayers[i].position.x > m_MaxX) {
+                m_MaxX = allPlayers[i].position.x;
             }
 
-            if (m_PlayerTransforms[i].position.z < m_MinZ) {
-                m_MinZ = m_PlayerTransforms[i].position.z;
-            } else if (m_PlayerTransforms[i].position.z > m_MaxZ) {
-                m_MaxZ = m_PlayerTransforms[i].position.z;
+            if (allPlayers[i].position.z < m_MinZ) {
+                m_MinZ = allPlayers[i].position.z;
+            } else if (allPlayers[i].position.z > m_MaxZ) {
+                m_MaxZ = allPlayers[i].position.z;
             }
         }
 
@@ -58,15 +58,5 @@ public class CoopCamera : MonoBehaviour {
         Vector3 targetCamPos = new Vector3(xMiddle, distance, zMiddle - distance);
 
         transform.position = Vector3.Lerp(transform.position, targetCamPos, m_CameraSmoothing * Time.deltaTime);
-    }
-
-    public void UpdatePlayers() {
-        var allPlayers = GameObject.FindGameObjectsWithTag("Player");
-        m_PlayerTransforms = new Transform[allPlayers.Length];
-
-        for (var i = 0; i < allPlayers.Length; i++)
-        {
-            m_PlayerTransforms[i] = allPlayers[i].transform;
-        }
     }
 }
