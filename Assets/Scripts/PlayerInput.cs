@@ -85,6 +85,7 @@ public class PlayerInput : MonoBehaviour {
     private void Update () {
         PlayerMove();
 
+        // Check if the player is trying to interact with something
         if (Input.GetKeyDown(m_InteractButton)) {
             if (Interact != null) {
                 Interact.Interact();
@@ -124,41 +125,45 @@ public class PlayerInput : MonoBehaviour {
         // Rotate based on movement/aim
         Vector3 rotation;
         if (Mathf.Abs(deltaRotX) > 0 || Mathf.Abs(deltaRotZ) > 0) {
-            // nothing
+            // Rotate in relation to the axis of our right stick
             rotation = new Vector3(deltaRotX, 0, deltaRotZ);
             transform.rotation = Quaternion.LookRotation(rotation);
         } else if (Mathf.Abs(movement.magnitude) > 0) {
+            // Rotate in the direction we're moving
             rotation = movement;
             transform.rotation = Quaternion.LookRotation(rotation);
         }
 
+        // Get dot product from our movement to see what direction we're in relation to 
+        // our rotation and send it to our animator so it can decide what animation to use.
         var dotForward = Vector3.Dot(transform.forward, movement);
         var dotRight = Vector3.Dot(transform.right, movement);
         m_Animator.SetFloat("VelocityZ", dotForward);
         m_Animator.SetFloat("VelocityX", dotRight);
 
+        // Clamp magnitude so that we can't move faster than our max speed
         movement = Vector3.ClampMagnitude(movement, m_Speed);
-        //movement.y -= 9.8f;
-        movement *= Time.deltaTime;
+        movement *= Time.deltaTime; // Multiply by deltatime so we don't move based on framerate
 
+        // Check the players position relative to camera viewport
         var pos = Camera.main.WorldToViewportPoint(transform.position + movement);
-        //pos.x = Mathf.Clamp(pos.x, 0.1f, 0.9f);
-        //pos.y = Mathf.Clamp(pos.y, 0.1f, 0.9f);
-
-        if (m_Debug) {
-            Debug.Log(pos);
-        }
 
         // TODO (richard): Ugly way to limit movement, please fix. Try in camera class
         if (pos.y < 0.01f && movement.z < 0 ||
             pos.y > 0.86 && movement.z > 0) {
             movement.z = 0;
         }
+
         if (pos.x <= 0.1f && movement.x < 0 ||
             pos.x >= 0.9f && movement.x > 0) {
             movement.x = 0;
         }
-        
+
+        if (m_Debug) {
+            Debug.Log(pos);
+        }
+
+        // Move the player
         m_PlayerController.Move(movement);
 
         // Shooting
