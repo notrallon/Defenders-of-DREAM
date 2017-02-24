@@ -6,16 +6,15 @@ public class PauseGame : MonoBehaviour {
 
     public Transform canvas;
 
-
-    // Update is called once per frame
+    
     void Start()
     {
-        canvas.gameObject.SetActive(false);
+        canvas.gameObject.SetActive(false);//turen off canvas at start of level
     }
     void Update () {
-		if(Input.GetKeyDown(KeyCode.Escape))
+		if(Input.GetKeyDown(KeyCode.Escape))//if you press escape
         {
-            pause();
+            pause();//run pause
         }
        
 	}
@@ -23,17 +22,17 @@ public class PauseGame : MonoBehaviour {
     {
         if (canvas.gameObject.activeInHierarchy == false)
         {
-            canvas.gameObject.SetActive(true);
-            Time.timeScale = 0;
+            canvas.gameObject.SetActive(true);//make canvas viseble
+            Time.timeScale = 0;//stop time
         }
         else
         {
             canvas.gameObject.SetActive(false);
-            Time.timeScale = 1;
+            Time.timeScale = 1;//turn on time
         }
     }
     public void LoadScene(string name)
     {
-        Application.LoadLevel(name);
+        Application.LoadLevel(name);//load level were name = the name of the level
     }
 }
