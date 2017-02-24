@@ -11,8 +11,12 @@ public class PlayerInput : MonoBehaviour {
     private string m_LeftJoyVert;
     private string m_ShootTrigger;
 
+    private KeyCode m_InteractButton;
+
     [SerializeField]
     private bool m_Debug;
+
+    public Interactable Interact { get; set; }
 
     private CharacterController m_PlayerController;
     private PlayerStates_t m_PlayerState;
@@ -28,7 +32,8 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyP1HorizontalR";
                 m_RightJoyVert = "JoyP1VerticalR";
                 m_ShootTrigger = "JoyP1TriggerR";
-                } break;
+                m_InteractButton = KeyCode.Joystick1Button0;
+            } break;
 
             case ControllerInputs_t.PLAYER_2: {
                 m_LeftJoyHor = "JoyP2HorizontalL";
@@ -36,6 +41,7 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyP2HorizontalR";
                 m_RightJoyVert = "JoyP2VerticalR";
                 m_ShootTrigger = "JoyP2TriggerR";
+                m_InteractButton = KeyCode.Joystick2Button0;
             } break;
 
             case ControllerInputs_t.PLAYER_3: {
@@ -44,8 +50,8 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyP3HorizontalR";
                 m_RightJoyVert = "JoyP3VerticalR";
                 m_ShootTrigger = "JoyP3TriggerR";
-                }
-                break;
+                m_InteractButton = KeyCode.Joystick3Button0;
+            } break;
 
             case ControllerInputs_t.PLAYER_4: {
                 m_LeftJoyHor = "JoyP4HorizontalL";
@@ -53,6 +59,7 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyP4HorizontalR";
                 m_RightJoyVert = "JoyP4VerticalR";
                 m_ShootTrigger = "JoyP4TriggerR";
+                m_InteractButton = KeyCode.Joystick4Button0;
             } break;
 
             case ControllerInputs_t.KEYBOARD: {
@@ -61,6 +68,7 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyKeyboardHorizontalR";
                 m_RightJoyVert = "JoyKeyboardVerticalR";
                 m_ShootTrigger = "JoyKeyboardTriggerR";
+                m_InteractButton = KeyCode.Return;
             } break;
 
             default: {
@@ -76,6 +84,13 @@ public class PlayerInput : MonoBehaviour {
 	// Update is called once per frame
     private void Update () {
         PlayerMove();
+
+        if (Input.GetKeyDown(m_InteractButton)) {
+            if (Interact != null) {
+                Interact.Interact();
+            }
+        }
+
         return;
         // TODO (richard): Make a state machine
         switch (m_PlayerState) {
@@ -149,7 +164,8 @@ public class PlayerInput : MonoBehaviour {
         // Shooting
         if (Math.Abs(Input.GetAxisRaw(m_ShootTrigger)) > 0) {
             GetComponent<Animator>().SetBool("Shoot", true);
-            GetComponent<FireProjectile>().Shoot();
+            //GetComponent<FireProjectile>().Shoot();
+            GetComponent<PlayerWeaponController>().PerformWeaponAttack();
         } else {
             GetComponent<Animator>().SetBool("Shoot", false);
         }
