@@ -13,7 +13,6 @@ public class Interactable : MonoBehaviour {
     }
 
     public virtual void Interact() {
-        Debug.Log("Base interact");
     }
 
     private void OnTriggerStay(Collider col) {
@@ -28,6 +27,7 @@ public class Interactable : MonoBehaviour {
 
     private void OnTriggerExit(Collider col) {
         if (!col.CompareTag("Player")) return;
+
         m_Rend.material.color = m_DefaultColor;
         col.GetComponent<PlayerInput>().Interact = null;
         Player = null;
