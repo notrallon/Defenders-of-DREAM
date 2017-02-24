@@ -20,6 +20,7 @@ public class Spawner : MonoBehaviour
             if (whatToSpawnClone == null)
             {
                 spawnPlayer();
+                Camera.main.GetComponent<CoopCamera>().UpdatePlayers();
             }
         }
     }

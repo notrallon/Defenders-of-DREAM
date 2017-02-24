@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
 public interface IWeapon {
-    void Attack();
+    string WeaponPickupSlug { get; set; }
+    void Attack(Vector3 dir);
 }

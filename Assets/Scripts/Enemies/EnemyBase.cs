@@ -23,7 +23,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     //damage variables
     float damage = 10;
     private float NextFire;
-    float FireRate = 2;
+    float FireRate = 1.5f;
     GameObject playerObject;
 
 
@@ -35,11 +35,11 @@ public class EnemyBase : MonoBehaviour, IEnemy
     private void Start()
     {
         
-        var allPlayers = GameObject.FindGameObjectsWithTag("Player");
         EnemyState = EnemyStates_t.IDLE;
         HealthPoints = m_HealthMax;
         m_EnemyAgent = GetComponent<NavMeshAgent>();
 
+        var allPlayers = GameObject.FindGameObjectsWithTag("Player");
         m_PlayerTransforms = new GameObject[allPlayers.Length];
 
         for (var i = 0; i < allPlayers.Length; i++)
@@ -51,6 +51,17 @@ public class EnemyBase : MonoBehaviour, IEnemy
     // Update is called once per frame
     private void Update()
     {
+
+        var allPlayers = GameObject.FindGameObjectsWithTag("Player");
+
+        if (allPlayers.Length == 0) return;
+
+        m_PlayerTransforms = new GameObject[allPlayers.Length];
+
+        for (var i = 0; i < allPlayers.Length; i++)
+        {
+            m_PlayerTransforms[i] = allPlayers[i];
+        }
 
         m_ClosestPlayer = m_PlayerTransforms[0];
 
@@ -149,7 +160,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
         NextFire = Time.time + FireRate;
 
-        Debug.Log("Attacked once every 2s");
+        //Debug.Log("Attacked once every 1,5s");
         }
     }
 
@@ -164,7 +175,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
             NextFire = Time.deltaTime + FireRate;
 
-            Debug.Log("Attacked once every 1s");
+            //Debug.Log("Attacked once every 1s");
         }
 
     }
