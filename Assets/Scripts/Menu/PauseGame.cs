@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PauseGame : MonoBehaviour {
 
-    public Transform canvas;
+    public Transform PauseMenu;
 
     
     void Start()
     {
-        canvas.gameObject.SetActive(false);//turen off canvas at start of level
+        PauseMenu.gameObject.SetActive(false);//turen off canvas at start of level
     }
     void Update () {
 		if(Input.GetKeyDown(KeyCode.Escape))//if you press escape
@@ -20,21 +20,21 @@ public class PauseGame : MonoBehaviour {
 	}
     public void pause()
     {
-        if (canvas.gameObject.activeInHierarchy == false)
+        if (PauseMenu.gameObject.activeInHierarchy == false)
         {
-            canvas.gameObject.SetActive(true);//make canvas viseble
+            PauseMenu.gameObject.SetActive(true);//make canvas viseble
             Time.timeScale = 0;//stop time
         }
         else
         {
-            canvas.gameObject.SetActive(false);
+            PauseMenu.gameObject.SetActive(false);
             Time.timeScale = 1;//turn on time
         }
     }
     public void LoadScene(string name)
     {
         //load level were name = the name of the level
-        canvas.gameObject.SetActive(false);
+        PauseMenu.gameObject.SetActive(false);
         Time.timeScale = 1;
         Application.LoadLevel(name);
     }
