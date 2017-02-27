@@ -8,7 +8,7 @@ public class PlayerHealth : MonoBehaviour {
     const float MAX_HEALTH = 100;
     const float DEATH_TRIGGER = 0;
 
-    private float flashLength = 0.2f;   // set time length
+    public float flashLength;   // set time length
     private float flashCounter; // countdown timer
 
     private Renderer rend; // this will render the flash
