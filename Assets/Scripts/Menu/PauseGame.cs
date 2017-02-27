@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseGame : MonoBehaviour {
 
@@ -36,6 +37,7 @@ public class PauseGame : MonoBehaviour {
         //load level were name = the name of the level
         PauseMenu.gameObject.SetActive(false);
         Time.timeScale = 1;
-        Application.LoadLevel(name);
+        SceneManager.LoadScene(name);
+        //Application.LoadLevel(name);
     }
 }
