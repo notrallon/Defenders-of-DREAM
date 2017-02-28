@@ -7,6 +7,7 @@ public class WaterGun : BaseWeapon, IWeapon {
     // Use this for initialization
     private void Start () {
         WeaponPickupSlug = "WaterGun_Pickup";
+        audioSource = GetComponent<AudioSource>();
     }
 	
     public void Attack(Vector3 dir) {

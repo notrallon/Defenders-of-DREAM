@@ -43,7 +43,7 @@ public class Interactable : MonoBehaviour {
     private void OnTriggerExit(Collider col) {
         // Return if not colliding with a player
         if (!col.CompareTag("Player")) return;
-
+        
         // Set back to default colour
         for (var i = 0; i < m_DefaultColours.Length; i++) {
             m_Rend.materials[i].color = m_DefaultColours[i];
