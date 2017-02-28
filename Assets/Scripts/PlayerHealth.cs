@@ -41,8 +41,9 @@ public class PlayerHealth : MonoBehaviour {
         }
     }
 
-    private void PickUpHealth ()
+    public void PickUpHealth (int healing)
     {
+        PlayerHP += healing;
         if (PlayerHP > MAX_HEALTH)
             PlayerHP = MAX_HEALTH;
         
