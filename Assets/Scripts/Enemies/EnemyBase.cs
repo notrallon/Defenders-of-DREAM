@@ -116,15 +116,15 @@ public class EnemyBase : MonoBehaviour, IEnemy
                 rend.material.SetColor("_Color", storedColor); // reset the color to original
             }
         }
+
+        if (HealthPoints < 1) {
+            ScoreTracker.score += 5;
+            Destroy(gameObject);
+        }
     }
 
     private void CheckState()
     {
-        if (HealthPoints < 1)
-        {
-            Destroy(gameObject);
-        }
-
         switch (EnemyState)
         {
             case EnemyStates_t.IDLE:
@@ -158,6 +158,10 @@ public class EnemyBase : MonoBehaviour, IEnemy
             default:
                 Debug.Log("No state");
                 break;
+        }
+
+        if (GameController.Instance.PlayerInstances.Length < 1) {
+            EnemyState = EnemyStates_t.IDLE;
         }
     }
 
