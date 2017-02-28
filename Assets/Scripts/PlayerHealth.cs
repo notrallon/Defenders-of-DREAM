@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(AudioSource))]
+
 public class PlayerHealth : MonoBehaviour {
 
     public float PlayerHP = 100;
@@ -14,16 +17,23 @@ public class PlayerHealth : MonoBehaviour {
     private Renderer rend; // this will render the flash
     private Color storedColor; // store current color
 
+
+    public AudioClip takeDamage;
+    AudioSource audio;
+
+
     public float GetPlayerHealth { get
         {
             return PlayerHP;
         }
     }
 
-
+    
 
     // Use this for initialization
     private void Start () {
+
+        audio = GetComponent<AudioSource>();
 
         rend = GetComponentInChildren<Renderer>(); // get renderer of first child
         storedColor = rend.material.GetColor("_Color");
@@ -52,7 +62,8 @@ public class PlayerHealth : MonoBehaviour {
     public void TakeDamage(float amount)
     {
         PlayerHP -= amount;
-
+        audio.PlayOneShot(takeDamage, 0.5f);
+        
         if (PlayerHP <= 0)
         {
             gameObject.SetActive(false); // deactivate the player object if health reaches 0
