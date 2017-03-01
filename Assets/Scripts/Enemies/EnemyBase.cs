@@ -21,8 +21,10 @@ public class EnemyBase : MonoBehaviour, IEnemy
     private Transform m_ClosestPlayer;
 
     //damage variables
+    [SerializeField]
     float damage = 10;
     private float NextFire;
+    [SerializeField]
     float FireRate = 1.5f;
     GameObject playerObject;
 
