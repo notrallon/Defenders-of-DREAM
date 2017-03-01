@@ -12,7 +12,7 @@ public class WaterGun : BaseWeapon, IWeapon {
         audioSource = GetComponent<AudioSource>();
 
         particles.transform.position = ProjectileEmitter.transform.position;
-        particles.enableEmission = false;
+        //particles.enableEmission = false;
         //particles.Stop();
         //particles.enableEmission() = false;
     }
@@ -25,8 +25,9 @@ public class WaterGun : BaseWeapon, IWeapon {
     public void Attack(Vector3 dir) {
         // Use base attack
         // base.Attack(dir);
-        particles.Play();
-        particles.enableEmission = true;
+        //particles.Play();
+        //particles.enableEmission = true;
+        particles.Emit(10);
     }
 
     // Sets the correct placement for this weapon.
