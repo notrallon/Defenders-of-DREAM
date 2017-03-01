@@ -26,7 +26,7 @@ public class WaterGun : BaseWeapon, IWeapon {
     }
 
     // Sets the correct placement for this weapon.
-    public override void SetPlacement() {
+    public override void SetUp(Material playerColorMaterial) {
         transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
         transform.localPosition = new Vector3(0.001f, 0f, 0.085f);
         var rot = new Vector3(57.766f, 90.79201f, 270.044f);

@@ -53,4 +53,8 @@ public class Interactable : MonoBehaviour {
         col.GetComponent<PlayerInput>().Interact = null;
         Player = null;
     }
+
+    public virtual void SetPickupPlayerColor(Material playerColorMaterial) {
+        
+    }
 }

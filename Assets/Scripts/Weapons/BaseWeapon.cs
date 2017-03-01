@@ -65,10 +65,14 @@ public class BaseWeapon : MonoBehaviour, IWeapon, IProjectileWeapon {
         throw new System.NotImplementedException();
     }
 
-    public virtual void SetPlacement() {
+    public virtual void SetUp(Material playerColorMaterial) {
         transform.localPosition = new Vector3(-0.098f, 0.038f, 0.087f);
         var rot = new Vector3(-8.337001f, 177.759f, 149.026f);
         transform.localRotation = Quaternion.Euler(rot);
+
+        // Set the weapons highlighted color to the player color
+        GetComponent<Renderer>().materials[2].color = playerColorMaterial.color;
+        GetComponent<Renderer>().materials[2].SetColor("_EmissionColor", playerColorMaterial.GetColor("_EmissionColor"));
     }
 
 }
