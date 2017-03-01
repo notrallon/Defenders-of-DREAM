@@ -17,18 +17,31 @@ public class BaseWeapon : MonoBehaviour, IWeapon, IProjectileWeapon {
     private float m_NextFire;
     public float FireRate = 1;
 
+    //Audio Effects
+    public AudioClip shootSound;
+    protected AudioSource audioSource;
+    private float volLowRange = .5f;
+    private float volHighRange = 1.0f;
+
     // Use this for initialization
     private void Start () {
 		WeaponPickupSlug = "WaterBalloonGun_Pickup";
+
+        audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
     private void Update () {
-		
-	}
+
+    }
 
     public void Attack(Vector3 dir) {
         if (!(m_NextFire < Time.time)) return;
+
+        //Play shootSound
+        float vol = Random.Range(volLowRange, volHighRange);
+        audioSource.PlayOneShot(shootSound, vol);
+
         // Instantiate projectile
         var temporaryProjectile = Instantiate(Projectile, ProjectileEmitter.transform.position, ProjectileEmitter.transform.rotation);
 

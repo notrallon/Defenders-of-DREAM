@@ -33,7 +33,9 @@ public class ProjectileDamage : MonoBehaviour
 
             Destroy(gameObject);
 
-            GameObject splat = Instantiate(explosion, enemyObject.transform.position, enemyObject.transform.rotation) as GameObject;
+            GameObject splat = Instantiate(explosion, enemyObject.transform.position, enemyObject.transform.rotation) as GameObject; // Instantiate the particle splash effect
+
+            Destroy(splat, 1.0f); // destroy the splash-system
 
             //Debug.Log("Enemy is damaged!");
         }
