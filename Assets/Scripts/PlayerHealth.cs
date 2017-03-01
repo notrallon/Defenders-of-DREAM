@@ -49,6 +49,8 @@ public class PlayerHealth : MonoBehaviour {
                 rend.material.SetColor("_Color", storedColor); // reset the color to original
             }
         }
+
+        GetComponent<HealthTank>().SetScale(PlayerHP);
     }
 
     public void PickUpHealth (int healing)
