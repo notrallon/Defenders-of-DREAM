@@ -11,7 +11,7 @@ public class WaterGun : BaseWeapon, IWeapon {
         WeaponPickupSlug = "WaterGun_Pickup";
         audioSource = GetComponent<AudioSource>();
 
-        particles.transform.position = ProjectileEmitter.transform.position;
+        //particles.transform.position = ProjectileEmitter.transform.position;
         //particles.enableEmission = false;
         //particles.Stop();
         //particles.enableEmission() = false;
@@ -19,15 +19,10 @@ public class WaterGun : BaseWeapon, IWeapon {
 
     private void Update ()
     {
-        //ProjectileEmitter.transform.parent = particles.transform;
     }
 	
     public void Attack(Vector3 dir) {
-        // Use base attack
-        // base.Attack(dir);
-        //particles.Play();
-        //particles.enableEmission = true;
-        particles.Emit(10);
+        particles.Emit(1);
     }
 
     // Sets the correct placement for this weapon.

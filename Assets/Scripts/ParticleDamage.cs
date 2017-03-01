@@ -23,9 +23,6 @@ public class ParticleDamage : MonoBehaviour {
     {
         if (col.gameObject.tag == "Enemy")
         {
-
-            Debug.Log("Particle Collision!");
-
             enemyObject = col.gameObject;
             var script = enemyObject.GetComponent<IEnemy>();
             script.TakeDamage(damage);
