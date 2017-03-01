@@ -19,7 +19,7 @@ public class BaseWeapon : MonoBehaviour, IWeapon, IProjectileWeapon {
 
     //Audio Effects
     public AudioClip shootSound;
-    private AudioSource audioSource;
+    protected AudioSource audioSource;
     private float volLowRange = .5f;
     private float volHighRange = 1.0f;
 
