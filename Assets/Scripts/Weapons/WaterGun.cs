@@ -2,17 +2,31 @@
 
 public class WaterGun : BaseWeapon, IWeapon {
     // String to the weapon pickup that should spawn when throwing away the weapon
-    public string WeaponPickupSlug { get; set; } 
+    //public string WeaponPickupSlug { get; set; }
+
+    public ParticleSystem particles;
 
     // Use this for initialization
     private void Start () {
         WeaponPickupSlug = "WaterGun_Pickup";
         audioSource = GetComponent<AudioSource>();
+
+        particles.transform.position = ProjectileEmitter.transform.position;
+        particles.enableEmission = false;
+        //particles.Stop();
+        //particles.enableEmission() = false;
+    }
+
+    private void Update ()
+    {
+        //ProjectileEmitter.transform.parent = particles.transform;
     }
 	
     public void Attack(Vector3 dir) {
         // Use base attack
-        base.Attack(dir);
+        // base.Attack(dir);
+        particles.Play();
+        particles.enableEmission = true;
     }
 
     // Sets the correct placement for this weapon.
@@ -22,4 +36,5 @@ public class WaterGun : BaseWeapon, IWeapon {
         var rot = new Vector3(57.766f, 90.79201f, 270.044f);
         transform.localRotation = Quaternion.Euler(rot);
     }
+
 }
