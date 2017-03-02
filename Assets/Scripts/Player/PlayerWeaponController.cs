@@ -30,6 +30,7 @@ public class PlayerWeaponController : MonoBehaviour {
     }
 
     public void PerformWeaponAttack() {
+        if (m_InstancedWeapon == null) return;
         m_InstancedWeapon.Attack(gameObject.transform.forward);
     }
 

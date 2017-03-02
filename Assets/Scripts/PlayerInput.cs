@@ -25,6 +25,7 @@ public class PlayerInput : MonoBehaviour {
 
 	// Use this for initialization
     private void Start () {
+
         switch (m_PlayerInput) {
             case ControllerInputs_t.PLAYER_1: {
                 m_LeftJoyHor = "JoyP1HorizontalL";
@@ -166,6 +167,7 @@ public class PlayerInput : MonoBehaviour {
         // Move the player
         m_PlayerController.Move(movement);
 
+        
         // Shooting
         if (Math.Abs(Input.GetAxisRaw(m_ShootTrigger)) > 0) {
             GetComponent<Animator>().SetBool("Shoot", true);
