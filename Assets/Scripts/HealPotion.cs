@@ -6,7 +6,7 @@ public class HealPotion : MonoBehaviour {
 
     public int healing = 50;
 
-	void OnCollisionEnter (Collision col)
+	void OnTriggerEnter (Collision col)
     {
         if(col.gameObject.tag == "Player")
         {
