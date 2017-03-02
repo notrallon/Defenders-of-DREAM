@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour {
     private string m_LeftJoyHor;
     private string m_LeftJoyVert;
     private string m_ShootTrigger;
+    private string m_MeleeTrigger;
 
     private KeyCode m_InteractButton;
 
@@ -33,6 +34,7 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyP1HorizontalR";
                 m_RightJoyVert = "JoyP1VerticalR";
                 m_ShootTrigger = "JoyP1TriggerR";
+                m_MeleeTrigger = "JoyP1TriggerL";
                 m_InteractButton = KeyCode.Joystick1Button0;
             } break;
 
@@ -42,6 +44,7 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyP2HorizontalR";
                 m_RightJoyVert = "JoyP2VerticalR";
                 m_ShootTrigger = "JoyP2TriggerR";
+                m_MeleeTrigger = "JoyP2TriggerL";
                 m_InteractButton = KeyCode.Joystick2Button0;
             } break;
 
@@ -51,6 +54,7 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyP3HorizontalR";
                 m_RightJoyVert = "JoyP3VerticalR";
                 m_ShootTrigger = "JoyP3TriggerR";
+                m_MeleeTrigger = "JoyP3TriggerL";
                 m_InteractButton = KeyCode.Joystick3Button0;
             } break;
 
@@ -60,6 +64,7 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyP4HorizontalR";
                 m_RightJoyVert = "JoyP4VerticalR";
                 m_ShootTrigger = "JoyP4TriggerR";
+                m_MeleeTrigger = "JoyP4TriggerL";
                 m_InteractButton = KeyCode.Joystick4Button0;
             } break;
 
@@ -69,6 +74,7 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyKeyboardHorizontalR";
                 m_RightJoyVert = "JoyKeyboardVerticalR";
                 m_ShootTrigger = "JoyKeyboardTriggerR";
+                m_MeleeTrigger = "JoyKeyboardTriggerL";
                 m_InteractButton = KeyCode.Return;
             } break;
 
