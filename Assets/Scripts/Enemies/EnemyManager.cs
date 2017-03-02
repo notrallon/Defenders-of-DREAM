@@ -10,8 +10,9 @@ public class EnemyManager : MonoBehaviour {
     [SerializeField] private int m_EnemiesToSpawn;
 
     private int m_EnemiesSpawned = 0;
-
     private int m_PlayersInSpawn = 0;
+
+    [SerializeField] private GameObject[] m_ItemRewards;
 
 	// Use this for initialization
     private void Start () {
@@ -19,7 +20,13 @@ public class EnemyManager : MonoBehaviour {
 	}
 
     private void Spawn() {
-        if (m_EnemiesSpawned >= m_EnemiesToSpawn || GameController.Instance.PlayerInstances.Length == 0) return;
+        if (m_EnemiesSpawned >= m_EnemiesToSpawn || GameController.Instance.PlayerInstances.Length == 0) {
+            if (m_EnemiesSpawned >= m_EnemiesToSpawn) {
+                DropRewards();
+            }
+            CancelInvoke();
+            return;
+        }
 
         var spawnPointIndex = Random.Range(0, m_SpawnPoints.Length);
 
@@ -32,7 +39,8 @@ public class EnemyManager : MonoBehaviour {
         m_EnemiesToSpawn *= GameController.Instance.PlayerInstances.Length;
         var spawnTime = m_SpawnTime / GameController.Instance.PlayerInstances.Length;
         InvokeRepeating("Spawn", spawnTime, spawnTime);
-        Destroy(GetComponent<BoxCollider>());
+        //Destroy(GetComponent<BoxCollider>());
+        GetComponent<BoxCollider>().enabled = false;
     }
 
     private void OnTriggerExit(Collider col) {
@@ -41,6 +49,16 @@ public class EnemyManager : MonoBehaviour {
 
         if (m_PlayersInSpawn < 0) {
             m_PlayersInSpawn = 0;
+        }
+    }
+
+    private void DropRewards() {
+        if (m_ItemRewards.Length == 0) return;
+        for (var i = 0; i < GameController.Instance.PlayerInstances.Length; i++) {
+            var itemIndex = Random.Range(0, m_ItemRewards.Length);
+            var posToSpawn = GetComponent<BoxCollider>().transform.position;
+            posToSpawn.y += 2;
+            Instantiate(m_ItemRewards[itemIndex], posToSpawn, Random.rotation);
         }
     }
 
