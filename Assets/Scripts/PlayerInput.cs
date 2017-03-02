@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour {
     private string m_LeftJoyHor;
     private string m_LeftJoyVert;
     private string m_ShootTrigger;
+    private string m_MeleeTrigger;
 
     private KeyCode m_InteractButton;
 
@@ -23,8 +24,19 @@ public class PlayerInput : MonoBehaviour {
 
     private Animator m_Animator;
 
+    [SerializeField]
+    private AudioClip m_StepSound;
+    private AudioSource audio;
+
+    private float footStepRate = 0.3f;
+    private float m_nextStep = 0.5f;
+    private float stepVolume = 0.05f;
+
+    
 	// Use this for initialization
     private void Start () {
+
+        
         switch (m_PlayerInput) {
             case ControllerInputs_t.PLAYER_1: {
                 m_LeftJoyHor = "JoyP1HorizontalL";
@@ -32,6 +44,7 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyP1HorizontalR";
                 m_RightJoyVert = "JoyP1VerticalR";
                 m_ShootTrigger = "JoyP1TriggerR";
+                m_MeleeTrigger = "JoyP1TriggerL";
                 m_InteractButton = KeyCode.Joystick1Button0;
             } break;
 
@@ -41,6 +54,7 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyP2HorizontalR";
                 m_RightJoyVert = "JoyP2VerticalR";
                 m_ShootTrigger = "JoyP2TriggerR";
+                m_MeleeTrigger = "JoyP2TriggerL";
                 m_InteractButton = KeyCode.Joystick2Button0;
             } break;
 
@@ -50,6 +64,7 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyP3HorizontalR";
                 m_RightJoyVert = "JoyP3VerticalR";
                 m_ShootTrigger = "JoyP3TriggerR";
+                m_MeleeTrigger = "JoyP3TriggerL";
                 m_InteractButton = KeyCode.Joystick3Button0;
             } break;
 
@@ -59,6 +74,7 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyP4HorizontalR";
                 m_RightJoyVert = "JoyP4VerticalR";
                 m_ShootTrigger = "JoyP4TriggerR";
+                m_MeleeTrigger = "JoyP4TriggerL";
                 m_InteractButton = KeyCode.Joystick4Button0;
             } break;
 
@@ -68,6 +84,7 @@ public class PlayerInput : MonoBehaviour {
                 m_RightJoyHor = "JoyKeyboardHorizontalR";
                 m_RightJoyVert = "JoyKeyboardVerticalR";
                 m_ShootTrigger = "JoyKeyboardTriggerR";
+                m_MeleeTrigger = "JoyKeyboardTriggerL";
                 m_InteractButton = KeyCode.Return;
             } break;
 
@@ -79,9 +96,14 @@ public class PlayerInput : MonoBehaviour {
         m_PlayerState = PlayerStates_t.IDLE;
         m_Animator = GetComponent<Animator>();
         m_PlayerController = GetComponent<CharacterController>();
-	}
-	
-	// Update is called once per frame
+
+        audio = GetComponent<AudioSource>();
+        
+
+
+    }
+
+    // Update is called once per frame
     private void Update () {
         PlayerMove();
 
@@ -165,6 +187,18 @@ public class PlayerInput : MonoBehaviour {
 
         // Move the player
         m_PlayerController.Move(movement);
+
+        // Move sound effect
+        if (movement.magnitude > 0)
+        {
+            if (m_nextStep < Time.time && !audio.isPlaying)
+            {
+                audio.PlayOneShot(m_StepSound, stepVolume);
+                audio.pitch = UnityEngine.Random.Range(1.2f, 1.5f);
+                m_nextStep = Time.time + footStepRate;
+            }
+        }
+
 
         // Shooting
         if (Math.Abs(Input.GetAxisRaw(m_ShootTrigger)) > 0) {
