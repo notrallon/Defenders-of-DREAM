@@ -33,6 +33,7 @@ public class Interactable : MonoBehaviour {
         // Highlight each colour
         for (var i = 0; i < m_DefaultColours.Length; i++) {
             m_Rend.materials[i].color = m_DefaultColours[i] * 2;
+            m_Rend.materials[i].SetColor("_EmissionColor", m_Rend.materials[i].GetColor("_EmissionColor") * 2);
         }
         
         // Set playerinteraction to this component
@@ -46,11 +47,16 @@ public class Interactable : MonoBehaviour {
         
         // Set back to default colour
         for (var i = 0; i < m_DefaultColours.Length; i++) {
+            m_Rend.materials[i].SetColor("_EmissionColor", m_Rend.materials[i].GetColor("_EmissionColor") / 2);
             m_Rend.materials[i].color = m_DefaultColours[i];
         }
         
         // The player is no longer interacting
         col.GetComponent<PlayerInput>().Interact = null;
         Player = null;
+    }
+
+    public virtual void SetPickupPlayerColor(Material playerColorMaterial) {
+        
     }
 }

@@ -23,6 +23,9 @@ public class BaseWeapon : MonoBehaviour, IWeapon, IProjectileWeapon {
     private float volLowRange = .5f;
     private float volHighRange = 1.0f;
 
+    private Color m_Color;
+    private Color m_EmissionColor;
+
     // Use this for initialization
     private void Start () {
 		WeaponPickupSlug = "WaterBalloonGun_Pickup";
@@ -45,6 +48,9 @@ public class BaseWeapon : MonoBehaviour, IWeapon, IProjectileWeapon {
         // Instantiate projectile
         var temporaryProjectile = Instantiate(Projectile, ProjectileEmitter.transform.position, ProjectileEmitter.transform.rotation);
 
+        temporaryProjectile.GetComponent<Renderer>().material.color = m_Color;
+        temporaryProjectile.GetComponent<Renderer>().material.SetColor("_EmissionColor", m_EmissionColor);
+
         //Projectiles may appear rotated  incorrectly due to the way its pivot was set from original model
         //Corrected here if needed:
         temporaryProjectile.transform.Rotate(Vector3.left * 270);
@@ -65,10 +71,17 @@ public class BaseWeapon : MonoBehaviour, IWeapon, IProjectileWeapon {
         throw new System.NotImplementedException();
     }
 
-    public virtual void SetPlacement() {
+    public virtual void SetUp(Material playerColorMaterial) {
         transform.localPosition = new Vector3(-0.098f, 0.038f, 0.087f);
         var rot = new Vector3(-8.337001f, 177.759f, 149.026f);
         transform.localRotation = Quaternion.Euler(rot);
+
+        // Set the weapons highlighted color to the player color
+        GetComponent<Renderer>().materials[2].color = playerColorMaterial.color;
+        GetComponent<Renderer>().materials[2].SetColor("_EmissionColor", playerColorMaterial.GetColor("_EmissionColor"));
+
+        m_Color = playerColorMaterial.color;
+        m_EmissionColor = playerColorMaterial.GetColor("_EmissionColor");
     }
 
 }

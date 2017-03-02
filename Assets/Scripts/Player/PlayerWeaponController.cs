@@ -5,12 +5,15 @@ public class PlayerWeaponController : MonoBehaviour {
     public GameObject PlayerHand;
     public GameObject EquippedWeapon { get; set; }
 
+    private Material m_PlayerColorMaterial;
+
     private IWeapon m_InstancedWeapon;
 
 	// Use this for initialization
     private void Start () {
-		
-	}
+        // Get the players color material
+        m_PlayerColorMaterial = GetComponentInChildren<Renderer>().materials[3];
+    }
 
     public void EquipWeapon(Item weaponToEquip) {
         if (EquippedWeapon != null) {
@@ -22,7 +25,7 @@ public class PlayerWeaponController : MonoBehaviour {
 
         m_InstancedWeapon = EquippedWeapon.GetComponent<IWeapon>();
         EquippedWeapon.transform.SetParent(PlayerHand.transform);
-        EquippedWeapon.GetComponent<BaseWeapon>().SetPlacement();
+        EquippedWeapon.GetComponent<BaseWeapon>().SetUp(m_PlayerColorMaterial);
         //EquippedWeapon.transform.localPosition = Vector3.zero;
     }
 
@@ -40,7 +43,7 @@ public class PlayerWeaponController : MonoBehaviour {
         var pickupThrow =
             Instantiate(Resources.Load<GameObject>("Pickups/Weapons/" + m_InstancedWeapon.WeaponPickupSlug), posToSpawn, transform.rotation);
 
-        
+        pickupThrow.GetComponent<Interactable>().SetPickupPlayerColor(m_PlayerColorMaterial);
         pickupThrow.GetComponent<Rigidbody>().AddForce(transform.forward * 100);
         Destroy(PlayerHand.transform.GetChild(0).gameObject);
     }
