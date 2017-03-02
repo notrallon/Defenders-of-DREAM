@@ -28,8 +28,9 @@ public class PlayerInput : MonoBehaviour {
     private AudioClip m_StepSound;
     private AudioSource audio;
 
-    public float footStepRate;
+    private float footStepRate = 0.3f;
     private float m_nextStep = 0.5f;
+    private float stepVolume = 0.05f;
 
     
 	// Use this for initialization
@@ -192,7 +193,7 @@ public class PlayerInput : MonoBehaviour {
         {
             if (m_nextStep < Time.time && !audio.isPlaying)
             {
-                audio.PlayOneShot(m_StepSound, 0.1f);
+                audio.PlayOneShot(m_StepSound, stepVolume);
                 audio.pitch = UnityEngine.Random.Range(1.2f, 1.5f);
                 m_nextStep = Time.time + footStepRate;
             }
