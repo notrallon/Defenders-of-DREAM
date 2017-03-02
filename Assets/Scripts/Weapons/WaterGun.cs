@@ -23,6 +23,7 @@ public class WaterGun : BaseWeapon, IWeapon {
 	
     public void Attack(Vector3 dir) {
         particles.Emit(1);
+
     }
 
     // Sets the correct placement for this weapon.
