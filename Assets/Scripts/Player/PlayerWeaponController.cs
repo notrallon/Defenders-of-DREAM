@@ -42,7 +42,7 @@ public class PlayerWeaponController : MonoBehaviour {
         var posToSpawn = PlayerHand.transform.position;
         posToSpawn.y += 1;
         var pickupThrow =
-            Instantiate(Resources.Load<GameObject>("Pickups/Weapons/" + m_InstancedWeapon.WeaponPickupSlug), posToSpawn, transform.rotation);
+            Instantiate(Resources.Load<GameObject>("Pickups/Weapons/" + m_InstancedWeapon.WeaponPickupSlug), posToSpawn, Random.rotation);
 
         pickupThrow.GetComponent<Interactable>().SetPickupPlayerColor(m_PlayerColorMaterial);
         pickupThrow.GetComponent<Rigidbody>().AddForce(transform.forward * 100);

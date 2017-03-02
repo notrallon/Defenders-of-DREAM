@@ -56,7 +56,8 @@ public class EnemyManager : MonoBehaviour {
         if (m_ItemRewards.Length == 0) return;
         for (var i = 0; i < GameController.Instance.PlayerInstances.Length; i++) {
             var itemIndex = Random.Range(0, m_ItemRewards.Length);
-            var posToSpawn = GetComponent<BoxCollider>().transform.position;
+            var dropPointIndex = Random.Range(0, m_SpawnPoints.Length);
+            var posToSpawn = m_SpawnPoints[dropPointIndex].transform.position;
             posToSpawn.y += 2;
             Instantiate(m_ItemRewards[itemIndex], posToSpawn, Random.rotation);
         }
