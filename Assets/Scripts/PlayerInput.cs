@@ -24,9 +24,18 @@ public class PlayerInput : MonoBehaviour {
 
     private Animator m_Animator;
 
+    [SerializeField]
+    private AudioClip m_StepSound;
+    private AudioSource audio;
+
+    public float footStepRate;
+    private float m_nextStep = 0.5f;
+
+    
 	// Use this for initialization
     private void Start () {
 
+        
         switch (m_PlayerInput) {
             case ControllerInputs_t.PLAYER_1: {
                 m_LeftJoyHor = "JoyP1HorizontalL";
@@ -86,9 +95,14 @@ public class PlayerInput : MonoBehaviour {
         m_PlayerState = PlayerStates_t.IDLE;
         m_Animator = GetComponent<Animator>();
         m_PlayerController = GetComponent<CharacterController>();
-	}
-	
-	// Update is called once per frame
+
+        audio = GetComponent<AudioSource>();
+        
+
+
+    }
+
+    // Update is called once per frame
     private void Update () {
         PlayerMove();
 
@@ -173,7 +187,18 @@ public class PlayerInput : MonoBehaviour {
         // Move the player
         m_PlayerController.Move(movement);
 
-        
+        // Move sound effect
+        if (movement.magnitude > 0)
+        {
+            if (m_nextStep < Time.time && !audio.isPlaying)
+            {
+                audio.PlayOneShot(m_StepSound, 0.1f);
+                audio.pitch = UnityEngine.Random.Range(1.2f, 1.5f);
+                m_nextStep = Time.time + footStepRate;
+            }
+        }
+
+
         // Shooting
         if (Math.Abs(Input.GetAxisRaw(m_ShootTrigger)) > 0) {
             GetComponent<Animator>().SetBool("Shoot", true);
