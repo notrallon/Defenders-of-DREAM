@@ -10,7 +10,8 @@ public class WaterGun : BaseWeapon, IWeapon {
     private void Start () {
         WeaponPickupSlug = "WaterGun_Pickup";
         audioSource = GetComponent<AudioSource>();
-
+        
+        
         //particles.transform.position = ProjectileEmitter.transform.position;
         //particles.enableEmission = false;
         //particles.Stop();

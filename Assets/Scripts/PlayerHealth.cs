@@ -66,7 +66,7 @@ public class PlayerHealth : MonoBehaviour {
         PlayerHP -= amount;
 
         audio.pitch = Random.Range(0.9f, 1.2f);
-        audio.PlayOneShot(takeDamage, 0.5f);
+        audio.PlayOneShot(takeDamage, 2f);
         
         if (PlayerHP <= 0)
         {
