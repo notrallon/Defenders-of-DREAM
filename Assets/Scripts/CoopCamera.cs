@@ -52,6 +52,10 @@ public class CoopCamera : MonoBehaviour {
         } else if (distance > m_CameraMaxDistance) {
             distance = m_CameraMaxDistance;
         }
+
+        int fog = 30;
+
+        RenderSettings.fogDensity = (fog - distance) * 0.003f; 
         
         distance /= m_CameraDistanceDivider;
 

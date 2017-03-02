@@ -6,10 +6,39 @@ ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Cube
+    100004: Cube_002
+    100006: Cube_003
+    100008: GlowingSpikes
+    100010: GlowingSpikes_Upper
+    100012: Mushroom
     400000: //RootNode
+    400002: Cube
+    400004: Cube_002
+    400006: Cube_003
+    400008: GlowingSpikes
+    400010: GlowingSpikes_Upper
+    400012: Mushroom
     2300000: //RootNode
+    2300002: Cube
+    2300004: Cube_002
+    2300006: Cube_003
+    2300008: GlowingSpikes
+    2300010: GlowingSpikes_Upper
+    2300012: Mushroom
     3300000: //RootNode
+    3300002: Cube
+    3300004: Cube_002
+    3300006: Cube_003
+    3300008: GlowingSpikes
+    3300010: GlowingSpikes_Upper
+    3300012: Mushroom
     4300000: Cube
+    4300002: Cube_003
+    4300004: Cube_002
+    4300006: GlowingSpikes_Upper
+    4300008: GlowingSpikes
+    4300010: Mushroom
     7400000: Default Take
     9500000: //RootNode
   materials:
