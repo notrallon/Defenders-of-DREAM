@@ -37,6 +37,7 @@ public class PlayerInput : MonoBehaviour {
 
     private PlayerIndex m_PlayerIndex;
     private GamePadState m_GamePadState;
+    private float m_Vibration;
     
 	// Use this for initialization
     private void Start () {
@@ -193,7 +194,8 @@ public class PlayerInput : MonoBehaviour {
             } break;
         }
 
-        
+        GamePad.SetVibration(m_PlayerIndex, m_Vibration, m_Vibration);
+
 
         return;
         // TODO (richard): Make a state machine
@@ -361,5 +363,9 @@ public class PlayerInput : MonoBehaviour {
         } else {
             GetComponent<Animator>().SetBool("Shoot", false);
         }
+    }
+
+    public void SetVibration(float amount) {
+        m_Vibration = amount;
     }
 }

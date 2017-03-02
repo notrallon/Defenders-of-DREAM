@@ -43,10 +43,12 @@ public class PlayerHealth : MonoBehaviour {
     private void Update () {
         if (flashCounter > 0) // if flashcounter is more than 0
         {
+            GetComponent<PlayerInput>().SetVibration(flashCounter);
             flashCounter -= Time.deltaTime; // start counting down
             if (flashCounter <= 0)  // when count down is finished
             {
                 rend.material.SetColor("_Color", storedColor); // reset the color to original
+                GetComponent<PlayerInput>().SetVibration(0);
             }
         }
 
