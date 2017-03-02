@@ -28,6 +28,7 @@ public class ParticleDamage : MonoBehaviour {
             script.TakeDamage(damage);
 
             GameObject splat = Instantiate(explosion, enemyObject.transform.position, enemyObject.transform.rotation) as GameObject; // Instantiate the particle splash effect
+            splat.transform.localScale *= 0.5f;
 
             Destroy(splat, 1.0f); // destroy the splash-system
 
