@@ -5,11 +5,15 @@ public class WaterGun : BaseWeapon, IWeapon {
     //public string WeaponPickupSlug { get; set; }
 
     public ParticleSystem particles;
+    public bool isPlaying;
+    public float maxVolume = 1f;
+    public float fadeSpeed = 0.02f; 
 
     // Use this for initialization
     private void Start () {
         WeaponPickupSlug = "WaterGun_Pickup";
         audioSource = GetComponent<AudioSource>();
+        isPlaying = false;
         
         
         //particles.transform.position = ProjectileEmitter.transform.position;
@@ -20,11 +24,36 @@ public class WaterGun : BaseWeapon, IWeapon {
 
     private void Update ()
     {
+        //.particleCount
+        // kolla player Input
+        if ((particles.particleCount < 50) && (particles.particleCount > 0) && isPlaying)
+        {
+
+                audioSource.volume -= particles.particleCount*fadeSpeed*Time.deltaTime;
+        }
+        else if ((particles.particleCount > 50) && isPlaying)
+        {
+
+            audioSource.volume = maxVolume;
+        }
+        else if (particles.particleCount == 0)
+        {
+            audioSource.Stop();
+            isPlaying = false;
+        }
     }
 	
     public void Attack(Vector3 dir) {
         particles.Emit(1);
+
+        if (!isPlaying)
+        {
+            audioSource.Play();
+            isPlaying = true;
+        }
+
     }
+
 
     // Sets the correct placement for this weapon.
     public override void SetUp(Material playerColorMaterial) {
