@@ -71,7 +71,7 @@ public class BaseWeapon : MonoBehaviour, IWeapon, IProjectileWeapon {
         m_NextFire = Time.time + FireRate;
 
 
-        GetComponent<PlayerInput>().SetVibration(0.3f);
+        //GetComponent<PlayerInput>().SetVibration(0.3f);
         
     }
 
