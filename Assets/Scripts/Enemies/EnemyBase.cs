@@ -34,7 +34,8 @@ public class EnemyBase : MonoBehaviour, IEnemy
     private NavMeshAgent m_EnemyAgent;
 
     // Flash when damaged
-    public float flashLength;   // set time length
+    //[SerializeField]
+    private float flashLength = 0.3f;   // set time length
     private float flashCounter; // countdown timer
 
     private Renderer rend; // this will render the flash
