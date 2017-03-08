@@ -7,12 +7,12 @@ public class ProjectileDamage : MonoBehaviour
 
     public float damage;
     public GameObject explosion;
-    private Renderer rend;
+    //private MeshRenderer rend;
 
     protected AudioSource audioSource;
     public AudioClip impact;
 
-    private float vol = 0.6f;
+    private float vol = 0.4f;
     private float newPitch;
     private float minPitch = 0.7f;
     private float maxPitch = 1.3f;
@@ -45,7 +45,8 @@ public class ProjectileDamage : MonoBehaviour
             var script = enemyObject.GetComponent<IEnemy>();
             script.TakeDamage(damage);
 
-            gameObject.GetComponent<Renderer>().enabled = false;
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.GetComponent<SphereCollider>().enabled = false;
             Destroy(gameObject, 1);
 
             GameObject splat = Instantiate(explosion, enemyObject.transform.position, enemyObject.transform.rotation) as GameObject; // Instantiate the particle splash effect
