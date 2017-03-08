@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActivatePuzzle : MonoBehaviour
+public class ButtonChangeColor : MonoBehaviour
 {
-    //drag the puzzlelid to this field in the inspector
-    public GameObject PuzzleLid;
-    //To smooth out the motion a bit
-    public float smooth;
     //To check if the player has pressed the button
     private bool buttonPressed;
 
@@ -35,10 +31,9 @@ public class ActivatePuzzle : MonoBehaviour
         //When someone has pressed the button
         if (buttonPressed == true)
         {
-            //Move the PuzzleLid GameObject upwards
-            PuzzleLid.transform.position = Vector3.MoveTowards(PuzzleLid.transform.position, new Vector3(0, 100, 0), Time.deltaTime * smooth);
             //Get the material on the GameObject
             Renderer rend = GetComponent<Renderer>();
+            //rend.sharedMaterial = materials[0];
             rend.material.shader = Shader.Find("Standard");
             rend.material.SetColor("_EmissionColor", Color.cyan);
 
