@@ -9,10 +9,21 @@ public class ParticleDamage : MonoBehaviour {
 
     GameObject enemyObject;
 
+    protected AudioSource audioSource;
+    public AudioClip impact;
+
+    private float vol = 1.0f;
+    private float newPitch;
+    private float minPitch = 0.7f;
+    private float maxPitch = 1.3f;
+    private bool isPlaying;
+    private float counter;
+
     // Use this for initialization
     void Start () {
-		
-	}
+        isPlaying = false;
+        counter = 0.0f;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -23,6 +34,19 @@ public class ParticleDamage : MonoBehaviour {
     {
         if (col.gameObject.tag == "Enemy")
         {
+            //if ((isPlaying == false) && (counter == 0))
+            //{
+            //    newPitch = Random.Range(minPitch, maxPitch);
+            //    audioSource.pitch = newPitch;
+            //    audioSource.PlayOneShot(impact, vol);
+            //    isPlaying = true;
+            //    counter = 1.0f;
+            //}
+            //else
+            //{
+            //    counter -= Time.deltaTime;
+            //}
+
             enemyObject = col.gameObject;
             var script = enemyObject.GetComponent<IEnemy>();
             script.TakeDamage(damage);
@@ -31,6 +55,7 @@ public class ParticleDamage : MonoBehaviour {
             splat.transform.localScale *= 0.5f;
 
             Destroy(splat, 1.0f); // destroy the splash-system
+
 
             //Debug.Log("Enemy is damaged!");
         }
