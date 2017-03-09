@@ -92,6 +92,8 @@ public class ActivatePuzzle : MonoBehaviour
             Renderer rend = GetComponent<Renderer>();
             rend.material.shader = Shader.Find("Standard");
             rend.material.SetColor("_EmissionColor", Color.cyan);
+
+            //Destroy(gameObject, 5f);
         }
     }
 
