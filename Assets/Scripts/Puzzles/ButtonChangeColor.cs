@@ -1,5 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/// <summary>
+/// This script is used to quickly highlight the button GameObject to
+/// help indicate to the player that this object is interactable just
+/// like how the player picks up weapons.
+/// </summary>
+
 using UnityEngine;
 
 public class ButtonChangeColor : MonoBehaviour

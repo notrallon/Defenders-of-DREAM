@@ -1,6 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿/// <summary>
+/// This script is used to spawn the player prefabs as clones so that we don't accidentally
+/// damage the actual prefabs. Each player will be spawned at the child object of the
+/// Spawner named spawnLocation. This script can be used to spawn an array of prefabs,
+/// but in this case that's not needed and is instead just a pointer to a possible use.
+/// </summary>
+
 using UnityEngine;
 using XInputDotNetPure;
 
@@ -44,8 +48,6 @@ public class Spawner : MonoBehaviour
                 
             } break;
         }
-
-
     }
     //Spawn Player prefab at spawnLocation and sets it's rotation.
     void SpawnPlayer()

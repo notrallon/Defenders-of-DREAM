@@ -1,5 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/// <summary>
+/// This script makes the PuzzleCube glow by changing it's material
+/// once it has been pushed into the PuzzleFinish trigger. 
+/// </summary>
+
 using UnityEngine;
 
 public class CubeChangeColor : MonoBehaviour
