@@ -19,6 +19,7 @@ public class SettingManager : MonoBehaviour
     public Resolution[] resolutions;
     public GameSettings gameSettings;
 
+
     void Start()
     {
         LoadSettings();
@@ -62,7 +63,7 @@ public class SettingManager : MonoBehaviour
 
     public void OnAntialiasingChange()
     {
-        QualitySettings.antiAliasing = gameSettings.antialiasing = (int)Mathf.Pow(2, antialiasingDropdown.value);
+        QualitySettings.antiAliasing = gameSettings.antialiasing = (int)Mathf.Pow(antialiasingDropdown.value,2);
     }
 
     public void OnVSyncChange()
@@ -89,7 +90,7 @@ public class SettingManager : MonoBehaviour
     {
         gameSettings = JsonUtility.FromJson<GameSettings>(File.ReadAllText(Application.persistentDataPath + "/gamesettings.json"));
 
-        musicVolumeSlider.value = gameSettings.musicVolume;
+        musicVolumeSlider.value = AudioListener.volume = gameSettings.musicVolume;
         antialiasingDropdown.value = gameSettings.antialiasing;
         vSyncDropdown.value = gameSettings.vSync;
         textureQualityDropdown.value = gameSettings.textureQuality;
@@ -97,6 +98,6 @@ public class SettingManager : MonoBehaviour
         fullscreenToggle.isOn = gameSettings.fullscreen;
 
         resolutionDropdown.RefreshShownValue();
-        gameSettings.musicVolume = AudioListener.volume;
+        
     }
 }
