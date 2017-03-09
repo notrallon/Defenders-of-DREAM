@@ -19,6 +19,11 @@ public class SettingManager : MonoBehaviour
     public Resolution[] resolutions;
     public GameSettings gameSettings;
 
+    void Start()
+    {
+        LoadSettings();
+    }
+
     void OnEnable()
     {
         gameSettings = new GameSettings();
@@ -67,7 +72,8 @@ public class SettingManager : MonoBehaviour
 
     public void OnMusicVolumeChange()
     {
-        musicSource.volume = gameSettings.musicVolume = musicVolumeSlider.value;
+        AudioListener.volume = gameSettings.musicVolume = musicVolumeSlider.value;
+        
     }
     public void onApplyButtonClick()
     {
@@ -91,5 +97,6 @@ public class SettingManager : MonoBehaviour
         fullscreenToggle.isOn = gameSettings.fullscreen;
 
         resolutionDropdown.RefreshShownValue();
+        gameSettings.musicVolume = AudioListener.volume;
     }
 }
