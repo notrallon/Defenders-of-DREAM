@@ -13,11 +13,16 @@ public class EnemyManager : MonoBehaviour {
     private int m_PlayersInSpawn = 0;
 
     [SerializeField] private GameObject[] m_ItemRewards;
+    [SerializeField] public GameObject rewardParticles;
 
-	// Use this for initialization
+    protected AudioSource audioSource;
+    public AudioClip rewardSound;
+
+    // Use this for initialization
     private void Start () {
-		//InvokeRepeating("Spawn", m_SpawnTime, m_SpawnTime);
-	}
+        //InvokeRepeating("Spawn", m_SpawnTime, m_SpawnTime);
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void Spawn() {
         if (m_EnemiesSpawned >= m_EnemiesToSpawn || GameController.Instance.PlayerInstances.Length == 0) {
@@ -60,6 +65,8 @@ public class EnemyManager : MonoBehaviour {
             var posToSpawn = m_SpawnPoints[dropPointIndex].transform.position;
             posToSpawn.y += 2;
             Instantiate(m_ItemRewards[itemIndex], posToSpawn, Random.rotation);
+            GameObject chime = Instantiate(rewardParticles, posToSpawn, rewardParticles.transform.rotation) as GameObject; // Instantiate the particle splash effect
+            audioSource.PlayOneShot(rewardSound, 0.5f);
         }
     }
 

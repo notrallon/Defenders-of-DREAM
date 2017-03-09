@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+
+
 public class BaseWeapon : MonoBehaviour, IWeapon, IProjectileWeapon {
     public Transform ProjectileSpawn { get; set; }
     public string WeaponPickupSlug { get; set; }
@@ -31,11 +33,13 @@ public class BaseWeapon : MonoBehaviour, IWeapon, IProjectileWeapon {
 		WeaponPickupSlug = "WaterBalloonGun_Pickup";
 
         audioSource = GetComponent<AudioSource>();
+
+        
 	}
 	
 	// Update is called once per frame
     private void Update () {
-
+ 
     }
 
     public void Attack(Vector3 dir) {
@@ -65,10 +69,16 @@ public class BaseWeapon : MonoBehaviour, IWeapon, IProjectileWeapon {
         Destroy(temporaryProjectile, 2.0f);
 
         m_NextFire = Time.time + FireRate;
+
+
+        //GetComponent<PlayerInput>().SetVibration(0.3f);
+        
     }
 
     public void ShootProjectile() {
         throw new System.NotImplementedException();
+
+       
     }
 
     public virtual void SetUp(Material playerColorMaterial) {
