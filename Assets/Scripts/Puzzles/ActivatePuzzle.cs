@@ -1,13 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/// <summary>
+/// This script moves the PuzzleLid upwards once the player has moved within the trigger
+/// and has pressed the button, allowing the player(s) to take on the puzzle or event
+/// that's hidden under the PuzzleLid GameObject.
+/// </summary>
+
 using UnityEngine;
 
 public class ActivatePuzzle : MonoBehaviour
 {
     //drag the puzzlelid to this field in the inspector
-    public GameObject PuzzleLid;
+    [SerializeField]
+    private GameObject PuzzleLid;
     //To smooth out the motion a bit
-    public float smooth;
+    [SerializeField]
+    private float smooth;
     //To check if the player has pressed the button
     private bool buttonPressed;
 
@@ -36,12 +42,12 @@ public class ActivatePuzzle : MonoBehaviour
         if (buttonPressed == true)
         {
             //Move the PuzzleLid GameObject upwards
-            PuzzleLid.transform.position = Vector3.MoveTowards(PuzzleLid.transform.position, new Vector3(0, 100, 0), Time.deltaTime * smooth);
+            //(the directions are for some reason scued and need x to be -15 and z to be 60 to let the y axis move straight up/down)
+            PuzzleLid.transform.position = Vector3.MoveTowards(PuzzleLid.transform.position, new Vector3(-15, 100, 60), Time.deltaTime * smooth);
             //Get the material on the GameObject
             Renderer rend = GetComponent<Renderer>();
             rend.material.shader = Shader.Find("Standard");
             rend.material.SetColor("_EmissionColor", Color.cyan);
-
         }
     }
 }
