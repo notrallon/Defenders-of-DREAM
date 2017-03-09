@@ -36,7 +36,7 @@ public class FinishTriggerCheck : MonoBehaviour
         {
             //Move the PuzzleLid GameObject downwards
             //(the directions are for some reason scued and needs X to be -15 and Z to be 60 to let the Y axis move straight up/down)
-            wall.transform.position = Vector3.MoveTowards(wall.transform.position, new Vector3(-15, -100, 60), Time.deltaTime * speed);
+            wall.transform.position = Vector3.MoveTowards(wall.transform.position, new Vector3(-7, -100, 30), Time.deltaTime * speed);
         }
     }
 }
