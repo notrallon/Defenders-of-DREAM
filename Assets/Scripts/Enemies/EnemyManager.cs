@@ -67,6 +67,8 @@ public class EnemyManager : MonoBehaviour {
             var dropPointIndex = Random.Range(0, GameController.Instance.PlayerInstances.Length);
             var posToSpawn = GameController.Instance.PlayerInstances[dropPointIndex].transform.position;
             posToSpawn.y += 2;
+            posToSpawn.z += Random.Range(-2f, 2f);
+            posToSpawn.x += Random.Range(-2f, 2f);
             Instantiate(m_ItemRewards[itemIndex], posToSpawn, Random.rotation);
             GameObject chime = Instantiate(rewardParticles, posToSpawn, rewardParticles.transform.rotation) as GameObject; // Instantiate the particle splash effect
             audioSource.PlayOneShot(rewardSound, 0.5f);
