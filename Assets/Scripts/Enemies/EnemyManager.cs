@@ -10,6 +10,7 @@ public class EnemyManager : MonoBehaviour {
     [SerializeField] private int m_EnemiesToSpawn;
 
     private int m_EnemiesSpawned = 0;
+    public int EnemiesAlive = 0;
     private int m_PlayersInSpawn = 0;
 
     [SerializeField] private GameObject[] m_ItemRewards;
@@ -26,17 +27,19 @@ public class EnemyManager : MonoBehaviour {
 
     private void Spawn() {
         if (m_EnemiesSpawned >= m_EnemiesToSpawn || GameController.Instance.PlayerInstances.Length == 0) {
-            if (m_EnemiesSpawned >= m_EnemiesToSpawn) {
+            if (m_EnemiesSpawned >= m_EnemiesToSpawn && EnemiesAlive == 0) {
                 DropRewards();
+                CancelInvoke();
             }
-            CancelInvoke();
             return;
         }
 
         var spawnPointIndex = Random.Range(0, m_SpawnPoints.Length);
 
-        Instantiate(m_Enemy, m_SpawnPoints[spawnPointIndex].position, m_SpawnPoints[spawnPointIndex].rotation);
+        var enemy = Instantiate(m_Enemy, m_SpawnPoints[spawnPointIndex].position, m_SpawnPoints[spawnPointIndex].rotation);
+        enemy.GetComponent<EnemyBase>().SetEnemyManagerIndex(this);
         m_EnemiesSpawned++;
+        EnemiesAlive++;
     }
 
     private void OnTriggerEnter(Collider col) {
@@ -61,8 +64,8 @@ public class EnemyManager : MonoBehaviour {
         if (m_ItemRewards.Length == 0) return;
         for (var i = 0; i < GameController.Instance.PlayerInstances.Length; i++) {
             var itemIndex = Random.Range(0, m_ItemRewards.Length);
-            var dropPointIndex = Random.Range(0, m_SpawnPoints.Length);
-            var posToSpawn = m_SpawnPoints[dropPointIndex].transform.position;
+            var dropPointIndex = Random.Range(0, GameController.Instance.PlayerInstances.Length);
+            var posToSpawn = GameController.Instance.PlayerInstances[dropPointIndex].transform.position;
             posToSpawn.y += 2;
             Instantiate(m_ItemRewards[itemIndex], posToSpawn, Random.rotation);
             GameObject chime = Instantiate(rewardParticles, posToSpawn, rewardParticles.transform.rotation) as GameObject; // Instantiate the particle splash effect
