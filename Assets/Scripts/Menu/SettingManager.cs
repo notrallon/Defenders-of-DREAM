@@ -22,6 +22,7 @@ public class SettingManager : MonoBehaviour
 
     void Start()
     {
+        
         LoadSettings();
     }
 
@@ -85,9 +86,19 @@ public class SettingManager : MonoBehaviour
     {
         string jsonData = JsonUtility.ToJson(gameSettings, true);
         File.WriteAllText(Application.persistentDataPath + "/gamesettings.json", jsonData);
+        LoadSettings();
     }
     public void LoadSettings()
     {
+        if (!File.Exists(Application.persistentDataPath + "/gamesettings.json"))
+        {
+            gameSettings.fullscreen = Screen.fullScreen;
+            gameSettings.textureQuality = QualitySettings.masterTextureLimit;
+            gameSettings.antialiasing = QualitySettings.antiAliasing;
+            gameSettings.vSync = QualitySettings.vSyncCount;
+            gameSettings.musicVolume = AudioListener.volume;
+            SaveSettings();
+        }
         gameSettings = JsonUtility.FromJson<GameSettings>(File.ReadAllText(Application.persistentDataPath + "/gamesettings.json"));
 
         musicVolumeSlider.value = AudioListener.volume = gameSettings.musicVolume;
