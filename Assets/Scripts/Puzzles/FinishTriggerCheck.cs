@@ -20,10 +20,13 @@ public class FinishTriggerCheck : MonoBehaviour
     private float speed;
     //PuzzleIsFinished is used to tell when the wall should move downwards once the puzzle is finished
     private bool PuzzleIsFinished;
+    private Vector3 m_TargetPos;
 
     void Awake()
     {
         PuzzleIsFinished = false;
+        m_TargetPos = wall.transform.position;
+        m_TargetPos.y -= 2;
     }
     //When the puzzle cube is in the trigger the PuzzleIsFinished is switched to true 
     void OnTriggerEnter(Collider block)
@@ -36,7 +39,7 @@ public class FinishTriggerCheck : MonoBehaviour
         {
             //Move the PuzzleLid GameObject downwards
             //(the directions are for some reason scued and needs X to be -15 and Z to be 60 to let the Y axis move straight up/down)
-            wall.transform.position = Vector3.MoveTowards(wall.transform.position, new Vector3(-7, -100, 30), Time.deltaTime * speed);
+            wall.transform.position = Vector3.Lerp(wall.transform.position, m_TargetPos, Time.deltaTime * speed);
         }
     }
 }
