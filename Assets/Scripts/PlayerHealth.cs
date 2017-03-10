@@ -72,6 +72,7 @@ public class PlayerHealth : MonoBehaviour {
         
         if (PlayerHP <= 0)
         {
+            GetComponent<PlayerInput>().SetVibration(0);
             gameObject.SetActive(false); // deactivate the player object if health reaches 0
             GameController.Instance.UpdatePlayers();
         }
