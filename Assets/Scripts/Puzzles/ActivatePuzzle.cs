@@ -40,10 +40,14 @@ public class ActivatePuzzle : MonoBehaviour
     protected AudioSource audioSource;
     public AudioClip rewardSound;
 
+    private Vector3 m_TargetPos;
+
     //Initialize the button as having not been pressed
     void Awake()
     {
         buttonPressed = false;
+        m_TargetPos = PuzzleLid.transform.position;
+        m_TargetPos.y += 8;
     }
 
     private void Start()
@@ -57,10 +61,10 @@ public class ActivatePuzzle : MonoBehaviour
         if (col.gameObject.CompareTag("Player"))
         {
             //If someone presses A on any controller or E on keyboard the button is set to having been pressed (true)
-            if (Input.GetKey(KeyCode.JoystickButton0) || (Input.GetKey(KeyCode.E)))
+            if (Input.GetKey(KeyCode.JoystickButton0) || (Input.GetKey(KeyCode.Return)))
             {
                 buttonPressed = true;
-
+                Destroy(PuzzleLid, 5f);
                 if (SpawnEnemies == true)
                 {
                     if (!col.CompareTag("Player")) return;
@@ -86,8 +90,7 @@ public class ActivatePuzzle : MonoBehaviour
         if (buttonPressed == true)
         {
             //Move the PuzzleLid GameObject upwards
-            //(the directions are for some reason scued and need x to be -15 and z to be 60 to let the y axis move straight up/down)
-            PuzzleLid.transform.position = Vector3.MoveTowards(PuzzleLid.transform.position, new Vector3(-60, 100, -20), Time.deltaTime * smooth);
+            PuzzleLid.transform.position = Vector3.Lerp(PuzzleLid.transform.position, m_TargetPos, Time.deltaTime * smooth);
             //Get the material on the GameObject
             Renderer rend = GetComponent<Renderer>();
             rend.material.shader = Shader.Find("Standard");
@@ -101,7 +104,7 @@ public class ActivatePuzzle : MonoBehaviour
         {
             if (m_EnemiesSpawned >= m_EnemiesToSpawn)
             {
-                //DropRewards();
+                DropRewards();
             }
             CancelInvoke();
             return;
@@ -125,6 +128,9 @@ public class ActivatePuzzle : MonoBehaviour
             posToSpawn.y += 2;
             Instantiate(m_ItemRewards[itemIndex], posToSpawn, Random.rotation);
             GameObject chime = Instantiate(rewardParticles, posToSpawn, rewardParticles.transform.rotation) as GameObject; // Instantiate the particle splash effect
+        }
+
+        if (audioSource != null) {
             audioSource.PlayOneShot(rewardSound, 0.5f);
         }
     }
