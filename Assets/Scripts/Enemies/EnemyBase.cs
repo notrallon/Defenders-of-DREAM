@@ -32,6 +32,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     private GameObject[] m_PlayerTransforms;
 
     private NavMeshAgent m_EnemyAgent;
+    private EnemyManager m_EnemyManager;
 
     // Flash when damaged
     //[SerializeField]
@@ -121,6 +122,9 @@ public class EnemyBase : MonoBehaviour, IEnemy
         }
 
         if (HealthPoints < 1) {
+            if (m_EnemyManager != null) {
+                m_EnemyManager.EnemiesAlive--;
+            }
             ScoreTracker.score += 5;
             Destroy(gameObject);
         }
@@ -185,6 +189,10 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
         flashCounter = flashLength; // count down timer is set
         rend.material.SetColor("_Color", Color.red); // set material color to red
+    }
+
+    public void SetEnemyManagerIndex(EnemyManager manager) {
+        m_EnemyManager = manager;
     }
 
     public void Attack()
