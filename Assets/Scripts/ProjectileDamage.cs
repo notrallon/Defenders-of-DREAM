@@ -46,7 +46,7 @@ public class ProjectileDamage : MonoBehaviour
             // Find the colliding object, send damage to colliding object (enemy)
             enemyObject = col.gameObject;
             var script = enemyObject.GetComponent<IEnemy>();
-            script.TakeDamage(damage);
+            script.TakeDamage(damage, GetComponent<Renderer>().material.color);
 
             // Hide gameObject and inactivate the collider, destroyt object after one second
             gameObject.GetComponent<MeshRenderer>().enabled = false;
@@ -54,10 +54,12 @@ public class ProjectileDamage : MonoBehaviour
             Destroy(gameObject, 1);
 
             // instantiate particle effect on enemy position
-            GameObject splat = Instantiate(explosion, enemyObject.transform.position, enemyObject.transform.rotation) as GameObject; // Instantiate the particle splash effect
+            //GameObject splat = Instantiate(explosion, enemyObject.transform.position, enemyObject.transform.rotation) as GameObject; // Instantiate the particle splash effect
+
+            GameObject.FindGameObjectWithTag("ParticleController").GetComponent<ParticleController>().EmitSplatterAtLocation(enemyObject.transform, GetComponent<Renderer>().material.color);
 
             // destroy the splash-system
-            Destroy(splat, 1.0f); 
+            //Destroy(splat, 1.0f); 
 
 
 

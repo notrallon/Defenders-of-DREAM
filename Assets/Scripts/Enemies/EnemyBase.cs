@@ -10,6 +10,8 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
     public float HealthPoints { get; private set; }
 
+    private ParticleController particleController;
+
     [SerializeField]
     private float m_HealthMax;
     [SerializeField]
@@ -42,11 +44,11 @@ public class EnemyBase : MonoBehaviour, IEnemy
     private Renderer rend; // this will render the flash
     private Color storedColor; // store current color
 
+    private Color m_LastPlayerHitColor;
 
     // Use this for initialization
     private void Start()
     {
-        
         EnemyState = EnemyStates_t.IDLE;
         HealthPoints = m_HealthMax;
         m_EnemyAgent = GetComponent<NavMeshAgent>();
@@ -61,23 +63,13 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
         rend = GetComponentInChildren<Renderer>(); // get renderer of first child
         storedColor = rend.material.GetColor("_Color");
+
+        particleController = GameObject.FindGameObjectWithTag("ParticleController").GetComponent<ParticleController>();
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
-
-//        var allPlayers = GameObject.FindGameObjectsWithTag("Player");
-//
-//        if (allPlayers.Length == 0) return;
-//
-//        m_PlayerTransforms = new GameObject[allPlayers.Length];
-//
-//        for (var i = 0; i < allPlayers.Length; i++)
-//        {
-//            m_PlayerTransforms[i] = allPlayers[i];
-//        }
-
         var allPlayers = GameController.Instance.PlayerInstances;
         if (allPlayers == null ||
             allPlayers.Length == 0) {
@@ -119,14 +111,6 @@ public class EnemyBase : MonoBehaviour, IEnemy
             {
                 rend.material.SetColor("_Color", storedColor); // reset the color to original
             }
-        }
-
-        if (HealthPoints < 1) {
-            if (m_EnemyManager != null) {
-                m_EnemyManager.EnemiesAlive--;
-            }
-            ScoreTracker.score += 5;
-            Destroy(gameObject);
         }
     }
 
@@ -172,6 +156,15 @@ public class EnemyBase : MonoBehaviour, IEnemy
         }
     }
 
+    private void Die() {
+        if (m_EnemyManager != null) {
+            m_EnemyManager.EnemiesAlive--;
+        }
+        particleController.EmitSplatterAtLocation(transform, m_LastPlayerHitColor);
+        ScoreTracker.score += 5;
+        Destroy(gameObject);
+    }
+
     private bool InAttackRange()
     {
         return Vector3.Distance(transform.position, m_ClosestPlayer.transform.position) < m_AttackRange;
@@ -183,9 +176,26 @@ public class EnemyBase : MonoBehaviour, IEnemy
     }
 
     //take damage
-    public void TakeDamage(float amount)
-    {
+    public void TakeDamage(float amount, Color color) {
         HealthPoints -= amount;
+        particleController.EmitSplatterAtLocation(transform, m_LastPlayerHitColor);
+        if (HealthPoints < 1) {
+            m_LastPlayerHitColor = color;
+            Die();
+        }
+
+        flashCounter = flashLength; // count down timer is set
+        rend.material.SetColor("_Color", Color.red); // set material color to red
+    }
+
+    //take damage
+    public void TakeDamage(float amount) {
+        HealthPoints -= amount;
+        particleController.EmitSplatterAtLocation(transform, m_LastPlayerHitColor);
+        if (HealthPoints < 1) {
+            m_LastPlayerHitColor = Color.red;
+            Die();
+        }
 
         flashCounter = flashLength; // count down timer is set
         rend.material.SetColor("_Color", Color.red); // set material color to red

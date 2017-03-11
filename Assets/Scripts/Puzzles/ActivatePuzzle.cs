@@ -72,6 +72,7 @@ public class ActivatePuzzle : MonoBehaviour
                     var spawnTime = m_SpawnTime / GameController.Instance.PlayerInstances.Length;
                     InvokeRepeating("Spawn", spawnTime, spawnTime);
                     GetComponent<BoxCollider>().enabled = false;
+                    SpawnEnemies = false;
                 }
                 if (!col.CompareTag("Player")) return;
                 m_PlayersInSpawn--;
