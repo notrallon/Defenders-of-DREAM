@@ -21,6 +21,8 @@ public class ParticleDamage : MonoBehaviour {
 
     public Color PlayerColor;
 
+    private ParticleController m_partController;
+
     // Use this for initialization
     void Start () {
         isPlaying = false;
@@ -53,7 +55,10 @@ public class ParticleDamage : MonoBehaviour {
             var script = enemyObject.GetComponent<IEnemy>();
             script.TakeDamage(damage, PlayerColor);
 
-            GameObject.FindGameObjectWithTag("ParticleController").GetComponent<ParticleController>().EmitSplatterAtLocation(enemyObject.transform, PlayerColor);
+            for (int i = 0; i < 10; i++) {
+                //GameObject.FindGameObjectWithTag("ParticleController").GetComponent<ParticleController>().EmitSplatterAtLocation(enemyObject.transform, PlayerColor);
+                m_partController.EmitSplatterAtLocation(enemyObject.transform, PlayerColor);
+            }
 
             //GameObject splat = Instantiate(explosion, enemyObject.transform.position, enemyObject.transform.rotation) as GameObject; // Instantiate the particle splash effect
             //splat.transform.localScale *= 0.5f;
@@ -63,5 +68,9 @@ public class ParticleDamage : MonoBehaviour {
 
             //Debug.Log("Enemy is damaged!");
         }
+    }
+
+    public void SetParticleController(ParticleController controller) {
+        m_partController = controller;
     }
 }

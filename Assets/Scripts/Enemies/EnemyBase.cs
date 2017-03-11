@@ -64,7 +64,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
         rend = GetComponentInChildren<Renderer>(); // get renderer of first child
         storedColor = rend.material.GetColor("_Color");
 
-        particleController = GameObject.FindGameObjectWithTag("ParticleController").GetComponent<ParticleController>();
+        //particleController = GameObject.FindGameObjectWithTag("ParticleController").GetComponent<ParticleController>();
     }
 
     // Update is called once per frame
@@ -160,7 +160,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
         if (m_EnemyManager != null) {
             m_EnemyManager.EnemiesAlive--;
         }
-        particleController.EmitSplatterAtLocation(transform, m_LastPlayerHitColor);
+        //particleController.EmitSplatterAtLocation(transform, m_LastPlayerHitColor);
         ScoreTracker.score += 5;
         Destroy(gameObject);
     }
@@ -178,7 +178,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     //take damage
     public void TakeDamage(float amount, Color color) {
         HealthPoints -= amount;
-        particleController.EmitSplatterAtLocation(transform, m_LastPlayerHitColor);
+        //particleController.EmitSplatterAtLocation(transform, m_LastPlayerHitColor);
         if (HealthPoints < 1) {
             m_LastPlayerHitColor = color;
             Die();
@@ -191,7 +191,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     //take damage
     public void TakeDamage(float amount) {
         HealthPoints -= amount;
-        particleController.EmitSplatterAtLocation(transform, m_LastPlayerHitColor);
+        //particleController.EmitSplatterAtLocation(transform, m_LastPlayerHitColor);
         if (HealthPoints < 1) {
             m_LastPlayerHitColor = Color.red;
             Die();

@@ -82,6 +82,7 @@ public class WaterGun : BaseWeapon, IWeapon {
         //ParticleSystem.MainModule psMain = particles.main;
         //psMain.startColor = m_Color;
         particles.GetComponent<ParticleDamage>().PlayerColor = m_Color;
+        particles.GetComponent<ParticleDamage>().SetParticleController(GetComponentInParent<PlayerInput>().PlayerParticleSystem.GetComponent<ParticleController>());
         //particles.GetComponent<Renderer>().material.color = m_Color;
 
 

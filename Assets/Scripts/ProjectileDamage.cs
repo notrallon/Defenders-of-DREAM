@@ -20,6 +20,8 @@ public class ProjectileDamage : MonoBehaviour
 
     GameObject enemyObject;
 
+    ParticleController partController;
+
     // Use this for initialization
     void Start()
     {
@@ -56,7 +58,7 @@ public class ProjectileDamage : MonoBehaviour
             // instantiate particle effect on enemy position
             //GameObject splat = Instantiate(explosion, enemyObject.transform.position, enemyObject.transform.rotation) as GameObject; // Instantiate the particle splash effect
 
-            GameObject.FindGameObjectWithTag("ParticleController").GetComponent<ParticleController>().EmitSplatterAtLocation(enemyObject.transform, GetComponent<Renderer>().material.color);
+            partController.EmitSplatterAtLocation(enemyObject.transform, GetComponent<Renderer>().material.color);
 
             // destroy the splash-system
             //Destroy(splat, 1.0f); 
@@ -65,6 +67,10 @@ public class ProjectileDamage : MonoBehaviour
 
             //Debug.Log("Enemy is damaged!");
         }
+    }
+
+    public void SetParticleController(ParticleController controller) {
+        partController = controller;
     }
 
 

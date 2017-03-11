@@ -38,11 +38,15 @@ public class PlayerInput : MonoBehaviour {
     private PlayerIndex m_PlayerIndex;
     private GamePadState m_GamePadState;
     private float m_Vibration;
-    
-	// Use this for initialization
+
+    public GameObject PlayerParticleSystem;
+
+    // Use this for initialization
     private void Start () {
 
-        
+        var ps = Instantiate(PlayerParticleSystem);
+        PlayerParticleSystem = ps;
+
         switch (m_PlayerInput) {
             case ControllerInputs_t.PLAYER_1: {
                 switch (InputMethod) {

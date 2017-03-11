@@ -22,16 +22,17 @@ public class ParticleController : MonoBehaviour {
         ParticleSystem.MainModule psMain = m_SplatterParticles.main;
         m_PlayerColor = color;
         psMain.startColor = m_PlayerColor;
+        m_SplatterParticles.GetComponent<SplatOnCollision>().PlayerColor = m_PlayerColor;
         
         m_SplatterParticles.transform.rotation = Quaternion.LookRotation(location.rotation.eulerAngles);
         m_SplatterParticles.Emit(1);
     }
 
-    private void OnParticleCollision(GameObject other) {
+    /*private void OnParticleCollision(GameObject other) {
         int numCollisionEvents = ParticlePhysicsExtensions.GetCollisionEvents(m_SplatterParticles, other, m_CollisionEvents);
 
         for (var i = 0; i < numCollisionEvents; i++) {
             m_DropletDecalPool.ParticleHit(m_CollisionEvents[i], m_PlayerColor);
         }
-    }
+    }*/
 }

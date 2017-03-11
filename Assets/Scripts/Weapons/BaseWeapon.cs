@@ -58,6 +58,7 @@ public class BaseWeapon : MonoBehaviour, IWeapon, IProjectileWeapon {
         //Projectiles may appear rotated  incorrectly due to the way its pivot was set from original model
         //Corrected here if needed:
         temporaryProjectile.transform.Rotate(Vector3.left * Random.Range(0, 360));
+        temporaryProjectile.GetComponent<ProjectileDamage>().SetParticleController(GetComponentInParent<PlayerInput>().PlayerParticleSystem.GetComponent<ParticleController>());
 
         //Retrieve Rigidbody from instantiated projectile and control it
         var temporaryRb = temporaryProjectile.GetComponent<Rigidbody>();
