@@ -39,14 +39,22 @@ public class PlayerInput : MonoBehaviour {
     private GamePadState m_GamePadState;
     private float m_Vibration;
 
+    private float ShootingRotateSpeed = 1f;
+    private float DefaultRotateSpeed = 10f;
+    private float m_RotateSpeed;
+
+    // Particle system that takes care of ground splatter.
     public GameObject PlayerParticleSystem;
 
     // Use this for initialization
     private void Start () {
+        m_RotateSpeed = DefaultRotateSpeed;
 
+        // Instantiate the players particlesystem
         var ps = Instantiate(PlayerParticleSystem);
         PlayerParticleSystem = ps;
 
+        // Check what player is playing and assign keybindings accordingly.
         switch (m_PlayerInput) {
             case ControllerInputs_t.PLAYER_1: {
                 switch (InputMethod) {
@@ -157,9 +165,6 @@ public class PlayerInput : MonoBehaviour {
         m_PlayerController = GetComponent<CharacterController>();
 
         audio = GetComponent<AudioSource>();
-        
-
-
     }
 
     // Update is called once per frame
@@ -200,7 +205,6 @@ public class PlayerInput : MonoBehaviour {
 
         GamePad.SetVibration(m_PlayerIndex, m_Vibration, m_Vibration);
 
-
         return;
         // TODO (richard): Make a state machine
         switch (m_PlayerState) {
@@ -224,6 +228,7 @@ public class PlayerInput : MonoBehaviour {
     }
 
     private void XInputPlayerMove() {
+        // Get values from thumbsticks.
         var deltaMoveX = m_GamePadState.ThumbSticks.Left.X * m_Speed;
         var deltaMoveZ = m_GamePadState.ThumbSticks.Left.Y * m_Speed;
         var deltaRotX = m_GamePadState.ThumbSticks.Right.X;
@@ -236,11 +241,11 @@ public class PlayerInput : MonoBehaviour {
         if (Mathf.Abs(deltaRotX) > 0 || Mathf.Abs(deltaRotZ) > 0) {
             // Rotate in relation to the axis of our right stick
             rotation = new Vector3(deltaRotX, 0, deltaRotZ);
-            transform.rotation = Quaternion.LookRotation(rotation);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotation), m_RotateSpeed * Time.deltaTime);
         } else if (Mathf.Abs(movement.magnitude) > 0) {
             // Rotate in the direction we're moving
             rotation = movement;
-            transform.rotation = Quaternion.LookRotation(rotation);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotation), m_RotateSpeed * Time.deltaTime);
         }
 
         // Get dot product from our movement to see what direction we're in relation to 
@@ -290,8 +295,10 @@ public class PlayerInput : MonoBehaviour {
             GetComponent<Animator>().SetBool("Shoot", true);
             //GetComponent<FireProjectile>().Shoot();
             GetComponent<PlayerWeaponController>().PerformWeaponAttack();
+            m_RotateSpeed = ShootingRotateSpeed;
         } else {
             GetComponent<Animator>().SetBool("Shoot", false);
+            m_RotateSpeed = DefaultRotateSpeed;
         }
     }
 
@@ -304,16 +311,17 @@ public class PlayerInput : MonoBehaviour {
         var movement = new Vector3(deltaMoveX, 0, deltaMoveZ);
 
         // Rotate based on movement/aim
-        Vector3 rotation;
+        Vector3 targetRotation = transform.rotation.eulerAngles;
         if (Mathf.Abs(deltaRotX) > 0 || Mathf.Abs(deltaRotZ) > 0) {
-            // Rotate in relation to the axis of our right stick
-            rotation = new Vector3(deltaRotX, 0, deltaRotZ);
-            transform.rotation = Quaternion.LookRotation(rotation);
+            // Set targetRotation in relation to the axis of our right stick
+            targetRotation = new Vector3(deltaRotX, 0, deltaRotZ);
         } else if (Mathf.Abs(movement.magnitude) > 0) {
-            // Rotate in the direction we're moving
-            rotation = movement;
-            transform.rotation = Quaternion.LookRotation(rotation);
+            // Set targetRotation to the direction we're moving
+            targetRotation = movement;
         }
+
+        // Rotate in a smooth motion
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetRotation), m_RotateSpeed * Time.deltaTime);
 
         // Get dot product from our movement to see what direction we're in relation to 
         // our rotation and send it to our animator so it can decide what animation to use.
@@ -364,8 +372,10 @@ public class PlayerInput : MonoBehaviour {
             GetComponent<Animator>().SetBool("Shoot", true);
             //GetComponent<FireProjectile>().Shoot();
             GetComponent<PlayerWeaponController>().PerformWeaponAttack();
+            m_RotateSpeed = ShootingRotateSpeed;
         } else {
             GetComponent<Animator>().SetBool("Shoot", false);
+            m_RotateSpeed = DefaultRotateSpeed;
         }
     }
 

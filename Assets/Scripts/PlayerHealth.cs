@@ -58,9 +58,9 @@ public class PlayerHealth : MonoBehaviour {
     public void PickUpHealth (int healing)
     {
         PlayerHP += healing;
-        if (PlayerHP > MAX_HEALTH)
+        if (PlayerHP > MAX_HEALTH) {
             PlayerHP = MAX_HEALTH;
-        
+        }
     }
 
     public void TakeDamage(float amount)
