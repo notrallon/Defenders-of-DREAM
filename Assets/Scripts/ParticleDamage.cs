@@ -54,11 +54,8 @@ public class ParticleDamage : MonoBehaviour {
             enemyObject = col.gameObject;
             var script = enemyObject.GetComponent<IEnemy>();
             script.TakeDamage(damage, PlayerColor);
-
-            for (int i = 0; i < 10; i++) {
-                //GameObject.FindGameObjectWithTag("ParticleController").GetComponent<ParticleController>().EmitSplatterAtLocation(enemyObject.transform, PlayerColor);
-                m_partController.EmitSplatterAtLocation(enemyObject.transform, PlayerColor);
-            }
+            
+            m_partController.EmitSplatterAtLocation(enemyObject.transform, PlayerColor);
 
             //GameObject splat = Instantiate(explosion, enemyObject.transform.position, enemyObject.transform.rotation) as GameObject; // Instantiate the particle splash effect
             //splat.transform.localScale *= 0.5f;

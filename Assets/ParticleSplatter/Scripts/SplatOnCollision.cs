@@ -33,6 +33,7 @@ public class SplatOnCollision : MonoBehaviour {
             particleIndex++;
             if (particleIndex >= dropletDecalPools[particleDecalPoolIndex].maxDecals) {
                 particleDecalPoolIndex++;
+                particleIndex = 0;
                 if (particleDecalPoolIndex >= dropletDecalPools.Length) {
                     particleDecalPoolIndex = 0;
                 }
