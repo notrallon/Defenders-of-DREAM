@@ -39,7 +39,8 @@ public class PlayerInput : MonoBehaviour {
     private GamePadState m_GamePadState;
     private float m_Vibration;
 
-    private float ShootingRotateSpeed = 1f;
+    [SerializeField]
+    private float ShootingRotateSpeed = 2f;
     private float DefaultRotateSpeed = 10f;
     private float m_RotateSpeed;
 

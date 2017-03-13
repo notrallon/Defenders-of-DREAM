@@ -57,8 +57,9 @@ public class ProjectileDamage : MonoBehaviour
 
             // instantiate particle effect on enemy position
             //GameObject splat = Instantiate(explosion, enemyObject.transform.position, enemyObject.transform.rotation) as GameObject; // Instantiate the particle splash effect
-
-            partController.EmitSplatterAtLocation(enemyObject.transform, GetComponent<Renderer>().material.color);
+            for (int i = 0; i < damage; i++) {
+                partController.EmitSplatterAtLocation(enemyObject.transform, GetComponent<Renderer>().material.color);
+            }
 
             // destroy the splash-system
             //Destroy(splat, 1.0f); 
