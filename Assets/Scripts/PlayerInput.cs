@@ -311,18 +311,17 @@ public class PlayerInput : MonoBehaviour {
         var movement = new Vector3(deltaMoveX, 0, deltaMoveZ);
 
         // Rotate based on movement/aim
-        Vector3 targetRotation = transform.rotation.eulerAngles;
+        Vector3 targetRotation;
         if (Mathf.Abs(deltaRotX) > 0 || Mathf.Abs(deltaRotZ) > 0) {
             // Set targetRotation in relation to the axis of our right stick
             targetRotation = new Vector3(deltaRotX, 0, deltaRotZ);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetRotation), m_RotateSpeed * Time.deltaTime);
         } else if (Mathf.Abs(movement.magnitude) > 0) {
             // Set targetRotation to the direction we're moving
             targetRotation = movement;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetRotation), m_RotateSpeed * Time.deltaTime);
         }
-
-        // Rotate in a smooth motion
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(targetRotation), m_RotateSpeed * Time.deltaTime);
-
+        
         // Get dot product from our movement to see what direction we're in relation to 
         // our rotation and send it to our animator so it can decide what animation to use.
         var dotForward = Vector3.Dot(transform.forward, movement);
