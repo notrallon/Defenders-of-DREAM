@@ -12,7 +12,7 @@ public class PickupWaterGun_BottomTank : Interactable
     public override void SetPickupPlayerColor(Material playerColorMaterial)
     {
         // Set the weapons highlighted color to the player color
-        GetComponent<Renderer>().materials[2].color = playerColorMaterial.color;
-        GetComponent<Renderer>().materials[2].SetColor("_EmissionColor", playerColorMaterial.GetColor("_EmissionColor"));
+        GetComponent<Renderer>().materials[1].color = playerColorMaterial.color;
+        GetComponent<Renderer>().materials[1].SetColor("_EmissionColor", playerColorMaterial.GetColor("_EmissionColor"));
     }
 }
