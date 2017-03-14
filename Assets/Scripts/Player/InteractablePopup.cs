@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InteractablePopup : MonoBehaviour {
 
-    public Canvas PopupCanvas;
+    private Canvas PopupCanvas;
     private CanvasRenderer m_PopupRenderer;
 
     private Vector3 m_Scale;
@@ -18,7 +18,7 @@ public class InteractablePopup : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	    PopupCanvas = Instantiate(PopupCanvas);
+	    PopupCanvas = Instantiate(Resources.Load("UI/InteractablePopup", typeof(Canvas))) as Canvas;
 	    PopupCanvas.enabled = false;
 
 	    m_LastPosition = Vector3.zero;
@@ -26,6 +26,7 @@ public class InteractablePopup : MonoBehaviour {
 	    m_Scale = m_PopupRenderer.transform.localScale;
 
         m_TargetTransform = transform;
+        m_LastPosition = transform.position;
 	}
 	
 	// Update is called once per frame
