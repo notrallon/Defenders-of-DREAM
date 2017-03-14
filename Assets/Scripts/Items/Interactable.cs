@@ -22,6 +22,10 @@ public class Interactable : MonoBehaviour {
     public virtual void Interact() {
     }
 
+    public void DisableInteraction() {
+        Player.GetComponent<InteractablePopup>().Deactivate();
+    }
+
     private void OnTriggerStay(Collider col) {
         // Return if collision is not with the player
         if (!col.CompareTag("Player")) return;
@@ -29,6 +33,8 @@ public class Interactable : MonoBehaviour {
         // Return if the player is already trying to interact with something
         var playerInput = col.GetComponent<PlayerInput>();
         if (playerInput.Interact != null) return;
+
+        col.GetComponent<InteractablePopup>().Activate(transform);
 
         // Highlight each colour
         for (var i = 0; i < m_DefaultColours.Length; i++) {
@@ -51,6 +57,8 @@ public class Interactable : MonoBehaviour {
             m_Rend.materials[i].color = m_DefaultColours[i];
         }
         
+        col.GetComponent<InteractablePopup>().Deactivate();
+
         // The player is no longer interacting
         col.GetComponent<PlayerInput>().Interact = null;
         Player = null;
