@@ -17,7 +17,9 @@ public class InteractablePopup : MonoBehaviour {
     private float m_ScaleTime = 0.5f;
     private float m_CurrentScaleTime;
 
-    private float m_WaitTime = 1f;
+    private float m_WaitTime = 0.25f;
+
+    public float MinPulseScale = 0.25f;
 
     private float m_Smoothing = 2.0f;
     private Vector3 m_LastPosition;
@@ -78,7 +80,7 @@ public class InteractablePopup : MonoBehaviour {
     private void Pulse() {
         m_CurrentScaleTime += Time.deltaTime;
         float perc = m_CurrentScaleTime / m_PulseTime;
-        float dist = 1f + 0.25f * Mathf.Sin(perc);
+        float dist = 1f + MinPulseScale * Mathf.Sin(perc);
 
         m_PopupRenderer.transform.localScale = m_VScaleMax * Mathf.Lerp(m_PopupRenderer.transform.localScale.magnitude, Mathf.Abs(dist), perc);
     }
@@ -91,12 +93,12 @@ public class InteractablePopup : MonoBehaviour {
 
         m_CurrentScaleTime += Time.deltaTime;
         float perc = m_CurrentScaleTime / m_ScaleTime;
-        float dist = 1f + 0.25f * Mathf.Sin(perc);
+        float dist = 1f + MinPulseScale * Mathf.Sin(perc);
         
         m_PopupRenderer.transform.localScale = m_VScaleMax * Mathf.Lerp(m_PopupRenderer.transform.localScale.magnitude, Mathf.Abs(dist), perc);
 
         if (m_CurrentScaleTime > m_ScaleTime) {
-            InvokeRepeating("Pulse", 2.5f, 0.01f);
+            InvokeRepeating("Pulse", 1.5f, 0.01f);
             CancelInvoke("ScaleUp");
         }
     }
