@@ -42,12 +42,16 @@ public class ActivatePuzzle : MonoBehaviour
 
     private Vector3 m_TargetPos;
 
+    //public GameObject bubblePart;
+    bool bubbles;
+
     //Initialize the button as having not been pressed
     void Awake()
     {
         buttonPressed = false;
         m_TargetPos = PuzzleLid.transform.position;
         m_TargetPos.y += 8;
+
     }
 
     private void Start()
@@ -96,6 +100,13 @@ public class ActivatePuzzle : MonoBehaviour
             Renderer rend = GetComponent<Renderer>();
             rend.material.shader = Shader.Find("Standard");
             rend.material.SetColor("_EmissionColor", Color.cyan);
+
+            if (!bubbles)
+            {
+                Instantiate(Resources.Load("Particle Systems/BubbleBurstEffect"), GetComponentInParent<Transform>().position, Quaternion.Euler(-90, 0 ,0));
+                bubbles = true;
+            } 
+
         }
     }
 

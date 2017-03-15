@@ -16,6 +16,10 @@ public class PauseGame : MonoBehaviour {
         {
             pause();//run pause
         }
+        if (Input.GetButtonDown("joybutton7"))
+        {
+            pause();//run pause
+        }
        
 	}
     public void pause()
