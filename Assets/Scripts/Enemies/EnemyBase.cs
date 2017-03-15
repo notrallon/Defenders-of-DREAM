@@ -30,6 +30,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     float FireRate = 1.5f;
     GameObject playerObject;
 
+    public float turnRate = 2;
 
     private GameObject[] m_PlayerTransforms;
 
@@ -47,7 +48,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     private Color m_LastPlayerHitColor;
 
     // Use this for initialization
-    private void Start()
+    protected virtual void Start()
     {
         EnemyState = EnemyStates_t.IDLE;
         HealthPoints = m_HealthMax;
@@ -91,13 +92,18 @@ public class EnemyBase : MonoBehaviour, IEnemy
         switch (EnemyState)
         {
             case EnemyStates_t.IDLE:
+                m_EnemyAgent.destination = transform.position;
                 break;
             case EnemyStates_t.CHASE:
                 m_EnemyAgent.destination = m_ClosestPlayer.transform.position;
                 break;
             case EnemyStates_t.ATTACK:
+                m_EnemyAgent.destination = transform.position;
+                Vector3 dir = (m_ClosestPlayer.position - transform.position).normalized;
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), turnRate * Time.deltaTime);
+                Attack();
                 break;
-            case EnemyStates_t.DEAD:
+            case EnemyStates_t.DEAD://NOT in use
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -138,10 +144,6 @@ public class EnemyBase : MonoBehaviour, IEnemy
                 if (!InAttackRange())
                 {
                     EnemyState = EnemyStates_t.CHASE;
-                }
-                else
-                {
-                    Attack();
                 }
                 break;
             case EnemyStates_t.DEAD:
@@ -205,7 +207,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
         m_EnemyManager = manager;
     }
 
-    public void Attack()
+    public virtual void Attack()
     {
         if (!(NextFire <= Time.time)) return;
         playerObject = m_ClosestPlayer.gameObject;
