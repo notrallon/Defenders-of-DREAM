@@ -13,6 +13,7 @@ public class SettingManager : MonoBehaviour
     public Dropdown vSyncDropdown;
     public Slider musicVolumeSlider;
     public Button applyButton;
+   
 
     public AudioSource musicSource;
 
@@ -28,7 +29,6 @@ public class SettingManager : MonoBehaviour
 
     void OnEnable()
     {
-        gameSettings = new GameSettings();
 
         fullscreenToggle.onValueChanged.AddListener(delegate { OnFullscreeenToggle(); });
         resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChange(); });
