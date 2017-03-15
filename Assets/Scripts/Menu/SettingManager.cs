@@ -5,7 +5,6 @@ using System.IO;
 
 public class SettingManager : MonoBehaviour
 {
-
     public Toggle fullscreenToggle;
     public Dropdown resolutionDropdown;
     public Dropdown textureQualityDropdown;
@@ -14,7 +13,6 @@ public class SettingManager : MonoBehaviour
     public Slider musicVolumeSlider;
     public Button applyButton;
    
-
     public AudioSource musicSource;
 
     public Resolution[] resolutions;
@@ -23,13 +21,11 @@ public class SettingManager : MonoBehaviour
 
     void Start()
     {
-        
         LoadSettings();
     }
 
     void OnEnable()
     {
-
         fullscreenToggle.onValueChanged.AddListener(delegate { OnFullscreeenToggle(); });
         resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChange(); });
         textureQualityDropdown.onValueChanged.AddListener(delegate { OnTextireQualityChange(); });
@@ -100,7 +96,11 @@ public class SettingManager : MonoBehaviour
             SaveSettings();
         }
         gameSettings = JsonUtility.FromJson<GameSettings>(File.ReadAllText(Application.persistentDataPath + "/gamesettings.json"));
-
+        if (gameSettings == null)
+        {
+            //Create default gameSettings
+            gameSettings = new GameSettings();
+        }
         musicVolumeSlider.value = AudioListener.volume = gameSettings.musicVolume;
         antialiasingDropdown.value = gameSettings.antialiasing;
         vSyncDropdown.value = gameSettings.vSync;
