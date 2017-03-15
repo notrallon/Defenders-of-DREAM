@@ -20,7 +20,7 @@ public class GhostKillerLight : MonoBehaviour {
     
     void OnTriggerEnter(Collider col)
     {
-        if (!col.gameObject.CompareTag("Enemy")) return;
+        if (!col.gameObject.CompareTag("Enemy") && (!col.gameObject.CompareTag("PurpleGhost"))) return;
         
             enemyObject = col.gameObject;
 
