@@ -29,6 +29,8 @@ public class CoopCamera : MonoBehaviour {
     private void Start() {
         // Do an update to see how many player instances that are in the game to avoid errors.
         GameController.Instance.UpdatePlayers();
+        GameController.Instance.FindAllPuzzles();
+        Debug.Log(GameController.Instance.PuzzlesTotal);
     }
 
     private void LateUpdate() {
