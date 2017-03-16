@@ -12,6 +12,9 @@ public class LampInteraction : Interactable {
     private Material[] Materials;
     public Material YellowLight;
 
+    private GameObject[] SmallLamps;
+    private GameObject[] TriggeredSmallLightObjects;
+
     private Color YellowColor;
     private Color YellowEmission;
     private Color DefaultColor;
@@ -26,7 +29,7 @@ public class LampInteraction : Interactable {
         {
             if (LightCollider.radius < 100)
             {
-                LightCollider.radius += 15*Time.deltaTime;
+                LightCollider.radius += 10*Time.deltaTime;
             }
         }
 
@@ -40,12 +43,23 @@ public class LampInteraction : Interactable {
                 TriggeredLight.range += 5 * Time.deltaTime;
             }
         }
-	}
+
+        if (TriggeredSmallLightObjects != null)
+        {
+            foreach (GameObject Light in TriggeredSmallLightObjects)
+            {
+                TriggeredLight = Light.GetComponent<Light>();
+                TriggeredLight.intensity = 1.25f;
+                TriggeredLight.range = 1.57f;
+            }
+        }
+    }
 
     public override void Interact()
     {
         LightCollider = GameObject.FindGameObjectWithTag("GreatLamp").GetComponent<SphereCollider>();
         TriggeredLightObject = GameObject.FindGameObjectWithTag("TriggeredLight");
+        TriggeredSmallLightObjects = GameObject.FindGameObjectsWithTag("SmallLights");
 
         // Set colors
         DefaultColor = GameObject.FindGameObjectWithTag("GreatLamp").GetComponent<Renderer>().materials[2].color;
@@ -64,6 +78,13 @@ public class LampInteraction : Interactable {
         
         GameObject.FindGameObjectWithTag("GreatLamp").GetComponent<Renderer>().materials[2].color = Color.Lerp(DefaultColor, YellowColor, percentage);
         GameObject.FindGameObjectWithTag("GreatLamp").GetComponent<Renderer>().materials[2].SetColor("_EmissionColor", Color.Lerp(DefaultEmission, YellowEmission, percentage));
+
+        SmallLamps = GameObject.FindGameObjectsWithTag("SmallLamps");
+        foreach (GameObject Lamp in SmallLamps)
+        {
+            Lamp.GetComponent<Renderer>().materials[2].color = Color.Lerp(DefaultColor, YellowColor, 100);
+            Lamp.GetComponent<Renderer>().materials[2].SetColor("_EmissionColor", Color.Lerp(DefaultEmission, YellowEmission, 100));
+        }
     }
 
    /* void OnTriggerStay(Collider col)
