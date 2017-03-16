@@ -13,7 +13,10 @@ public class PushBox : MonoBehaviour
         if (hit.moveDirection.y < -0.3F)
             return;
 
-        Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
-        body.velocity = pushDir * pushPower;
+        if (hit.gameObject.CompareTag("PuzzleBlock"))
+        {
+            Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+            body.velocity = pushDir * pushPower;
+        }
     }
 }
