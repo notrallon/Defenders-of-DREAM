@@ -33,7 +33,7 @@ public class LampInteraction : Interactable {
         if (TriggeredLightObject != null)
         {
             TriggeredLight = TriggeredLightObject.GetComponent<Light>();
-            TriggeredLight.intensity += 0.5f * Time.deltaTime;
+            TriggeredLight.intensity += 0.75f * Time.deltaTime;
 
             if (TriggeredLight.range < 30)
             {
