@@ -26,6 +26,7 @@ public class SettingManager : MonoBehaviour
 
     void OnEnable()
     {
+        LoadSettings();
         fullscreenToggle.onValueChanged.AddListener(delegate { OnFullscreeenToggle(); });
         resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChange(); });
         textureQualityDropdown.onValueChanged.AddListener(delegate { OnTextireQualityChange(); });

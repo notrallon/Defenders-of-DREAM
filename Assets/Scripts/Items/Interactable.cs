@@ -3,6 +3,13 @@
 public class Interactable : MonoBehaviour {
     private Renderer m_Rend;
     private Color[] m_DefaultColours;
+    private Color[] m_DefaultEmissionColours;
+    private Material[] m_DefaultMaterials;
+
+    [SerializeField][Range(1f, 5f)]
+    private float m_ColorMultiplier = 2.5f;
+    [SerializeField][Range(1f, 5f)]
+    private float m_EmissionMultiplier = 2.5f;
 
     protected GameObject Player;
 
@@ -12,10 +19,13 @@ public class Interactable : MonoBehaviour {
 
         // Set up an array of colours that is as big as the amount of materials we got
         m_DefaultColours = new Color[m_Rend.materials.Length];
+        m_DefaultEmissionColours = new Color[m_Rend.materials.Length];
 
         // Set up all default colours
         for (var i = 0; i < m_DefaultColours.Length; i++) {
             m_DefaultColours[i] = m_Rend.materials[i].color;
+            m_DefaultEmissionColours[i] = m_Rend.materials[i].GetColor("_EmissionColor");
+            //m_DefaultMaterials[i] = m_Rend.materials[i];
         }
     }
 
@@ -38,8 +48,8 @@ public class Interactable : MonoBehaviour {
 
         // Highlight each colour
         for (var i = 0; i < m_DefaultColours.Length; i++) {
-            m_Rend.materials[i].color = m_DefaultColours[i] * 2;
-            m_Rend.materials[i].SetColor("_EmissionColor", m_Rend.materials[i].GetColor("_EmissionColor") * 2);
+            m_Rend.materials[i].color = m_DefaultColours[i] * m_ColorMultiplier;
+            m_Rend.materials[i].SetColor("_EmissionColor", m_DefaultEmissionColours[i] * m_EmissionMultiplier);
         }
         
         // Set playerinteraction to this component
@@ -53,7 +63,7 @@ public class Interactable : MonoBehaviour {
         
         // Set back to default colour
         for (var i = 0; i < m_DefaultColours.Length; i++) {
-            m_Rend.materials[i].SetColor("_EmissionColor", m_Rend.materials[i].GetColor("_EmissionColor") / 2);
+            m_Rend.materials[i].SetColor("_EmissionColor", m_DefaultEmissionColours[i]);
             m_Rend.materials[i].color = m_DefaultColours[i];
         }
         
