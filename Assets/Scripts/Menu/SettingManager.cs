@@ -21,13 +21,6 @@ public class SettingManager : MonoBehaviour
 
     void Start()
     {
-
-        //if (!File.Exists(Application.persistentDataPath + "/gamesettings.json"))
-        //{
-        //    string jsonData = JsonUtility.ToJson(gameSettings, true);
-        //    File.WriteAllText(Application.persistentDataPath + "/gamesettings.json", jsonData);
-        //    LoadSettings();
-        //}
         LoadSettings();
     }
 
@@ -48,6 +41,24 @@ public class SettingManager : MonoBehaviour
         {
             resolutionDropdown.options.Add(new Dropdown.OptionData(resolution.ToString()));
         }
+        //resulotion index
+       
+    }
+
+    public int GetResIndex()
+    {
+        string[] resString;
+        resString = new string[Screen.resolutions.Length];
+        int i = 0;
+        int resIndex = 0;
+        foreach (Resolution res in Screen.resolutions)
+        {
+            if (res.width == Screen.currentResolution.width && res.height == Screen.currentResolution.height)
+                resIndex = i;
+            resString[i++] = res.width + "x" + res.height;
+
+        }
+        return resIndex;
     }
 
     public void OnFullscreeenToggle()
@@ -104,6 +115,8 @@ public class SettingManager : MonoBehaviour
             gameSettings.antialiasing = QualitySettings.antiAliasing;
             gameSettings.vSync = QualitySettings.vSyncCount;
             gameSettings.musicVolume = AudioListener.volume;
+            gameSettings.resolutionIndex = GetResIndex();
+
             SaveSettings();
         }
         gameSettings = JsonUtility.FromJson<GameSettings>(File.ReadAllText(Application.persistentDataPath + "/gamesettings.json"));
