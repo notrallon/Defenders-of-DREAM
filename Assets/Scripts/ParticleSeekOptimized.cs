@@ -16,9 +16,22 @@ public class ParticleSeekOptimized : MonoBehaviour
     {
         particleSystem = GetComponent<ParticleSystem>();
         particleSystemMainModule = particleSystem.main;
+
+        
     }
 
     void LateUpdate()
+    {
+
+        if (GameObject.Find("ArrowSign").GetComponentInParent<LerpSignsUpwards>().activate == true)
+        {
+            //ParticleSystem.Play();
+            FindTarget();
+        }
+    }
+
+
+    void FindTarget()
     {
         int maxParticles = particleSystemMainModule.maxParticles;
         if (particles == null || particles.Length < maxParticles)
@@ -35,7 +48,7 @@ public class ParticleSeekOptimized : MonoBehaviour
 
         Vector3 targetTransformedPosition;
 
-        switch(particleSystemMainModule.simulationSpace)
+        switch (particleSystemMainModule.simulationSpace)
         {
             case ParticleSystemSimulationSpace.Local:
 
@@ -67,4 +80,5 @@ public class ParticleSeekOptimized : MonoBehaviour
 
         particleSystem.SetParticles(particles, particles.Length);
     }
+
 }
