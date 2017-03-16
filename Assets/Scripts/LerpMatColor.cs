@@ -9,8 +9,8 @@ public class LerpMatColor : MonoBehaviour
     Color color;
 
     float t = 0;
-    [SerializeField]
-    float i = 0.0025f;
+    //[SerializeField]
+    float i = 0.05f;
     bool change = false;
 
     void Awake()

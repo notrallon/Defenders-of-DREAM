@@ -16,50 +16,38 @@ public class LerpSignsUpwards : MonoBehaviour {
     [SerializeField]
     private float smooth = 0.2f;
 
-
-    ParticleSystem[] childrenInParticleSystems;
-    
-
-    // Use this for initialization
+    private bool spawnParticles;
+    GameObject eruptionPart;
+   
     void Start () {
         
         m_TargetPos = gameObject.transform.position;
         m_TargetPos.y += amountToMoveY;
 
-
-        childrenInParticleSystems = gameObject.GetComponentsInChildren<ParticleSystem>();
-
-        
+        eruptionPart = Resources.Load("Particle Systems/ParticleSpawnSigns") as GameObject;
     }
 	
-	// Update is called once per frame
+	
 	void Update () {
 
         if (activate)
         {
             gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, m_TargetPos, Time.deltaTime * smooth);
-
-
-
-            foreach (ParticleSystem childPS in childrenInParticleSystems)
+  
+            // Activate the un-seen sign objects
+            foreach(Transform child in transform)
             {
-                // Get the emission module of the current child particle system [childPS]
-                ParticleSystem.EmissionModule childPSEmissionModule = childPS.emission;
-                // Disable the childs emission module
-                childPSEmissionModule.enabled = true;
-
-                // Get all particle systems from the children of the current child [childPS]
-                ParticleSystem[] grandchildrenParticleSystems = childPS.GetComponentsInChildren<ParticleSystem>();
-
-                foreach (ParticleSystem grandchildPS in grandchildrenParticleSystems)
+                if((!child.gameObject.activeSelf) && (!spawnParticles))
                 {
-                    // Get the emission module from the particle system of the current grandchild
-                    ParticleSystem.EmissionModule grandchildPSEmissionModule = grandchildPS.emission;
-
-                    // Enable the grandchilds emission module
-                    grandchildPSEmissionModule.enabled = true;
+                    child.gameObject.SetActive(true);
+                    var rockShower = Instantiate(eruptionPart, child.gameObject.transform.position, Quaternion.Euler(-90, 0, 0));
+                    Destroy(rockShower, 4f);
                 }
             }
+            spawnParticles = true;
+            
         }
-	}
+
+        
+    }
 }
