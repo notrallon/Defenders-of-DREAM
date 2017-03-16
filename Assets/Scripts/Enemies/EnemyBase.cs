@@ -27,7 +27,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
     float damage = 10;
     private float NextFire;
     [SerializeField]
-    float FireRate = 1.5f;
+    protected float FireRate = 1.5f;
     GameObject playerObject;
 
     public float turnRate = 2;
