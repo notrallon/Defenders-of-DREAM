@@ -41,9 +41,9 @@ public class EnemyProjectileDamage : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             // Set a random pitch and play audio
-            newPitch = Random.Range(minPitch, maxPitch);
-            audioSource.pitch = newPitch;
-            audioSource.PlayOneShot(impact, vol);
+            //newPitch = Random.Range(minPitch, maxPitch);
+            //audioSource.pitch = newPitch;
+            //audioSource.PlayOneShot(impact, vol);
 
             // Find the colliding object, send damage to colliding object (enemy)
             playerObject = col.gameObject;
@@ -57,10 +57,10 @@ public class EnemyProjectileDamage : MonoBehaviour
 
             // instantiate particle effect on enemy position
             //GameObject splat = Instantiate(explosion, enemyObject.transform.position, enemyObject.transform.rotation) as GameObject; // Instantiate the particle splash effect
-            //for (int i = 0; i < damage; i++)
-            //{
-            //    partController.EmitSplatterAtLocation(enemyObject.transform, GetComponent<Renderer>().material.color);
-            //}
+            for (int i = 0; i < damage; i++)
+            {
+                partController.EmitSplatterAtLocation(playerObject.transform, GetComponent<Renderer>().material.color);
+            }
 
             // destroy the splash-system
             //Destroy(splat, 1.0f); 
