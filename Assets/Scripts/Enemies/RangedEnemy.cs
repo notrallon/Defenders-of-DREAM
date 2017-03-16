@@ -20,8 +20,6 @@ public class RangedEnemy : EnemyBase {
 
     public override void Attack()
     {
-        Debug.Log("Ranged enemy attack");
-
         if (!(m_NextFire < Time.time)) return;
 
         //Play shootSound
