@@ -51,6 +51,8 @@ public class PlayerInput : MonoBehaviour {
     private void Start () {
         m_RotateSpeed = DefaultRotateSpeed;
 
+        InteractablePopup interactablePopup = gameObject.AddComponent(typeof(InteractablePopup)) as InteractablePopup;
+
         // Instantiate the players particlesystem
         var ps = Instantiate(PlayerParticleSystem);
         PlayerParticleSystem = ps;
@@ -190,6 +192,7 @@ public class PlayerInput : MonoBehaviour {
                 if (prevState.Buttons.A == ButtonState.Released && m_GamePadState.Buttons.A == ButtonState.Pressed) {
                     if (Interact != null) {
                         Interact.Interact();
+                        Interact.DisableInteraction();
                     }
                 }
 
