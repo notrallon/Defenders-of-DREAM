@@ -18,7 +18,7 @@ public class PuzzleGUIController : MonoBehaviour {
 	}
 
     public void UpdatePuzzleGUIText() {
-        PuzzleGUIString = "Puzzles solved: " + GameController.Instance.PuzzlesSolved + " / " +
+        PuzzleGUIString = "Puzzles: " + GameController.Instance.PuzzlesSolved + " / " +
                           GameController.Instance.PuzzlesTotal;
 
         if (PuzzleGUIText == null) {

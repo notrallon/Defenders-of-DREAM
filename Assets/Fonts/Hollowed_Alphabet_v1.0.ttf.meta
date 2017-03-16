@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 0a968035022f24f4cb475b17b2f3731d
+timeCreated: 1489669926
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Hollowed
+  fontNames:
+  - Hollowed
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -33,6 +33,7 @@ public class FinishTriggerCheck : MonoBehaviour
     {
         if (other.GetComponent<BoxCollider>() == block.GetComponent<BoxCollider>()) {
             PuzzleIsFinished = true;
+            Destroy(other.GetComponent<Rigidbody>());
             GameController.Instance.PuzzlesSolved++;
             PuzzleGUIController.Instance.UpdatePuzzleGUIText();
         }
