@@ -1,17 +1,19 @@
 fileFormatVersion: 2
-guid: cf3f9012a8dc5034eb8d70e6e585df8f
-timeCreated: 1489673119
+guid: 3920aadd0c0b1554e85f435188f40516
+timeCreated: 1489671340
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: pCylinder1
-    400000: //RootNode
-    400002: pCylinder1
-    2300000: pCylinder1
-    3300000: pCylinder1
-    4300000: pCylinder1
+    100000: Cave_Dirt_01 1
+    100002: //RootNode
+    400000: Cave_Dirt_01 1
+    400002: //RootNode
+    2300000: Cave_Dirt_01 1
+    3300000: Cave_Dirt_01 1
+    4300000: Cave_Dirt_01
+    7400000: Take 001
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -74,7 +76,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

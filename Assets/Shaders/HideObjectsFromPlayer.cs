@@ -18,6 +18,7 @@ public class HideObjectsFromPlayer : MonoBehaviour
     void Start()
     {
         _LastTransforms = new Dictionary<Transform, Material>();
+        WatchTarget = Camera.main.transform;
     }
 
     void Update()
@@ -48,7 +49,7 @@ public class HideObjectsFromPlayer : MonoBehaviour
         {
             foreach (RaycastHit hit in hits)
             {
-                if (hit.collider.gameObject.transform != WatchTarget && hit.collider.transform.root != WatchTarget)
+                if (hit.collider.gameObject.transform != WatchTarget && hit.collider.transform.root != WatchTarget && (hit.collider.gameObject.CompareTag("CanTransparent")))
                 {
 
 

@@ -36,7 +36,7 @@ public class Spawner : MonoBehaviour
             case InputMethod_t.X_INPUT: {
                 var state = GamePad.GetState(playerIndex);
 
-                if (state.Buttons.Start == ButtonState.Pressed) {
+                if (state.Buttons.A == ButtonState.Pressed) {
                     if (whatToSpawnClone == null) {
                         SpawnPlayer();
                         GameController.Instance.UpdatePlayers();
