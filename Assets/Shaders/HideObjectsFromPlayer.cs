@@ -18,6 +18,7 @@ public class HideObjectsFromPlayer : MonoBehaviour
     void Start()
     {
         _LastTransforms = new Dictionary<Transform, Material>();
+        WatchTarget = Camera.main.transform;
     }
 
     void Update()
