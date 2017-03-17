@@ -44,10 +44,9 @@ public class EnemyManager : MonoBehaviour {
 
     private void OnTriggerEnter(Collider col) {
         if (!col.CompareTag("Player")) return;
-        m_EnemiesToSpawn *= GameController.Instance.PlayerInstances.Length;
-        var spawnTime = m_SpawnTime / GameController.Instance.PlayerInstances.Length;
+        m_EnemiesToSpawn *= GameController.Instance.TotalPlayersSpawned;
+        var spawnTime = m_SpawnTime / GameController.Instance.TotalPlayersSpawned;
         InvokeRepeating("Spawn", spawnTime, spawnTime);
-        //Destroy(GetComponent<BoxCollider>());
         GetComponent<BoxCollider>().enabled = false;
     }
 
@@ -62,7 +61,7 @@ public class EnemyManager : MonoBehaviour {
 
     private void DropRewards() {
         if (m_ItemRewards.Length == 0) return;
-        for (var i = 0; i < GameController.Instance.PlayerInstances.Length; i++) {
+        for (var i = 0; i < GameController.Instance.TotalPlayersSpawned; i++) {
             var itemIndex = Random.Range(0, m_ItemRewards.Length);
             var dropPointIndex = Random.Range(0, GameController.Instance.PlayerInstances.Length);
             var posToSpawn = GameController.Instance.PlayerInstances[dropPointIndex].transform.position;
