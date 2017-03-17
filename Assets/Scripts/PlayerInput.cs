@@ -180,8 +180,8 @@ public class PlayerInput : MonoBehaviour {
                 if (Input.GetKeyDown(m_InteractButton)) {
                     if (Interact != null) {
                         Interact.Interact();
-                        GetComponent<InteractablePopup>().Deactivate();
                     }
+                    GetComponent<InteractablePopup>().Deactivate();
                 }
             } break;
 
@@ -190,11 +190,12 @@ public class PlayerInput : MonoBehaviour {
                 m_GamePadState = GamePad.GetState(m_PlayerIndex);
                 XInputPlayerMove();
 
-                if (prevState.Buttons.A == ButtonState.Released && m_GamePadState.Buttons.A == ButtonState.Pressed) {
+                if (prevState.Buttons.A == ButtonState.Released && 
+                    m_GamePadState.Buttons.A == ButtonState.Pressed) {
                     if (Interact != null) {
                         Interact.Interact();
-                        GetComponent<InteractablePopup>().Deactivate();
                     }
+                    GetComponent<InteractablePopup>().Deactivate();
                 }
 
                 if (m_GamePadState.Buttons.Y == ButtonState.Pressed && 
