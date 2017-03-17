@@ -43,4 +43,9 @@ public class GameController : MonoBehaviour {
         PuzzlesTotal = GameObject.FindGameObjectsWithTag("PuzzleFinish").Length;
         PuzzleGUIController.Instance.UpdatePuzzleGUIText();
     }
+
+    public void ResetDefault() {
+        Destroy(m_instance);
+        m_instance = new GameController();
+    }
 }

@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour
     public PlayerIndex playerIndex;
     public InputMethod_t InputMethod;
 
-    private void Update() {
+    private void FixedUpdate() {
         switch (InputMethod) {
             case InputMethod_t.INPUT_MANAGER: {
                 //If Player presses Start button, the player gets spawned

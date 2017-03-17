@@ -32,6 +32,7 @@ public class FinishTriggerCheck : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<BoxCollider>() == block.GetComponent<BoxCollider>()) {
+            block.GetComponent<CubeChangeColor>().ChangeColor();
             PuzzleIsFinished = true;
             Destroy(other.GetComponent<Rigidbody>());
             GameController.Instance.PuzzlesSolved++;
