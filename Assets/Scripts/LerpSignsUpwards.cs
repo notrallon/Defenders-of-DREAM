@@ -30,6 +30,11 @@ public class LerpSignsUpwards : MonoBehaviour {
 	
 	void Update () {
 
+        if(Input.GetKeyDown(KeyCode.H))
+        {
+            activate = true;
+        }
+
         if (activate)
         {
             gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, m_TargetPos, Time.deltaTime * smooth);

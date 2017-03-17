@@ -22,6 +22,10 @@ public class ParticleSeekOptimized : MonoBehaviour
 
     void LateUpdate()
     {
+        // Return if there's no arrowsign in the scene to avoid errors
+        if (GameObject.Find("ArrowSign") == null) {
+            return;
+        }
 
         if (GameObject.Find("ArrowSign").GetComponentInParent<LerpSignsUpwards>().activate == true)
         {
