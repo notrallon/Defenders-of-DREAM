@@ -6,8 +6,11 @@ public class Attack_01 : MonoBehaviour {
 
     [SerializeField]
     private CapsuleCollider collider;
+
     float attackDelay = 2.0f;
     float attackDuration = 2.5f;
+    float damage = 25;
+
     // Use this for initialization
     void Start () {
 
@@ -38,6 +41,7 @@ public class Attack_01 : MonoBehaviour {
                 Destroy(this.gameObject);
             }
         }
+
 
 	}
 }
