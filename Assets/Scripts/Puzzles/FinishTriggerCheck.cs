@@ -31,12 +31,12 @@ public class FinishTriggerCheck : MonoBehaviour
     //When the puzzle cube is in the trigger the PuzzleIsFinished is switched to true 
     void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<BoxCollider>() == block.GetComponent<BoxCollider>()) {
+        //if (other.GetComponent<BoxCollider>() == block.GetComponent<BoxCollider>()) {
             PuzzleIsFinished = true;
             Destroy(other.GetComponent<Rigidbody>());
             GameController.Instance.PuzzlesSolved++;
             PuzzleGUIController.Instance.UpdatePuzzleGUIText();
-        }
+        //}
     }
     void Update()
     {
