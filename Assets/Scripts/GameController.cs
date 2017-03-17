@@ -13,6 +13,8 @@ public class GameController : MonoBehaviour {
     public int PuzzlesTotal { get; private set; }
     public int PuzzlesSolved;
 
+    public int TotalPlayersSpawned { get; private set; }
+
     // Return this instance.
     public static GameController Instance {
         get { return m_instance ?? (m_instance = new GameController()); }
@@ -30,6 +32,10 @@ public class GameController : MonoBehaviour {
 
         for (var i = 0; i < allPlayers.Length; i++) {
             PlayerInstances[i] = allPlayers[i].transform;
+        }
+
+        if (PlayerInstances.Length > TotalPlayersSpawned) {
+            TotalPlayersSpawned++;
         }
     }
 
