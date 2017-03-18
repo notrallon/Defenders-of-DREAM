@@ -10,7 +10,7 @@ public class ParticleSeekOptimized : MonoBehaviour
     new ParticleSystem particleSystem;
     ParticleSystem.Particle[] particles;
 
-    GameObject[] m_ArrowSigns;
+    GameObject m_ArrowSigns;
     ParticleSystem.MainModule particleSystemMainModule;
 
     void Start()
@@ -18,13 +18,13 @@ public class ParticleSeekOptimized : MonoBehaviour
         particleSystem = GetComponent<ParticleSystem>();
         particleSystemMainModule = particleSystem.main;
 
-        m_ArrowSigns = GameObject.FindGameObjectsWithTag("ArrowSign");
+        m_ArrowSigns = GameObject.Find("ArrowSign");
     }
 
     void LateUpdate()
     {
         // Return if there's no arrowsign in the scene to avoid errors
-        if (m_ArrowSigns == null || m_ArrowSigns.Length == 0) {
+        if (m_ArrowSigns == null) {
             return;
         }
 

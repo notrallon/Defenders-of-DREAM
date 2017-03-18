@@ -33,8 +33,9 @@ public class FinishTriggerCheck : MonoBehaviour
     {
         if (other.GetComponent<BoxCollider>() == block.GetComponent<BoxCollider>()) {
             block.GetComponent<CubeChangeColor>().ChangeColor();
+            block.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             PuzzleIsFinished = true;
-            Destroy(other.GetComponent<Rigidbody>());
+            //Destroy(other.GetComponent<Rigidbody>());
             GameController.Instance.PuzzlesSolved++;
             PuzzleGUIController.Instance.UpdatePuzzleGUIText();
             GetComponent<BoxCollider>().enabled = false;
