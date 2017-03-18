@@ -23,7 +23,7 @@ public class FinishTriggerCheck : MonoBehaviour
     private bool PuzzleIsFinished;
     private Vector3 m_TargetPos;
 
-    private float m_OpenDoorTime;
+    private float m_OpenDoorTime = 5;
     private float m_CurrentOpenDoorTime;
 
     private Vector3 m_DoorStartPos;
@@ -50,7 +50,8 @@ public class FinishTriggerCheck : MonoBehaviour
             block.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             Destroy(block.GetComponent<NavMeshAgent>());
             block.AddComponent<NavMeshObstacle>();
-            PuzzleIsFinished = true;
+            //PuzzleIsFinished = true;
+            InvokeRepeating("OpenDoor", 0, 0.01f);
             //Destroy(other.GetComponent<Rigidbody>());
             GameController.Instance.PuzzlesSolved++;
             PuzzleGUIController.Instance.UpdatePuzzleGUIText();
@@ -64,6 +65,10 @@ public class FinishTriggerCheck : MonoBehaviour
         var t = m_CurrentOpenDoorTime / m_OpenDoorTime;
 
         wall.transform.position = Vector3.Lerp(m_DoorStartPos, m_DoorTargetPos, t);
+
+        if (m_CurrentOpenDoorTime > m_OpenDoorTime) {
+            CancelInvoke("OpenDoor");
+        }
     }
 //
 //    void Update()
