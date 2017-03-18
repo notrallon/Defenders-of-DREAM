@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3034b990-8fff-4942-b2df-4e1ca4748e34" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Scripts/Puzzles/FinishTriggerCheck.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Puzzles/FinishTriggerCheck.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Scripts/Menu/PauseGame.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Menu/PauseGame.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assets/Scripts/Puzzles/CubeChangeColor.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/Puzzles/CubeChangeColor.cs" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -45,25 +46,47 @@
       <file leaf-file-name="CubeChangeColor.cs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Puzzles/CubeChangeColor.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="448">
+              <caret line="32" column="43" lean-forward="false" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
               <folding>
-                <marker date="1489786797194" expanded="true" signature="0:156" ph="/* This script makes the PuzzleCube glow by changing it's material ... */" />
-                <marker date="1489786797194" expanded="true" signature="222:1194" ph="{...}" />
-                <marker date="1489786797194" expanded="true" signature="381:424" ph="{...}" />
-                <marker date="1489786797194" expanded="true" signature="524:894" ph="{...}" />
-                <marker date="1489786797194" expanded="true" signature="539:888" ph="/* if (col.gameObject.CompareTag(&quot;PuzzleFinish&quot;)) ... */" />
-                <marker date="1489786797194" expanded="true" signature="926:1192" ph="{...}" />
+                <marker date="1489841579218" expanded="true" signature="0:156" ph="/* This script makes the PuzzleCube glow by changing it's material ... */" />
+                <marker date="1489841579218" expanded="true" signature="223:1205" ph="{...}" />
+                <marker date="1489841579218" expanded="true" signature="430:596" ph="{...}" />
+                <marker date="1489841579218" expanded="true" signature="628:812" ph="{...}" />
+                <marker date="1489841579218" expanded="true" signature="845:1203" ph="{...}" />
+                <marker date="1489841579218" expanded="true" signature="1145:1197" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FinishTriggerCheck.cs" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PauseGame.cs" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Assets/Scripts/Menu/PauseGame.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="742">
+              <caret line="53" column="27" lean-forward="false" selection-start-line="53" selection-start-column="27" selection-end-line="53" selection-end-column="27" />
+              <folding>
+                <marker date="1489842162315" expanded="true" signature="6:113" ph="..." />
+                <marker date="1489842162315" expanded="true" signature="154:1388" ph="{...}" />
+                <marker date="1489842162315" expanded="true" signature="211:306" ph="{...}" />
+                <marker date="1489842162315" expanded="true" signature="326:549" ph="{...}" />
+                <marker date="1489842162315" expanded="true" signature="387:439" ph="{...}" />
+                <marker date="1489842162315" expanded="true" signature="486:538" ph="{...}" />
+                <marker date="1489842162315" expanded="true" signature="573:910" ph="{...}" />
+                <marker date="1489842162315" expanded="true" signature="640:774" ph="{...}" />
+                <marker date="1489842162315" expanded="true" signature="787:904" ph="{...}" />
+                <marker date="1489842162315" expanded="true" signature="950:1171" ph="{...}" />
+                <marker date="1489842162315" expanded="true" signature="1204:1386" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FinishTriggerCheck.cs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Puzzles/FinishTriggerCheck.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="694">
-              <caret line="69" column="34" lean-forward="false" selection-start-line="69" selection-start-column="34" selection-end-line="69" selection-end-column="34" />
+            <state relative-caret-position="204">
+              <caret line="34" column="46" lean-forward="false" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
               <folding>
                 <marker date="1489840158651" expanded="true" signature="0:206" ph="/* This script checks if the block GameObject has been pushed into the trigger.  ... */" />
                 <marker date="1489840158651" expanded="true" signature="214:248" ph="..." />
@@ -92,6 +115,8 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Puzzles/ButtonChangeColor.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Puzzles/ActivatePuzzle.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Puzzles/FinishTriggerCheck.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Puzzles/CubeChangeColor.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Menu/PauseGame.cs" />
       </list>
     </option>
   </component>
@@ -190,12 +215,12 @@
       <updated>1489831114109</updated>
       <workItem from="1489831115862" duration="1662000" />
       <workItem from="1489832796118" duration="5132000" />
-      <workItem from="1489840060607" duration="99000" />
+      <workItem from="1489840060607" duration="2035000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6893000" />
+    <option name="totallyTimeSpent" value="8829000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -273,12 +298,12 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1489786797194" expanded="true" signature="0:156" ph="/* This script makes the PuzzleCube glow by changing it's material ... */" />
-            <marker date="1489786797194" expanded="true" signature="222:1194" ph="{...}" />
-            <marker date="1489786797194" expanded="true" signature="381:424" ph="{...}" />
-            <marker date="1489786797194" expanded="true" signature="524:894" ph="{...}" />
-            <marker date="1489786797194" expanded="true" signature="539:888" ph="/* if (col.gameObject.CompareTag(&quot;PuzzleFinish&quot;)) ... */" />
-            <marker date="1489786797194" expanded="true" signature="926:1192" ph="{...}" />
+            <marker date="1489841579218" expanded="true" signature="0:156" ph="/* This script makes the PuzzleCube glow by changing it's material ... */" />
+            <marker date="1489841579218" expanded="true" signature="223:1205" ph="{...}" />
+            <marker date="1489841579218" expanded="true" signature="430:596" ph="{...}" />
+            <marker date="1489841579218" expanded="true" signature="628:812" ph="{...}" />
+            <marker date="1489841579218" expanded="true" signature="845:1203" ph="{...}" />
+            <marker date="1489841579218" expanded="true" signature="1145:1197" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -357,21 +382,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Puzzles/CubeChangeColor.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1489786797194" expanded="true" signature="0:156" ph="/* This script makes the PuzzleCube glow by changing it's material ... */" />
-            <marker date="1489786797194" expanded="true" signature="222:1194" ph="{...}" />
-            <marker date="1489786797194" expanded="true" signature="381:424" ph="{...}" />
-            <marker date="1489786797194" expanded="true" signature="524:894" ph="{...}" />
-            <marker date="1489786797194" expanded="true" signature="539:888" ph="/* if (col.gameObject.CompareTag(&quot;PuzzleFinish&quot;)) ... */" />
-            <marker date="1489786797194" expanded="true" signature="926:1192" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Puzzles/ActivatePuzzle.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1554">
@@ -400,8 +410,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Puzzles/FinishTriggerCheck.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="694">
-          <caret line="69" column="34" lean-forward="false" selection-start-line="69" selection-start-column="34" selection-end-line="69" selection-end-column="34" />
+        <state relative-caret-position="204">
+          <caret line="34" column="46" lean-forward="false" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
           <folding>
             <marker date="1489840158651" expanded="true" signature="0:206" ph="/* This script checks if the block GameObject has been pushed into the trigger.  ... */" />
             <marker date="1489840158651" expanded="true" signature="214:248" ph="..." />
@@ -414,6 +424,41 @@
             <marker date="1489840158651" expanded="true" signature="2200:2501" ph="{...}" />
             <marker date="1489840158651" expanded="true" signature="2446:2495" ph="{...}" />
             <marker date="1489840158651" expanded="true" signature="2502:2912" ph="/* void Update() ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Puzzles/CubeChangeColor.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="32" column="43" lean-forward="false" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
+          <folding>
+            <marker date="1489841579218" expanded="true" signature="0:156" ph="/* This script makes the PuzzleCube glow by changing it's material ... */" />
+            <marker date="1489841579218" expanded="true" signature="223:1205" ph="{...}" />
+            <marker date="1489841579218" expanded="true" signature="430:596" ph="{...}" />
+            <marker date="1489841579218" expanded="true" signature="628:812" ph="{...}" />
+            <marker date="1489841579218" expanded="true" signature="845:1203" ph="{...}" />
+            <marker date="1489841579218" expanded="true" signature="1145:1197" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Assets/Scripts/Menu/PauseGame.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="742">
+          <caret line="53" column="27" lean-forward="false" selection-start-line="53" selection-start-column="27" selection-end-line="53" selection-end-column="27" />
+          <folding>
+            <marker date="1489842162315" expanded="true" signature="6:113" ph="..." />
+            <marker date="1489842162315" expanded="true" signature="154:1388" ph="{...}" />
+            <marker date="1489842162315" expanded="true" signature="211:306" ph="{...}" />
+            <marker date="1489842162315" expanded="true" signature="326:549" ph="{...}" />
+            <marker date="1489842162315" expanded="true" signature="387:439" ph="{...}" />
+            <marker date="1489842162315" expanded="true" signature="486:538" ph="{...}" />
+            <marker date="1489842162315" expanded="true" signature="573:910" ph="{...}" />
+            <marker date="1489842162315" expanded="true" signature="640:774" ph="{...}" />
+            <marker date="1489842162315" expanded="true" signature="787:904" ph="{...}" />
+            <marker date="1489842162315" expanded="true" signature="950:1171" ph="{...}" />
+            <marker date="1489842162315" expanded="true" signature="1204:1386" ph="{...}" />
           </folding>
         </state>
       </provider>

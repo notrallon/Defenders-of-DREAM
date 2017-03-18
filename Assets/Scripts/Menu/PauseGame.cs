@@ -51,5 +51,6 @@ public class PauseGame : MonoBehaviour {
 
         // Load current scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 1;
     }
 }
