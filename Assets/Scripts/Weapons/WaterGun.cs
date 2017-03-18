@@ -15,6 +15,8 @@ public class WaterGun : BaseWeapon, IWeapon {
     private Color m_Color;
     private Color m_EmissionColor;
 
+    private float m_NextFire;
+
     // Use this for initialization
     private void Start () {
         WeaponPickupSlug = "WaterGun_Pickup";
@@ -56,12 +58,18 @@ public class WaterGun : BaseWeapon, IWeapon {
 
     //Start emitting particles and play sound effect
     public new void Attack(Vector3 dir) {
+        if (!(m_NextFire < Time.time)) {
+            return;
+        }
+
         particles.Emit(1);
 
         if (!isPlaying) {
             audioSource.Play();
             isPlaying = true;
         }
+
+        m_NextFire = Time.time + FireRate;
 
     }
 
