@@ -5,6 +5,7 @@
 /// </summary>
 
 using UnityEngine;
+using UnityEngine.AI;
 
 public class FinishTriggerCheck : MonoBehaviour
 {
@@ -22,18 +23,33 @@ public class FinishTriggerCheck : MonoBehaviour
     private bool PuzzleIsFinished;
     private Vector3 m_TargetPos;
 
+    private float m_OpenDoorTime;
+    private float m_CurrentOpenDoorTime;
+
+    private Vector3 m_DoorStartPos;
+    private Vector3 m_DoorTargetPos;
+
     void Awake()
     {
         PuzzleIsFinished = false;
         m_TargetPos = wall.transform.position;
         m_TargetPos.y -= 2;
     }
+
+    private void Start() {
+        m_DoorStartPos = wall.transform.position;
+        m_DoorTargetPos = m_DoorStartPos;
+        m_DoorTargetPos.y -= 2;
+    }
+
     //When the puzzle cube is in the trigger the PuzzleIsFinished is switched to true 
     void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<BoxCollider>() == block.GetComponent<BoxCollider>()) {
             block.GetComponent<CubeChangeColor>().ChangeColor();
             block.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            Destroy(block.GetComponent<NavMeshAgent>());
+            block.AddComponent<NavMeshObstacle>();
             PuzzleIsFinished = true;
             //Destroy(other.GetComponent<Rigidbody>());
             GameController.Instance.PuzzlesSolved++;
@@ -41,14 +57,23 @@ public class FinishTriggerCheck : MonoBehaviour
             GetComponent<BoxCollider>().enabled = false;
         }
     }
-    void Update()
-    {
-        if (PuzzleIsFinished == true)
-        {
-            //Move the PuzzleLid GameObject downwards
-            //(the directions are for some reason scued and needs X to be -15 and Z to be 60 to let the Y axis move straight up/down)
-            wall.transform.position = Vector3.Lerp(wall.transform.position, m_TargetPos, Time.deltaTime * speed);
-        }
+
+    private void OpenDoor() {
+        m_CurrentOpenDoorTime += Time.deltaTime;
+
+        var t = m_CurrentOpenDoorTime / m_OpenDoorTime;
+
+        wall.transform.position = Vector3.Lerp(m_DoorStartPos, m_DoorTargetPos, t);
     }
+//
+//    void Update()
+//    {
+//        if (PuzzleIsFinished == true)
+//        {
+//            //Move the PuzzleLid GameObject downwards
+//            //(the directions are for some reason scued and needs X to be -15 and Z to be 60 to let the Y axis move straight up/down)
+//            wall.transform.position = Vector3.Lerp(wall.transform.position, m_TargetPos, Time.deltaTime * speed);
+//        }
+//    }
 }
 

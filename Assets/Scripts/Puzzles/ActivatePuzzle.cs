@@ -110,8 +110,6 @@ public class ActivatePuzzle : MonoBehaviour
     }*/
 
     public void Activate() {
-        Debug.Log("Activate");
-
         //Get the material on the GameObject
         Renderer rend = GetComponent<Renderer>();
         rend.material.shader = Shader.Find("Standard");
