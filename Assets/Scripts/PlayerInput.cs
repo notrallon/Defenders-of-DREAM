@@ -180,6 +180,7 @@ public class PlayerInput : MonoBehaviour {
                 if (Input.GetKeyDown(m_InteractButton)) {
                     if (Interact != null) {
                         Interact.Interact();
+                        Interact = null;
                     }
                     GetComponent<InteractablePopup>().Deactivate();
                 }
@@ -194,6 +195,7 @@ public class PlayerInput : MonoBehaviour {
                     m_GamePadState.Buttons.A == ButtonState.Pressed) {
                     if (Interact != null) {
                         Interact.Interact();
+                        Interact = null;
                     }
                     GetComponent<InteractablePopup>().Deactivate();
                 }

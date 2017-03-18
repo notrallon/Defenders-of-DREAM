@@ -9,8 +9,8 @@ using UnityEngine;
 public class ButtonChangeColor : Interactable
 {
     public override void Interact() {
+        Destroy(GetComponent<BoxCollider>());
         GetComponentInParent<ActivatePuzzle>().Activate();
-
         //Get the material on the GameObject
         Renderer rend = GetComponent<Renderer>();
         //rend.sharedMaterial = materials[0];
