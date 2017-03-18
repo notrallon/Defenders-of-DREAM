@@ -4,7 +4,9 @@
 /// that's hidden under the PuzzleLid GameObject.
 /// </summary>
 
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ActivatePuzzle : MonoBehaviour
 {
@@ -41,6 +43,21 @@ public class ActivatePuzzle : MonoBehaviour
     public AudioClip rewardSound;
 
     private Vector3 m_TargetPos;
+    private Vector3 m_StartPos;
+
+    [SerializeField][Range(1, 15)]
+    private float m_OpeningTime = 10;
+    private float m_CurrentOpeningTime;
+
+    public enum OpenMethods_t {
+        SMOOTHSTEP,
+        SMOOTHERSTEP,
+        EASE_OUT,
+        EASE_IN,
+        EXPONENTIAL
+    }
+
+    [SerializeField] private OpenMethods_t m_OpeningMethod = OpenMethods_t.SMOOTHERSTEP;
 
     //public GameObject bubblePart;
     bool bubbles;
@@ -49,8 +66,11 @@ public class ActivatePuzzle : MonoBehaviour
     void Awake()
     {
         buttonPressed = false;
-        m_TargetPos = PuzzleLid.transform.position;
-        m_TargetPos.y += 8;
+
+        // Set up the lids start end target positions
+        m_StartPos = PuzzleLid.transform.position;
+        m_TargetPos = m_StartPos;
+        m_TargetPos.y += 10;
 
     }
 
@@ -59,7 +79,7 @@ public class ActivatePuzzle : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    //Checks if someone enteres the triggerbox for the button
+    /*//Checks if someone enteres the triggerbox for the button
     void OnTriggerStay(Collider col)
     {
         if (col.gameObject.CompareTag("Player"))
@@ -87,26 +107,62 @@ public class ActivatePuzzle : MonoBehaviour
                 }
             }
         }
+    }*/
+
+    public void Activate() {
+        Debug.Log("Activate");
+
+        //Get the material on the GameObject
+        Renderer rend = GetComponent<Renderer>();
+        rend.material.shader = Shader.Find("Standard");
+        rend.material.SetColor("_EmissionColor", Color.cyan);
+
+        if (SpawnEnemies) {
+            m_EnemiesToSpawn *= GameController.Instance.TotalPlayersSpawned;
+            Spawn();
+            SpawnEnemies = false;
+        }
+
+        Instantiate(Resources.Load("Particle Systems/BubbleBurstEffect"), GetComponentInParent<Transform>().position, Quaternion.Euler(-90, 0 ,0));
+        InvokeRepeating("OpenLid", 0, 0.01f);
     }
 
-    void Update()
-    {
-        //When someone has pressed the button
-        if (buttonPressed == true)
-        {
-            //Move the PuzzleLid GameObject upwards
-            PuzzleLid.transform.position = Vector3.Lerp(PuzzleLid.transform.position, m_TargetPos, Time.deltaTime * smooth);
-            //Get the material on the GameObject
-            Renderer rend = GetComponent<Renderer>();
-            rend.material.shader = Shader.Find("Standard");
-            rend.material.SetColor("_EmissionColor", Color.cyan);
+    private void OpenLid() {
+        m_CurrentOpeningTime += Time.deltaTime;
 
-            if (!bubbles)
-            {
-                Instantiate(Resources.Load("Particle Systems/BubbleBurstEffect"), GetComponentInParent<Transform>().position, Quaternion.Euler(-90, 0 ,0));
-                bubbles = true;
-            } 
+        var t = m_CurrentOpeningTime / m_OpeningTime;
 
+        switch (m_OpeningMethod) {
+            case OpenMethods_t.SMOOTHSTEP: {
+                // Normal smoothestep
+                t = t * t * (3f - 2f * t);
+            } break;
+
+            case OpenMethods_t.SMOOTHERSTEP: {
+                t = t * t * t * (t * (6f * t * 15f) + 10f);
+            } break;
+
+            case OpenMethods_t.EASE_OUT: {
+                t = Mathf.Sin(t * Mathf.PI * 0.5f);
+            } break;
+
+            case OpenMethods_t.EASE_IN: {
+                t = 1f - Mathf.Cos(t * Mathf.PI * 0.5f);
+            } break;
+
+            case OpenMethods_t.EXPONENTIAL: {
+                t = t * t;
+            } break;
+
+            default: {
+            } break;
+        }
+
+        PuzzleLid.transform.position = Vector3.Lerp(m_StartPos, m_TargetPos, t);
+
+        if (m_CurrentOpeningTime > m_OpeningTime) {
+            Destroy(PuzzleLid);
+            CancelInvoke("OpenLid");
         }
     }
 
@@ -139,7 +195,7 @@ public class ActivatePuzzle : MonoBehaviour
             var posToSpawn = m_SpawnPoints[dropPointIndex].transform.position;
             posToSpawn.y += 2;
             Instantiate(m_ItemRewards[itemIndex], posToSpawn, Random.rotation);
-            GameObject chime = Instantiate(rewardParticles, posToSpawn, rewardParticles.transform.rotation) as GameObject; // Instantiate the particle splash effect
+            Instantiate(rewardParticles, posToSpawn, rewardParticles.transform.rotation); // Instantiate the particle splash effect
         }
 
         if (audioSource != null) {
