@@ -29,6 +29,9 @@ public class FinishTriggerCheck : MonoBehaviour
     private Vector3 m_DoorStartPos;
     private Vector3 m_DoorTargetPos;
 
+    private AudioSource m_AudioSource;
+    private AudioClip m_AudioClip;
+
     void Awake()
     {
         PuzzleIsFinished = false;
@@ -40,6 +43,9 @@ public class FinishTriggerCheck : MonoBehaviour
         m_DoorStartPos = wall.transform.position;
         m_DoorTargetPos = m_DoorStartPos;
         m_DoorTargetPos.y -= 2;
+
+        m_AudioClip = Resources.Load("Sound/SoundEffects/PuzzleFinished_02") as AudioClip;
+        m_AudioSource = GetComponent<AudioSource>();
     }
 
     //When the puzzle cube is in the trigger the PuzzleIsFinished is switched to true 
@@ -56,6 +62,7 @@ public class FinishTriggerCheck : MonoBehaviour
             GameController.Instance.PuzzlesSolved++;
             PuzzleGUIController.Instance.UpdatePuzzleGUIText();
             GetComponent<BoxCollider>().enabled = false;
+            m_AudioSource.PlayOneShot(m_AudioClip);
         }
     }
 

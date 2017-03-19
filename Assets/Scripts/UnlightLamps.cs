@@ -14,15 +14,11 @@ public class UnlightLamps : MonoBehaviour {
 
     private Color YellowColor;
     private Color YellowEmission;
-    private Color DefaultColor;
-    private Color DefaultEmission;
 
     // Use this for initialization
     private void Start () {
         TriggeredLightObjects = GameObject.FindGameObjectsWithTag("SmallLights");
 
-        DefaultColor = GameObject.FindGameObjectWithTag("SmallLamps").GetComponent<Renderer>().materials[2].color;
-        DefaultEmission = GameObject.FindGameObjectWithTag("SmallLamps").GetComponent<Renderer>().materials[2].GetColor("_EmissionColor");
         YellowColor = YellowLight.color;
         YellowEmission = YellowLight.GetColor("_EmissionColor");
 

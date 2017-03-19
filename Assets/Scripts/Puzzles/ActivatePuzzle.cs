@@ -49,6 +49,9 @@ public class ActivatePuzzle : MonoBehaviour
     private float m_OpeningTime = 10;
     private float m_CurrentOpeningTime;
 
+    private AudioSource m_AudioSource;
+    private AudioClip m_AudioClip;
+
     public enum OpenMethods_t {
         SMOOTHSTEP,
         SMOOTHERSTEP,
@@ -76,7 +79,10 @@ public class ActivatePuzzle : MonoBehaviour
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        //audioSource = GetComponent<AudioSource>();
+
+        m_AudioSource = GetComponent<AudioSource>();
+        m_AudioClip = Resources.Load("Sound/SoundEffects/OpenPuzzleLid_00") as AudioClip;
     }
 
     public void Activate() {
@@ -92,6 +98,7 @@ public class ActivatePuzzle : MonoBehaviour
             SpawnEnemies = false;
         }
 
+        m_AudioSource.PlayOneShot(m_AudioClip);
         Instantiate(Resources.Load("Particle Systems/BubbleBurstEffect"), GetComponentInParent<Transform>().position, Quaternion.Euler(-90, 0 ,0));
         InvokeRepeating("OpenLid", 0, 0.01f);
     }
