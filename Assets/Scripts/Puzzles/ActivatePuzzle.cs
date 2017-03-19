@@ -60,7 +60,7 @@ public class ActivatePuzzle : MonoBehaviour
     [SerializeField] private OpenMethods_t m_OpeningMethod = OpenMethods_t.SMOOTHERSTEP;
 
     //public GameObject bubblePart;
-    bool bubbles;
+    //private bool m_Bubbles;
 
     //Initialize the button as having not been pressed
     void Awake()
@@ -79,36 +79,6 @@ public class ActivatePuzzle : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    /*//Checks if someone enteres the triggerbox for the button
-    void OnTriggerStay(Collider col)
-    {
-        if (col.gameObject.CompareTag("Player"))
-        {
-            //If someone presses A on any controller or E on keyboard the button is set to having been pressed (true)
-            if (Input.GetKey(KeyCode.JoystickButton0) || (Input.GetKey(KeyCode.Return)))
-            {
-                buttonPressed = true;
-                Destroy(PuzzleLid, 5f);
-                if (SpawnEnemies == true)
-                {
-                    if (!col.CompareTag("Player")) return;
-                    m_EnemiesToSpawn *= GameController.Instance.PlayerInstances.Length;
-                    var spawnTime = m_SpawnTime / GameController.Instance.PlayerInstances.Length;
-                    InvokeRepeating("Spawn", spawnTime, spawnTime);
-                    GetComponent<BoxCollider>().enabled = false;
-                    SpawnEnemies = false;
-                }
-                if (!col.CompareTag("Player")) return;
-                m_PlayersInSpawn--;
-
-                if (m_PlayersInSpawn < 0)
-                {
-                    m_PlayersInSpawn = 0;
-                }
-            }
-        }
-    }*/
-
     public void Activate() {
         //Get the material on the GameObject
         Renderer rend = GetComponent<Renderer>();
@@ -117,7 +87,8 @@ public class ActivatePuzzle : MonoBehaviour
 
         if (SpawnEnemies) {
             m_EnemiesToSpawn *= GameController.Instance.TotalPlayersSpawned;
-            Spawn();
+            var spawnTime = m_SpawnTime / GameController.Instance.PlayerInstances.Length;
+            InvokeRepeating("Spawn", spawnTime, spawnTime);
             SpawnEnemies = false;
         }
 
@@ -158,10 +129,12 @@ public class ActivatePuzzle : MonoBehaviour
 
         PuzzleLid.transform.position = Vector3.Lerp(m_StartPos, m_TargetPos, t);
 
-        if (m_CurrentOpeningTime > m_OpeningTime) {
-            Destroy(PuzzleLid);
-            CancelInvoke("OpenLid");
+        if (!(m_CurrentOpeningTime > m_OpeningTime)) {
+            return;
         }
+
+        Destroy(PuzzleLid);
+        CancelInvoke("OpenLid");
     }
 
     private void Spawn()
@@ -172,7 +145,7 @@ public class ActivatePuzzle : MonoBehaviour
             {
                 DropRewards();
             }
-            CancelInvoke();
+            CancelInvoke("Spawn");
             return;
         }
         var spawnPointIndex = Random.Range(0, m_SpawnPoints.Length);
@@ -185,7 +158,10 @@ public class ActivatePuzzle : MonoBehaviour
 
     private void DropRewards()
     {
-        if (m_ItemRewards.Length == 0) return;
+        if (m_ItemRewards.Length == 0) {
+            return;
+        }
+
         for (var i = 0; i < GameController.Instance.PlayerInstances.Length; i++)
         {
             var itemIndex = Random.Range(0, m_ItemRewards.Length);
