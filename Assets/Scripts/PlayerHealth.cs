@@ -69,16 +69,21 @@ public class PlayerHealth : MonoBehaviour {
 
         audio.pitch = Random.Range(0.9f, 1.2f);
         audio.PlayOneShot(takeDamage, 2f);
-        
-        if (PlayerHP <= 0)
-        {
-            GetComponent<PlayerInput>().SetVibration(0);
-            gameObject.SetActive(false); // deactivate the player object if health reaches 0
-            GameController.Instance.UpdatePlayers();
-        }
 
         flashCounter = flashLength; // count down timer is set
         rend.material.SetColor("_Color", Color.red); // set material color to red
+
+        if (PlayerHP <= 0) {
+            PlayerHP = 0;
+            GetComponent<PlayerInput>().SetVibration(0);
+            flashCounter = 0f;
+            GetComponent<Animator>().SetTrigger("Die"); // Play death animation
+            gameObject.tag = "Untagged";
+            GetComponent<PlayerInput>().enabled = false;
+            rend.material.SetColor("_Color", storedColor); // reset the color to original
+            //gameObject.SetActive(false); // deactivate the player object if health reaches 0
+            GameController.Instance.UpdatePlayers();
+        }
     }
 
     void DeathTrigger ()
