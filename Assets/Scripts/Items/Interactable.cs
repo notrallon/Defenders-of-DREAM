@@ -14,7 +14,7 @@ public class Interactable : MonoBehaviour {
     protected GameObject Player;
 
 	// Use this for initialization
-    private void Start () {
+    protected virtual void Start () {
 		m_Rend = GetComponent<Renderer>();
 
         // Set up an array of colours that is as big as the amount of materials we got
