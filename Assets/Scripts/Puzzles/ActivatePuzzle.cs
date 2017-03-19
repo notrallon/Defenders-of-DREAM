@@ -154,8 +154,6 @@ public class ActivatePuzzle : MonoBehaviour
         m_EnemiesSpawned++;
     }
 
-
-
     private void DropRewards()
     {
         if (m_ItemRewards.Length == 0) {
