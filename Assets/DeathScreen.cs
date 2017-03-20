@@ -18,17 +18,17 @@ public class DeathScreen : MonoBehaviour {
         Button quit = quitButton.GetComponent<Button>();
         quit.onClick.AddListener(OnClickQuit);
 
-
-
 	}
 	
 	void OnClickRestart()
     {
+        GameController.Instance.ResetDefault();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void OnClickQuit()
     {
-        SceneManager.LoadScene(0);
+        GameController.Instance.ResetDefault();
+        SceneManager.LoadScene(0); 
     }
 }
