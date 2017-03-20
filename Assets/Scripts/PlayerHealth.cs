@@ -75,6 +75,7 @@ public class PlayerHealth : MonoBehaviour {
 
         if (PlayerHP <= 0) {
             PlayerHP = 0;
+            GetComponent<PlayerWeaponController>().WeaponThrow();
             GetComponent<PlayerInput>().SetVibration(0);
             flashCounter = 0f;
             GetComponent<Animator>().SetTrigger("Die"); // Play death animation
