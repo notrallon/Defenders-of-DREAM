@@ -95,13 +95,15 @@ public class PauseGame : MonoBehaviour {
         }
         m_CurrentSlideTime = 0f;
         //StopCoroutine(PauseSlideIn());
+
+        StartCoroutine(PauseMoveAround());
     }
 
     private IEnumerator PauseSlideOut(float startPos, float targetPos, float time) {
         while (m_CurrentSlideTime < SLIDE_TIME) {
             m_CurrentSlideTime += Time.unscaledDeltaTime;
             var t = m_CurrentSlideTime / SLIDE_TIME;
-            
+
             t = 1f - Mathf.Cos(t * Mathf.PI * 0.5f);
             var pos = PauseMenu.GetComponent<RectTransform>().anchoredPosition;
 
@@ -120,5 +122,29 @@ public class PauseGame : MonoBehaviour {
         Time.timeScale = 1f;
         //StopCoroutine(PauseSlideOut());
 
+    }
+
+    private IEnumerator PauseMoveAround() {
+        var startMovePos = PauseMenu.GetComponent<RectTransform>().anchoredPosition;
+
+        while (true) {
+            m_CurrentSlideTime += Time.unscaledDeltaTime;
+
+            var deltaX = m_CurrentSlideTime / 1f;
+            var deltaY = m_CurrentSlideTime / 2f;
+
+            var distX = 10f * Mathf.Sin(deltaX);
+            var distY = 10f * Mathf.Sin(deltaY);
+
+            var newPosX = startMovePos + Vector2.right * distX;
+            var newPosY = startMovePos + Vector2.up * distY;
+            var newPos = new Vector2(newPosX.x, newPosY.y);
+
+            PauseMenu.GetComponent<RectTransform>().anchoredPosition = newPos;
+
+            yield return new WaitForSecondsRealtime(0.01f);
+        }
+
+        yield return null;
     }
 }
