@@ -92,7 +92,7 @@ public class LampInteraction : Interactable {
         // Fade in the small lights
         foreach (var tLight in TriggeredSmallLightObjects) {
             tLight.GetComponent<Light>().intensity = Mathf.Lerp(0, SMALL_LIGHT_TARGET_INTENSITY, percentage);
-            tLight.GetComponent<Light>().range = Mathf.Lerp(0, 1.57f, percentage);
+            tLight.GetComponent<Light>().range = Mathf.Lerp(0, 10f, percentage);
         }
 
         // Fade in all the small lamps colors
