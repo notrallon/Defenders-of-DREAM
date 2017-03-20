@@ -10,6 +10,7 @@ public class ParticleSeekOptimized : MonoBehaviour
     new ParticleSystem particleSystem;
     ParticleSystem.Particle[] particles;
 
+    GameObject m_ArrowSigns;
     ParticleSystem.MainModule particleSystemMainModule;
 
     void Start()
@@ -17,17 +18,18 @@ public class ParticleSeekOptimized : MonoBehaviour
         particleSystem = GetComponent<ParticleSystem>();
         particleSystemMainModule = particleSystem.main;
 
-        
+        // Cache the arrowsign object so that we don't have to seek for it every frame
+        m_ArrowSigns = GameObject.Find("ArrowSign");
     }
 
     void LateUpdate()
     {
         // Return if there's no arrowsign in the scene to avoid errors
-        if (GameObject.Find("ArrowSign") == null) {
+        if (m_ArrowSigns == null) {
             return;
         }
 
-        if (GameObject.Find("ArrowSign").GetComponentInParent<LerpSignsUpwards>().activate == true)
+        if (m_ArrowSigns.GetComponentInParent<LerpSignsUpwards>().activate == true)
         {
             //ParticleSystem.Play();
             FindTarget();
@@ -83,6 +85,10 @@ public class ParticleSeekOptimized : MonoBehaviour
         }
 
         particleSystem.SetParticles(particles, particles.Length);
+    }
+
+    private void CreateNewParticles() {
+
     }
 
 }

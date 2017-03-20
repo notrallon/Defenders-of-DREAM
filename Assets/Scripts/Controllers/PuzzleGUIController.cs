@@ -12,6 +12,8 @@ public class PuzzleGUIController : MonoBehaviour {
     public static string PuzzleGUIString;
     private static Text PuzzleGUIText;
 
+    private GameObject m_ObjectivesDone;
+
     // Update is called once per frame
 	void Update () {
 		
@@ -26,5 +28,16 @@ public class PuzzleGUIController : MonoBehaviour {
         }
 
         PuzzleGUIText.text = PuzzleGUIString;
+
+        if (m_ObjectivesDone == null) {
+            m_ObjectivesDone = GameObject.FindGameObjectWithTag("ObjectivesDone");
+        }
+
+        if (GameController.Instance.PuzzlesSolved != GameController.Instance.PuzzlesTotal ||
+            m_ObjectivesDone.GetComponent<LerpSignsUpwards>().activate) {
+            return;
+        }
+        m_ObjectivesDone.GetComponent<LerpSignsUpwards>().ActivateSigns();
+        m_ObjectivesDone.GetComponent<LerpSignsUpwards>().activate = true;
     }
 }

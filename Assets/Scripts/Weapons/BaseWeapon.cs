@@ -43,7 +43,9 @@ public class BaseWeapon : MonoBehaviour, IWeapon, IProjectileWeapon {
     }
 
     public void Attack(Vector3 dir) {
-        if (!(m_NextFire < Time.time)) return;
+        if (!(m_NextFire < Time.time)) {
+            return;
+        }
 
         //Play shootSound
         float vol = Random.Range(volLowRange, volHighRange);

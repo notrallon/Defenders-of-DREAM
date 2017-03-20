@@ -180,6 +180,7 @@ public class PlayerInput : MonoBehaviour {
                 if (Input.GetKeyDown(m_InteractButton)) {
                     if (Interact != null) {
                         Interact.Interact();
+                        Interact = null;
                     }
                     GetComponent<InteractablePopup>().Deactivate();
                 }
@@ -194,6 +195,7 @@ public class PlayerInput : MonoBehaviour {
                     m_GamePadState.Buttons.A == ButtonState.Pressed) {
                     if (Interact != null) {
                         Interact.Interact();
+                        Interact = null;
                     }
                     GetComponent<InteractablePopup>().Deactivate();
                 }
@@ -256,8 +258,11 @@ public class PlayerInput : MonoBehaviour {
 
         // Get dot product from our movement to see what direction we're in relation to 
         // our rotation and send it to our animator so it can decide what animation to use.
-        var dotForward = Vector3.Dot(transform.forward, movement);
-        var dotRight = Vector3.Dot(transform.right, movement);
+        float dotForward = Vector3.Dot(transform.forward, movement.normalized);
+        var dotRight = Vector3.Dot(transform.right, movement.normalized);
+
+        dotForward = Mathf.Clamp(dotForward, -1f, 1f);
+
         m_Animator.SetFloat("VelocityZ", dotForward);
         m_Animator.SetFloat("VelocityX", dotRight);
 

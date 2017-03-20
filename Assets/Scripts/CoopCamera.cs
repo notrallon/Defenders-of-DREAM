@@ -33,6 +33,10 @@ public class CoopCamera : MonoBehaviour {
         Debug.Log(GameController.Instance.PuzzlesTotal);
     }
 
+    private void Update() {
+        HideObjectsController.Instance.Update();
+    }
+
     private void LateUpdate() {
         var allPlayers = GameController.Instance.PlayerInstances; // Get the reference to all player instances
 
@@ -69,8 +73,14 @@ public class CoopCamera : MonoBehaviour {
         var xMiddle = (m_MinX + m_MaxX) / 2.0f;
         var zMiddle = (m_MinZ + m_MaxZ) / 2.0f;
 
+        var distX = m_MaxX - m_MinX;
+        var distZ = m_MaxZ - m_MinZ;
+
+        distZ /= 9;
+        distZ *= 16;
+
         // Check if X or Z distance is the largest.
-        var distance = Mathf.Max(m_MaxX - m_MinX, m_MaxZ - m_MinZ);
+        var distance = Mathf.Max(m_MaxX - m_MinX, distZ);
 
         // Clamp the distance so that it can't get lower/higher than our min/max distance
         distance = Mathf.Clamp(distance, MinDistance, m_CameraMaxDistance);
@@ -82,12 +92,12 @@ public class CoopCamera : MonoBehaviour {
         }*/
 
         // Calculate fog density depending on distance.
-        int fog = 30;
+        const int fog = 30;
         RenderSettings.fogDensity = (fog - distance) * 0.003f; 
         distance /= m_CameraDistanceDivider;
 
         // Set the target camera position and tween to get a smooth motion.
-        Vector3 targetCamPos = new Vector3(xMiddle, distance, zMiddle - distance);
+        var targetCamPos = new Vector3(xMiddle, distance, zMiddle - distance);
         transform.position = Vector3.Lerp(transform.position, targetCamPos, m_CameraSmoothing * Time.deltaTime);
     }
 }
