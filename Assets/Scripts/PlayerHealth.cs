@@ -55,6 +55,24 @@ public class PlayerHealth : MonoBehaviour {
         GetComponent<HealthTank>().SetScale(PlayerHP);
     }
 
+    private void LateUpdate() {
+        // Disable everything if the player is dead.
+        if (PlayerHP <= 0) {
+            PlayerHP = 0;
+            GetComponent<PlayerWeaponController>().WeaponThrow();
+            GetComponent<PlayerInput>().SetVibration(0);
+            flashCounter = 0f;
+            GetComponent<Animator>().SetTrigger("Die"); // Play death animation
+            gameObject.tag = "Untagged";
+            GetComponent<PlayerInput>().enabled = false;
+            GetComponent<HideObjectsFromPlayer>().enabled = false;
+            rend.material.SetColor("_Color", storedColor); // reset the color to original
+            //gameObject.SetActive(false); // deactivate the player object if health reaches 0
+            GameController.Instance.UpdatePlayers();
+            GetComponent<PlayerHealth>().enabled = false;
+        }
+    }
+
     public void PickUpHealth (int healing)
     {
         PlayerHP += healing;
@@ -72,19 +90,6 @@ public class PlayerHealth : MonoBehaviour {
 
         flashCounter = flashLength; // count down timer is set
         rend.material.SetColor("_Color", Color.red); // set material color to red
-
-        if (PlayerHP <= 0) {
-            PlayerHP = 0;
-            GetComponent<PlayerWeaponController>().WeaponThrow();
-            GetComponent<PlayerInput>().SetVibration(0);
-            flashCounter = 0f;
-            GetComponent<Animator>().SetTrigger("Die"); // Play death animation
-            gameObject.tag = "Untagged";
-            GetComponent<PlayerInput>().enabled = false;
-            rend.material.SetColor("_Color", storedColor); // reset the color to original
-            //gameObject.SetActive(false); // deactivate the player object if health reaches 0
-            GameController.Instance.UpdatePlayers();
-        }
     }
 
     void DeathTrigger ()
