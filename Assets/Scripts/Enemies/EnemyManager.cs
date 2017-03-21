@@ -47,6 +47,7 @@ public class EnemyManager : MonoBehaviour {
         m_EnemiesToSpawn *= GameController.Instance.TotalPlayersSpawned;
         var spawnTime = m_SpawnTime / GameController.Instance.TotalPlayersSpawned;
         InvokeRepeating("Spawn", spawnTime, spawnTime);
+        Camera.main.GetComponent<CameraShaker>().Shake(1f);
         GetComponent<BoxCollider>().enabled = false;
     }
 
