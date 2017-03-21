@@ -52,6 +52,9 @@ public class ActivatePuzzle : MonoBehaviour
     private AudioSource m_AudioSource;
     private AudioClip m_AudioClip;
 
+    /*[SerializeField][Range(0.1f, 5f)]*/ private float m_ShakeDuration = 0.5f;
+    /*[SerializeField][Range(0.01f, 0.5f)]*/ private float m_ShakeMagnitude = 0.1f;
+
     public enum OpenMethods_t {
         SMOOTHSTEP,
         SMOOTHERSTEP,
@@ -86,6 +89,8 @@ public class ActivatePuzzle : MonoBehaviour
     }
 
     public void Activate() {
+        // Shake the camera
+        Camera.main.GetComponent<CameraShaker>().Shake(m_ShakeDuration, m_ShakeMagnitude);
         //Get the material on the GameObject
         Renderer rend = GetComponent<Renderer>();
         rend.material.shader = Shader.Find("Standard");
