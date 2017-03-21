@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour
     public PlayerIndex playerIndex;
     public InputMethod_t InputMethod;
 
-    private void FixedUpdate() {
+    private void Update() {
         switch (InputMethod) {
             case InputMethod_t.INPUT_MANAGER: {
                 //If Player presses Start button, the player gets spawned
@@ -40,6 +40,7 @@ public class Spawner : MonoBehaviour
                     if (whatToSpawnClone == null) {
                         SpawnPlayer();
                         GameController.Instance.UpdatePlayers();
+                        Destroy(gameObject);
                     }
                 }
             } break;

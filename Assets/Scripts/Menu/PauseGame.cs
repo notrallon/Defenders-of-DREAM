@@ -14,13 +14,15 @@ public class PauseGame : MonoBehaviour {
     private const float X_SLIDE_OUT_TARGET = -1300f;
     private const float X_SLIDE_IN_START = 1300f;
     private const float X_SLIDE_IN_TARGET = 0f;
+
+    bool paused;
     
     void Start() {
         Time.timeScale = 1;
         PauseMenu.gameObject.SetActive(false);//turen off canvas at start of level
         var pos = PauseMenu.GetComponent<RectTransform>().anchoredPosition;
 
-        pos.x = X_SLIDE_OUT_TARGET;
+        pos.x = X_SLIDE_IN_START;
         PauseMenu.GetComponent<RectTransform>().localPosition = pos;
     }
 
@@ -39,21 +41,25 @@ public class PauseGame : MonoBehaviour {
 
     public void pause()
     {
-        if (PauseMenu.gameObject.activeInHierarchy == false) {
+        StopAllCoroutines();
+        if (/*PauseMenu.gameObject.activeInHierarchy == false*/ !paused) {
             PauseMenu.FindChild("Resume").GetComponent<Button>().Select();
             PauseMenu.FindChild("Resume").GetComponent<Button>().OnSelect(null);
             PauseMenu.gameObject.SetActive(true);//make canvas viseble
             //InvokeRepeating("PauseSlideIn", 0, 0.01f);
-            StartCoroutine(PauseSlideIn(X_SLIDE_IN_START, X_SLIDE_IN_TARGET, 0.01f));
+            m_CurrentSlideTime = 0f;
+            StartCoroutine(PauseSlideIn(PauseMenu.GetComponent<RectTransform>().anchoredPosition.x, X_SLIDE_IN_TARGET, 0.01f));
             Time.timeScale = 0;//stop time
         }
         else
         {
             //InvokeRepeating("PauseSlideOut", 0, 0.01f);
-            StartCoroutine(PauseSlideOut());
+            m_CurrentSlideTime = 0f;
+            StartCoroutine(PauseSlideOut(PauseMenu.GetComponent<RectTransform>().anchoredPosition.x, X_SLIDE_OUT_TARGET, 0.01f));
             //PauseMenu.gameObject.SetActive(false);
             //Time.timeScale = 1;//turn on time
         }
+        paused = !paused;
     }
     
     public void LoadScene(string name)
@@ -89,60 +95,56 @@ public class PauseGame : MonoBehaviour {
         }
         m_CurrentSlideTime = 0f;
         //StopCoroutine(PauseSlideIn());
+
+        StartCoroutine(PauseMoveAround());
     }
 
-    private IEnumerator PauseSlideOut() {
+    private IEnumerator PauseSlideOut(float startPos, float targetPos, float time) {
         while (m_CurrentSlideTime < SLIDE_TIME) {
             m_CurrentSlideTime += Time.unscaledDeltaTime;
             var t = m_CurrentSlideTime / SLIDE_TIME;
-            
+
             t = 1f - Mathf.Cos(t * Mathf.PI * 0.5f);
             var pos = PauseMenu.GetComponent<RectTransform>().anchoredPosition;
 
-            pos.x = Mathf.Lerp(X_SLIDE_IN_TARGET, X_SLIDE_OUT_TARGET, t);
+            pos.x = Mathf.Lerp(startPos, targetPos, t);
             PauseMenu.GetComponent<RectTransform>().anchoredPosition = pos;
-
-
-            //CancelInvoke("PauseSlideOut");
-
-            yield return new WaitForSecondsRealtime(0.01f);
+            
+            yield return new WaitForSecondsRealtime(time);
         }
+        var poss = PauseMenu.GetComponent<RectTransform>().anchoredPosition;
+
+        poss.x = X_SLIDE_IN_START;
+        PauseMenu.GetComponent<RectTransform>().anchoredPosition = poss;
+
         m_CurrentSlideTime = 0f;
         PauseMenu.gameObject.SetActive(false);
         Time.timeScale = 1f;
         //StopCoroutine(PauseSlideOut());
 
     }
-    
-        /*
-    private void PauseSlideIn() {
-        Debug.Log("YO");
-        m_CurrentSlideTime += Time.unscaledDeltaTime;
-        var t = m_CurrentSlideTime / SLIDE_TIME;
-        var pos = PauseMenu.GetComponent<RectTransform>().anchoredPosition;
 
-        pos.x = Mathf.Lerp(X_SLIDE_OUT_TARGET, X_SLIDE_IN_TARGET, t);
-        PauseMenu.GetComponent<RectTransform>().anchoredPosition = pos;
+    private IEnumerator PauseMoveAround() {
+        var startMovePos = PauseMenu.GetComponent<RectTransform>().anchoredPosition;
 
-        if (m_CurrentSlideTime > SLIDE_TIME) {
-            m_CurrentSlideTime = 0f;
-            CancelInvoke("PauseSlideIn");
+        while (true) {
+            m_CurrentSlideTime += Time.unscaledDeltaTime;
+
+            var deltaX = m_CurrentSlideTime / 1f;
+            var deltaY = m_CurrentSlideTime / 2f;
+
+            var distX = 10f * Mathf.Sin(deltaX);
+            var distY = 10f * Mathf.Sin(deltaY);
+
+            var newPosX = startMovePos + Vector2.right * distX;
+            var newPosY = startMovePos + Vector2.up * distY;
+            var newPos = new Vector2(newPosX.x, newPosY.y);
+
+            PauseMenu.GetComponent<RectTransform>().anchoredPosition = newPos;
+
+            yield return new WaitForSecondsRealtime(0.01f);
         }
+
+        yield return null;
     }
-
-    private void PauseSlideOut() {
-        m_CurrentSlideTime += Time.unscaledDeltaTime;
-        var t = m_CurrentSlideTime / SLIDE_TIME;
-        var pos = PauseMenu.GetComponent<RectTransform>().anchoredPosition;
-
-        pos.x = Mathf.Lerp(X_SLIDE_IN_TARGET, X_SLIDE_OUT_TARGET, t);
-        PauseMenu.GetComponent<RectTransform>().anchoredPosition = pos;
-
-        if (m_CurrentSlideTime > SLIDE_TIME) {
-            m_CurrentSlideTime = 0f;
-            PauseMenu.gameObject.SetActive(false);
-            Time.timeScale = 1f;
-            CancelInvoke("PauseSlideOut");
-        }
-    }*/
 }

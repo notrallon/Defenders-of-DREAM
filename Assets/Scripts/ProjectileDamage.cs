@@ -13,7 +13,7 @@ public class ProjectileDamage : MonoBehaviour
     public AudioClip impact;
 
     //pitch and volume for SFX
-    private float vol = 0.3f;
+    private float vol = 0.1f;
     private float newPitch;
     private float minPitch = 0.7f;
     private float maxPitch = 1.3f;

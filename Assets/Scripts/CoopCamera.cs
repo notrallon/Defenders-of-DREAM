@@ -31,6 +31,10 @@ public class CoopCamera : MonoBehaviour {
         GameController.Instance.UpdatePlayers();
         GameController.Instance.FindAllPuzzles();
         Debug.Log(GameController.Instance.PuzzlesTotal);
+
+        if (GetComponent<CameraShaker>() == null) {
+            gameObject.AddComponent<CameraShaker>();
+        }
     }
 
     private void Update() {

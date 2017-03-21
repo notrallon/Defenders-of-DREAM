@@ -12,6 +12,8 @@ public class FinishTriggerCheck : MonoBehaviour
     //Put the PuzzleCube prefab in this field in the inspector
     [SerializeField]
     private GameObject block;
+
+    private GameObject blockChild;
     //The wall GameObject is the wall behind the puzzle that blocks the player from
     //continuing without having finished the puzzle.
     [SerializeField]
@@ -25,12 +27,17 @@ public class FinishTriggerCheck : MonoBehaviour
 
     private float m_OpenDoorTime = 5;
     private float m_CurrentOpenDoorTime;
+    private float m_FadeInTime = 2f;
+    private float m_CurrentFadeInTime;
 
     private Vector3 m_DoorStartPos;
     private Vector3 m_DoorTargetPos;
 
     private AudioSource m_AudioSource;
     private AudioClip m_AudioClip;
+
+    private Color m_StartColor;
+    private Color m_TargetColor;
 
     void Awake()
     {
@@ -46,6 +53,11 @@ public class FinishTriggerCheck : MonoBehaviour
 
         m_AudioClip = Resources.Load("Sound/SoundEffects/PuzzleFinished_02") as AudioClip;
         m_AudioSource = GetComponent<AudioSource>();
+
+        blockChild = wall.transform.FindChild("Edge").gameObject;
+
+        m_StartColor = blockChild.GetComponent<Renderer>().material.color;
+        m_TargetColor = Color.cyan;
     }
 
     //When the puzzle cube is in the trigger the PuzzleIsFinished is switched to true 
@@ -63,6 +75,19 @@ public class FinishTriggerCheck : MonoBehaviour
             PuzzleGUIController.Instance.UpdatePuzzleGUIText();
             GetComponent<BoxCollider>().enabled = false;
             m_AudioSource.PlayOneShot(m_AudioClip);
+
+            InvokeRepeating("FadeInBlockadeColor", 0, 0.01f);
+        }
+    }
+
+    private void FadeInBlockadeColor() {
+        m_CurrentFadeInTime += Time.deltaTime;
+        var t = m_CurrentFadeInTime / m_FadeInTime;
+
+        blockChild.GetComponent<Renderer>().material.color = Color.Lerp(m_StartColor, m_TargetColor, t);
+
+        if (m_CurrentFadeInTime > m_FadeInTime) {
+            CancelInvoke("FadeInBlockadeColor");
         }
     }
 
