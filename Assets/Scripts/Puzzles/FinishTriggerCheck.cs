@@ -51,7 +51,7 @@ public class FinishTriggerCheck : MonoBehaviour
         m_DoorTargetPos = m_DoorStartPos;
         m_DoorTargetPos.y -= 2;
 
-        m_AudioClip = Resources.Load("Sound/SoundEffects/PuzzleFinished_02") as AudioClip;
+        m_AudioClip = Resources.Load("Sound/SoundEffects/Long Impacts/PuzzleFinished_01") as AudioClip;
         m_AudioSource = GetComponent<AudioSource>();
 
         blockChild = wall.transform.FindChild("Edge").gameObject;
