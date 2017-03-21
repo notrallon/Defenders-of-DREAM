@@ -17,7 +17,8 @@ public class EnemyManager : MonoBehaviour {
     [SerializeField] public GameObject rewardParticles;
 
     protected AudioSource audioSource;
-    public AudioClip rewardSound;
+    private AudioClip rewardSound;
+    private AudioClip triggerSound;
 
     [SerializeField][Range(0.1f, 5f)] private float m_ShakeDuration = 1f;
     [SerializeField][Range(0.01f, 0.5f)] private float m_ShakeMagnitude = 0.2f;
@@ -26,6 +27,8 @@ public class EnemyManager : MonoBehaviour {
     private void Start () {
         //InvokeRepeating("Spawn", m_SpawnTime, m_SpawnTime);
         audioSource = GetComponent<AudioSource>();
+        rewardSound = Resources.Load("Sound/SoundEffects/Impacts/PuzzleFinished_02") as AudioClip;
+        triggerSound = Resources.Load("Sound/SoundEffects/Impacts/trigger_enemyspawn") as AudioClip;
     }
 
     private void Spawn() {
@@ -52,6 +55,9 @@ public class EnemyManager : MonoBehaviour {
         InvokeRepeating("Spawn", spawnTime, spawnTime);
         Camera.main.GetComponent<CameraShaker>().Shake(m_ShakeDuration, m_ShakeMagnitude);
         GetComponent<BoxCollider>().enabled = false;
+
+        audioSource.PlayOneShot(triggerSound, 1f);
+
     }
 
     private void OnTriggerExit(Collider col) {
@@ -74,7 +80,7 @@ public class EnemyManager : MonoBehaviour {
             posToSpawn.x += Random.Range(-2f, 2f);
             Instantiate(m_ItemRewards[itemIndex], posToSpawn, Random.rotation);
             GameObject chime = Instantiate(rewardParticles, posToSpawn, rewardParticles.transform.rotation) as GameObject; // Instantiate the particle splash effect
-            audioSource.PlayOneShot(rewardSound, 0.5f);
+            audioSource.PlayOneShot(rewardSound, 0.6f);
         }
     }
 
