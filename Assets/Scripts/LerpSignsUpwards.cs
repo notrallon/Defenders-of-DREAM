@@ -32,6 +32,9 @@ public class LerpSignsUpwards : MonoBehaviour {
     [Range(0.01f, 0.5f)]
     private float m_ShakeMagnitude = 0.2f;
 
+    private AudioSource m_AudioSource;
+    private AudioClip m_AudioClip;
+
 
     void Start () {
         m_DefaultPos = gameObject.transform.position;
@@ -39,6 +42,9 @@ public class LerpSignsUpwards : MonoBehaviour {
         m_TargetPos.y += amountToMoveY;
 
         eruptionPart = Resources.Load("Particle Systems/ParticleSpawnSigns") as GameObject;
+
+        m_AudioClip = Resources.Load("Sound/SoundEffects/Long Impacts/signs_rising_from_ground_2") as AudioClip;
+        m_AudioSource = GetComponent<AudioSource>();
     }
 	
 
@@ -68,6 +74,7 @@ public class LerpSignsUpwards : MonoBehaviour {
         spawnParticles = true;
 
         Camera.main.GetComponent<CameraShaker>().Shake(m_ShakeDuration, m_ShakeMagnitude);
+        m_AudioSource.PlayOneShot(m_AudioClip, 0.5f);
     }
 
     private void LerpSigns() {

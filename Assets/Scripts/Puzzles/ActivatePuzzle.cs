@@ -85,7 +85,7 @@ public class ActivatePuzzle : MonoBehaviour
         //audioSource = GetComponent<AudioSource>();
 
         m_AudioSource = GetComponent<AudioSource>();
-        m_AudioClip = Resources.Load("Sound/SoundEffects/OpenPuzzleLid_00") as AudioClip;
+        m_AudioClip = Resources.Load("Sound/SoundEffects/Impacts/Puzzle/activate_puzzle_lid") as AudioClip;
     }
 
     public void Activate() {
@@ -103,7 +103,7 @@ public class ActivatePuzzle : MonoBehaviour
             SpawnEnemies = false;
         }
 
-        m_AudioSource.PlayOneShot(m_AudioClip);
+        m_AudioSource.PlayOneShot(m_AudioClip, 0.25f);
         Instantiate(Resources.Load("Particle Systems/BubbleBurstEffect"), GetComponentInParent<Transform>().position, Quaternion.Euler(-90, 0 ,0));
         InvokeRepeating("OpenLid", 0, 0.01f);
     }
