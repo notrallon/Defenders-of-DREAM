@@ -24,15 +24,30 @@ public class LerpSignsUpwards : MonoBehaviour {
     // Handle the signs rising
     private Vector3 m_TargetPos;
 
+    // Screenshake
+    [SerializeField]
+    [Range(0.1f, 5f)]
+    private float m_ShakeDuration = 1f;
+    [SerializeField]
+    [Range(0.01f, 0.5f)]
+    private float m_ShakeMagnitude = 0.2f;
+
+    private AudioSource m_AudioSource;
+    private AudioClip m_AudioClip;
+
+
     void Start () {
         m_DefaultPos = gameObject.transform.position;
         m_TargetPos = gameObject.transform.position;
         m_TargetPos.y += amountToMoveY;
 
         eruptionPart = Resources.Load("Particle Systems/ParticleSpawnSigns") as GameObject;
+
+        m_AudioClip = Resources.Load("Sound/SoundEffects/Long Impacts/signs_rising_from_ground_2") as AudioClip;
+        m_AudioSource = GetComponent<AudioSource>();
     }
 	
-/*
+
 
 	void Update () {
 
@@ -41,25 +56,9 @@ public class LerpSignsUpwards : MonoBehaviour {
             ActivateSigns();
             activate = true;
         }
-/*
-        if (activate)
-        {
-            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, m_TargetPos, Time.deltaTime * smooth);
-  
-            // Activate the un-seen sign objects
-            foreach(Transform child in transform)
-            {
-                if((!child.gameObject.activeSelf) && (!spawnParticles))
-                {
-                    child.gameObject.SetActive(true);
-                    var rockShower = Instantiate(eruptionPart, child.gameObject.transform.position, Quaternion.Euler(-90, 0, 0));
-                    Destroy(rockShower, 4f);
-                }
-            }
-            spawnParticles = true;
-        }#1#
+
     }
-*/
+
 
     public void ActivateSigns() {
         InvokeRepeating("LerpSigns", 0, 0.01f);
@@ -73,6 +72,9 @@ public class LerpSignsUpwards : MonoBehaviour {
             }
         }
         spawnParticles = true;
+
+        Camera.main.GetComponent<CameraShaker>().Shake(m_ShakeDuration, m_ShakeMagnitude);
+        m_AudioSource.PlayOneShot(m_AudioClip, 0.5f);
     }
 
     private void LerpSigns() {
