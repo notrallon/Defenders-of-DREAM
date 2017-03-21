@@ -11,7 +11,7 @@ public class HealPotion : MonoBehaviour {
     // sound
     protected AudioSource audioSource;
     public AudioClip slurp;
-    private float vol = 1.0f;
+    private float vol = 0.2f;
     private GameObject Hp;
 
     void OnTriggerEnter (Collider col)

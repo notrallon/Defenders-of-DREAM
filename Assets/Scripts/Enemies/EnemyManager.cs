@@ -19,6 +19,9 @@ public class EnemyManager : MonoBehaviour {
     protected AudioSource audioSource;
     public AudioClip rewardSound;
 
+    [SerializeField][Range(0.1f, 5f)] private float m_ShakeDuration = 1f;
+    [SerializeField][Range(0.01f, 0.5f)] private float m_ShakeMagnitude = 0.2f;
+
     // Use this for initialization
     private void Start () {
         //InvokeRepeating("Spawn", m_SpawnTime, m_SpawnTime);
@@ -47,7 +50,7 @@ public class EnemyManager : MonoBehaviour {
         m_EnemiesToSpawn *= GameController.Instance.TotalPlayersSpawned;
         var spawnTime = m_SpawnTime / GameController.Instance.TotalPlayersSpawned;
         InvokeRepeating("Spawn", spawnTime, spawnTime);
-        Camera.main.GetComponent<CameraShaker>().Shake(1f);
+        Camera.main.GetComponent<CameraShaker>().Shake(m_ShakeDuration, m_ShakeMagnitude);
         GetComponent<BoxCollider>().enabled = false;
     }
 
