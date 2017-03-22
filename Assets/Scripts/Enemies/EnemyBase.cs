@@ -1,7 +1,7 @@
 ﻿using System;
-using Boo.Lang;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class EnemyBase : MonoBehaviour, IEnemy
 {
@@ -36,6 +36,12 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
     private NavMeshAgent m_EnemyAgent;
     private EnemyManager m_EnemyManager;
+
+    private float m_SinkTime = 1f;
+    private float m_CurrentSinkTime;
+
+    private Vector3 m_StartSinkPos;
+    private Vector3 m_TargetSinkPos;
 
     // Flash when damaged
     //[SerializeField]
@@ -158,13 +164,42 @@ public class EnemyBase : MonoBehaviour, IEnemy
         }
     }
 
+    public void Sink() {
+        m_StartSinkPos = transform.position;
+        m_TargetSinkPos = m_StartSinkPos;
+        m_TargetSinkPos.y -= 2f;
+
+        InvokeRepeating("SinkAndDestroy", 0.1f, 0.01f);
+    }
+
+    private void SinkAndDestroy() {
+        m_CurrentSinkTime += Time.deltaTime;
+
+        var t = m_CurrentSinkTime / m_SinkTime;
+
+        transform.position = Vector3.Lerp(m_StartSinkPos, m_TargetSinkPos, t);
+
+        if (m_CurrentSinkTime > m_SinkTime) {
+            Destroy(gameObject);
+        }
+    }
+
     private void Die() {
         if (m_EnemyManager != null) {
             m_EnemyManager.EnemiesAlive--;
         }
         //particleController.EmitSplatterAtLocation(transform, m_LastPlayerHitColor);
         ScoreTracker.score += 5;
-        Destroy(gameObject);
+        if (GetComponent<Animator>() != null) {
+            int i = Random.Range(0, 3);
+
+            EnemyState = EnemyStates_t.DEAD;
+
+            GetComponent<Animator>().SetTrigger("Death" + i);
+            Destroy(m_EnemyAgent);
+        } else {
+            Destroy(gameObject);
+        }
     }
 
     private bool InAttackRange()
@@ -179,6 +214,9 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
     //take damage
     public void TakeDamage(float amount, Color color) {
+        if (EnemyState == EnemyStates_t.DEAD) {
+            return;
+        }
         HealthPoints -= amount;
         //particleController.EmitSplatterAtLocation(transform, m_LastPlayerHitColor);
         if (HealthPoints < 1) {
