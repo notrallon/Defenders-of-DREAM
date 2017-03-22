@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: d7fc10af668e12941a9398fb10adc676
+timeCreated: 1490175930
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Frozen Crystal Halftone
+  fontNames:
+  - Frozen Crystal Halftone
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 1cd1bee4a44c6794b8bcc62c52e34bc4
+timeCreated: 1490175929
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Frozen Crystal Punch
+  fontNames:
+  - Frozen Crystal Punch
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

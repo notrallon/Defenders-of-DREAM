@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 3c9cb77d314c8e24daeadb08c8fa37d2
+timeCreated: 1490175930
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: neon-like
+  fontNames:
+  - neon-like
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
