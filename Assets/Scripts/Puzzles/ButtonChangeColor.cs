@@ -6,8 +6,7 @@
 
 using UnityEngine;
 
-public class ButtonChangeColor : Interactable
-{
+public class ButtonChangeColor : Interactable {
     public override void Interact() {
         Destroy(GetComponent<BoxCollider>());
         GetComponentInParent<ActivatePuzzle>().Activate();
