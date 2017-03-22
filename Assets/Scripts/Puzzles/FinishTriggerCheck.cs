@@ -7,8 +7,12 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class FinishTriggerCheck : MonoBehaviour
-{
+public class FinishTriggerCheck : MonoBehaviour {
+    private BossLidController m_BossLidController;
+
+    [SerializeField] private int m_BossButtonIndex;
+
+    //[SerializeField] private BossButton m_BossButton;
     //Put the PuzzleCube prefab in this field in the inspector
     [SerializeField]
     private GameObject block;
@@ -58,6 +62,8 @@ public class FinishTriggerCheck : MonoBehaviour
 
         m_StartColor = blockChild.GetComponent<Renderer>().material.color;
         m_TargetColor = Color.cyan;
+
+        m_BossLidController = GameObject.FindGameObjectWithTag("BossLid").GetComponent<BossLidController>();
     }
 
     //When the puzzle cube is in the trigger the PuzzleIsFinished is switched to true 
@@ -75,6 +81,15 @@ public class FinishTriggerCheck : MonoBehaviour
             PuzzleGUIController.Instance.UpdatePuzzleGUIText();
             GetComponent<BoxCollider>().enabled = false;
             m_AudioSource.PlayOneShot(m_AudioClip);
+
+//            if (m_BossButton != null) {
+//                m_BossButton.Unlock();
+//            }
+
+            // Unlock the boss button
+            if (m_BossLidController != null) {
+                m_BossLidController.m_BossButtons[m_BossButtonIndex].Unlock();
+            }
 
             InvokeRepeating("FadeInBlockadeColor", 0, 0.01f);
         }
