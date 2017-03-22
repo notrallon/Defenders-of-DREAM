@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: a944f025cb7d68148a15a40ab973bc1a
+timeCreated: 1490175930
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Frozen Crystal Title
+  fontNames:
+  - Frozen Crystal Title
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
