@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 8a404352524ee3848a0a09377cdb5ff8
+timeCreated: 1490175930
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Frozen Crystal Straight
+  fontNames:
+  - Frozen Crystal Straight
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
