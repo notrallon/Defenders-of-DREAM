@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 16604fe41b6ae0d4889646e716eeeab6
+timeCreated: 1490175929
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Frozen Crystal Expanded
+  fontNames:
+  - Frozen Crystal Expanded
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
