@@ -22,7 +22,7 @@ public class ParticleSeekOptimized : MonoBehaviour
         m_ArrowSigns = GameObject.Find("ArrowSign");
     }
 
-    void LateUpdate()
+    void Update()
     {
         // Return if there's no arrowsign in the scene to avoid errors
         if (m_ArrowSigns == null) {
