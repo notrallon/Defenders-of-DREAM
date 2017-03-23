@@ -8,7 +8,7 @@ public class BossLidController : MonoBehaviour {
 
     public BossButton[] m_BossButtons;
 
-    private const float OPEN_LID_TIME = 5f;
+    private const float OPEN_LID_TIME = 20f;
     private float m_CurrentOpenLidTime;
 
     private Vector3 m_LidStartPos;
@@ -29,15 +29,13 @@ public class BossLidController : MonoBehaviour {
         m_LidTargetPos.y += 10;
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.U)) {
-            InvokeRepeating("OpenLid", 0.1f, 0.01f);
-        }
-    }
-
-    public void ActivateButton(int index) {
-
-    }
+//    private void Update() {
+//        if (Input.GetKeyDown(KeyCode.U)) {
+//            InvokeRepeating("OpenLid", 0.1f, 0.01f);
+//            Invoke("ShowVictoryScreen", 5f);
+//            Camera.main.GetComponent<CameraShaker>().Shake(10f, 0.25f);
+//        }
+//    }
 
     public void UpdateActivatedButtons() {
         var amountActivated = 0;
@@ -49,7 +47,14 @@ public class BossLidController : MonoBehaviour {
 
         if (amountActivated == m_BossButtons.Length) {
             InvokeRepeating("OpenLid", 0.1f, 0.01f);
+            Invoke("ShowVictoryScreen", 5f);
+            Camera.main.GetComponent<CameraShaker>().Shake(10f, 0.25f);
         }
+    }
+
+    private void ShowVictoryScreen() {
+        Instantiate(Resources.Load("UI/WinCanvas"));
+        GetComponent<GameEnd>().FadeToBlack();
     }
 
     private void OpenLid() {
@@ -57,7 +62,8 @@ public class BossLidController : MonoBehaviour {
 
         var t = m_CurrentOpenLidTime / OPEN_LID_TIME;
 
-        t = t * t;
+        // Smootherstep lift
+        t = t * t * t * (t * (6f * t * 15f) + 10f);
 
         transform.position = Vector3.Lerp(m_LidStartPos, m_LidTargetPos, t);
 
