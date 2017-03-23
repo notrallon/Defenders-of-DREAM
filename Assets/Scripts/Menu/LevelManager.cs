@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
+    private void Start() {
+        Cursor.visible = false;
+    }
 
     public void LoadScene(string name)
     {

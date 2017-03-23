@@ -49,15 +49,15 @@ public class LerpSignsUpwards : MonoBehaviour {
 	
 
 
-	void Update () {
-
-        if(Input.GetKeyDown(KeyCode.H) && !activate)
-        {
-            ActivateSigns();
-            activate = true;
-        }
-
-    }
+//	void Update () {
+//
+//        if(Input.GetKeyDown(KeyCode.H) && !activate)
+//        {
+//            ActivateSigns();
+//            activate = true;
+//        }
+//
+//    }
 
 
     public void ActivateSigns() {
