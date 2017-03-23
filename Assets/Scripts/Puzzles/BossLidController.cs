@@ -29,13 +29,13 @@ public class BossLidController : MonoBehaviour {
         m_LidTargetPos.y += 10;
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.U)) {
-            InvokeRepeating("OpenLid", 0.1f, 0.01f);
-            Invoke("ShowVictoryScreen", 5f);
-            Camera.main.GetComponent<CameraShaker>().Shake(10f, 0.25f);
-        }
-    }
+//    private void Update() {
+//        if (Input.GetKeyDown(KeyCode.U)) {
+//            InvokeRepeating("OpenLid", 0.1f, 0.01f);
+//            Invoke("ShowVictoryScreen", 5f);
+//            Camera.main.GetComponent<CameraShaker>().Shake(10f, 0.25f);
+//        }
+//    }
 
     public void UpdateActivatedButtons() {
         var amountActivated = 0;
@@ -54,6 +54,7 @@ public class BossLidController : MonoBehaviour {
 
     private void ShowVictoryScreen() {
         Instantiate(Resources.Load("UI/WinCanvas"));
+        GetComponent<GameEnd>().FadeToBlack();
     }
 
     private void OpenLid() {
