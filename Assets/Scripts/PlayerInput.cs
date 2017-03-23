@@ -211,7 +211,7 @@ public class PlayerInput : MonoBehaviour {
             } break;
         }
 
-        if (Interact == null) {
+        if (Interact == null || Interact.GetComponent<BoxCollider>() == null) {
             GetComponent<InteractablePopup>().Deactivate();
         }
 
