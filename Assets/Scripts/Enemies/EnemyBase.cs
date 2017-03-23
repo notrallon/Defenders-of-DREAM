@@ -71,7 +71,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
         rend = GetComponentInChildren<Renderer>(); // get renderer of first child
         storedColor = rend.material.GetColor("_Color");
-        storedColor = rend.material.GetColor("_EmissionColor");
+        m_StoredEmissionColor = rend.material.GetColor("_EmissionColor");
 
         //particleController = GameObject.FindGameObjectWithTag("ParticleController").GetComponent<ParticleController>();
     }
@@ -195,9 +195,9 @@ public class EnemyBase : MonoBehaviour, IEnemy
         ScoreTracker.score += 5;
         if (GetComponent<Animator>() != null) {
             int i = Random.Range(0, 3);
-
             EnemyState = EnemyStates_t.DEAD;
 
+            Destroy(GetComponent<BoxCollider>());
             GetComponent<Animator>().SetTrigger("Death" + i);
             Destroy(m_EnemyAgent);
         } else {

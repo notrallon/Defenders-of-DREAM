@@ -76,6 +76,8 @@ public class PlayerHealth : MonoBehaviour {
             //gameObject.SetActive(false); // deactivate the player object if health reaches 0
             GameController.Instance.UpdatePlayers();
 
+            Destroy(GetComponent<InteractablePopup>());
+
             // If no players are left
             if (GameController.Instance.TotalPlayersSpawned > 0 &&
                 GameController.Instance.PlayerInstances.Length == 0 &&

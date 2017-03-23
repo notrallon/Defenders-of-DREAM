@@ -8,7 +8,7 @@ public class BossLidController : MonoBehaviour {
 
     public BossButton[] m_BossButtons;
 
-    private const float OPEN_LID_TIME = 15f;
+    private const float OPEN_LID_TIME = 12f;
     private float m_CurrentOpenLidTime;
 
     private Vector3 m_LidStartPos;

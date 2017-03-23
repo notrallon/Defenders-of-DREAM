@@ -43,8 +43,8 @@ public class InteractablePopup : MonoBehaviour {
         m_TargetTransform = transform;
         m_LastPosition = transform.position;
 	}
-	
-	// Update is called once per frame
+
+    // Update is called once per frame
 	void Update () {
         // Check the players position relative to camera screenpoint
         //Vector3 pos = new Vector3();
