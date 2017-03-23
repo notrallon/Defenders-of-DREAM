@@ -18,6 +18,8 @@ public class DeathScreen : MonoBehaviour {
         Button quit = quitButton.GetComponent<Button>();
         quit.onClick.AddListener(OnClickQuit);
 
+	    restart.Select();
+	    restart.OnSelect(null);
 	}
 	
 	void OnClickRestart()

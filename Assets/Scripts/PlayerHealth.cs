@@ -21,6 +21,11 @@ public class PlayerHealth : MonoBehaviour {
     public AudioClip takeDamage;
     AudioSource audio;
 
+    private GameObject m_RestartCanvas;
+    private GameObject m_RestartObject;
+
+    private bool isDead;
+
 
     public float GetPlayerHealth { get
         {
@@ -32,7 +37,7 @@ public class PlayerHealth : MonoBehaviour {
 
     // Use this for initialization
     private void Start () {
-
+        m_RestartCanvas = Resources.Load("UI/RestartCanvas") as GameObject;
         audio = GetComponent<AudioSource>();
 
         rend = GetComponentInChildren<Renderer>(); // get renderer of first child
@@ -57,7 +62,7 @@ public class PlayerHealth : MonoBehaviour {
 
     private void LateUpdate() {
         // Disable everything if the player is dead.
-        if (PlayerHP <= 0) {
+        if (PlayerHP <= 0 && !isDead) {
             PlayerHP = 0;
             GetComponent<PlayerWeaponController>().WeaponThrow();
             GetComponent<PlayerInput>().SetVibration(0);
@@ -69,6 +74,16 @@ public class PlayerHealth : MonoBehaviour {
             rend.material.SetColor("_Color", storedColor); // reset the color to original
             //gameObject.SetActive(false); // deactivate the player object if health reaches 0
             GameController.Instance.UpdatePlayers();
+
+            // If no players are left
+            if (GameController.Instance.TotalPlayersSpawned > 0 &&
+                GameController.Instance.PlayerInstances.Length == 0 &&
+                m_RestartObject == null) {
+                isDead = true;
+                m_RestartObject = Instantiate(m_RestartCanvas);
+            }
+
+            isDead = true;
             GetComponent<PlayerHealth>().enabled = false;
         }
     }
