@@ -70,6 +70,7 @@ public class PlayerHealth : MonoBehaviour {
             GetComponent<Animator>().SetTrigger("Die"); // Play death animation
             gameObject.tag = "Untagged";
             GetComponent<PlayerInput>().enabled = false;
+            Destroy(GetComponent<PlayerInput>());
             GetComponent<HideObjectsFromPlayer>().enabled = false;
             rend.material.SetColor("_Color", storedColor); // reset the color to original
             //gameObject.SetActive(false); // deactivate the player object if health reaches 0
