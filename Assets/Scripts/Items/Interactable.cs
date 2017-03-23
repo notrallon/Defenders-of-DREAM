@@ -2,9 +2,9 @@
 
 public class Interactable : MonoBehaviour {
     private Renderer m_Rend;
-    private Color[] m_DefaultColours;
-    private Color[] m_DefaultEmissionColours;
-    private Material[] m_DefaultMaterials;
+    protected Color[] m_DefaultColours;
+    protected Color[] m_DefaultEmissionColours;
+    protected Material[] m_DefaultMaterials;
 
     [SerializeField][Range(1f, 5f)]
     private float m_ColorMultiplier = 2.5f;

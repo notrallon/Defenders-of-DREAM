@@ -37,6 +37,7 @@ public class BossButton : Interactable {
         rend.material.shader = Shader.Find("Standard");
         rend.material.SetColor("_EmissionColor", Color.cyan);
 
+        GetComponentInParent<BossLinesChangeColor>().Activate(2f);
     }
 
     public void Unlock() {
@@ -45,6 +46,11 @@ public class BossButton : Interactable {
         }
 
         m_Materials[1].SetColor("_EmissionColor", Color.green);
+
+        for (int i = 0; i < m_Materials.Length; i++) {
+            m_DefaultColours[i] = m_Materials[i].color;
+            m_DefaultEmissionColours[i] = m_Materials[i].GetColor("_EmissionColor");
+        }
 
         m_IsUnlocked = true;
     }
