@@ -211,6 +211,10 @@ public class PlayerInput : MonoBehaviour {
             } break;
         }
 
+        if (Interact == null) {
+            GetComponent<InteractablePopup>().Deactivate();
+        }
+
         GamePad.SetVibration(m_PlayerIndex, m_Vibration, m_Vibration);
 
         return;
@@ -233,6 +237,10 @@ public class PlayerInput : MonoBehaviour {
                 
             } break;
         }
+    }
+
+    private void OnDestroy() {
+        GamePad.SetVibration(m_PlayerIndex, 0, 0);
     }
 
     private void XInputPlayerMove() {

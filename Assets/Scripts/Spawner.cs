@@ -20,7 +20,18 @@ public class Spawner : MonoBehaviour
     public PlayerIndex playerIndex;
     public InputMethod_t InputMethod;
 
+    private float m_startPosY;
+
+    private void Start() {
+        var startpos = transform.position;
+        m_startPosY = transform.position.y;
+    }
+
     private void Update() {
+        var pos = transform.position;
+        pos.y = m_startPosY;
+        transform.position = pos;
+
         switch (InputMethod) {
             case InputMethod_t.INPUT_MANAGER: {
                 //If Player presses Start button, the player gets spawned
