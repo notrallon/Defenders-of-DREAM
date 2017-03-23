@@ -4,24 +4,32 @@ using UnityEngine.SceneManagement;
 
 
 public class DeathScreen : MonoBehaviour {
-
     [SerializeField]
-    private Button restartButton, quitButton;
+    private Button m_RestartButton, m_QuitButton;
 
+    private void Awake() {
+        transform.FindChild("YouDied").gameObject.SetActive(false);
+        Invoke("ShowScreen", 0.5f);
+    }
 
-	// Use this for initialization
+    // Use this for initialization
 	void Start () {
 
-        Button restart = restartButton.GetComponent<Button>();
+
+	}
+
+    void ShowScreen() {
+        transform.FindChild("YouDied").gameObject.SetActive(true);
+        Button restart = m_RestartButton.GetComponent<Button>();
         restart.onClick.AddListener(OnClickRestart);
 
-        Button quit = quitButton.GetComponent<Button>();
+        Button quit = m_QuitButton.GetComponent<Button>();
         quit.onClick.AddListener(OnClickQuit);
 
-	    restart.Select();
-	    restart.OnSelect(null);
-	}
-	
+        restart.Select();
+        restart.OnSelect(null);
+    }
+
 	void OnClickRestart()
     {
         GameController.Instance.ResetDefault();
