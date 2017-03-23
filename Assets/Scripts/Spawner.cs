@@ -27,7 +27,7 @@ public class Spawner : MonoBehaviour
         m_startPosY = transform.position.y;
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         var pos = transform.position;
         pos.y = m_startPosY;
         transform.position = pos;

@@ -39,6 +39,8 @@ public class PlayerInput : MonoBehaviour {
     private GamePadState m_GamePadState;
     private float m_Vibration;
 
+    private GameObject m_Pause;
+
     [SerializeField]
     private float ShootingRotateSpeed = 2f;
     private float DefaultRotateSpeed = 10f;
@@ -50,6 +52,8 @@ public class PlayerInput : MonoBehaviour {
     // Use this for initialization
     private void Start () {
         m_RotateSpeed = DefaultRotateSpeed;
+
+        m_Pause = GameObject.Find("PauseCanvas");
 
         InteractablePopup interactablePopup = gameObject.AddComponent(typeof(InteractablePopup)) as InteractablePopup;
 
@@ -184,12 +188,22 @@ public class PlayerInput : MonoBehaviour {
                     }
                     GetComponent<InteractablePopup>().Deactivate();
                 }
+
+                if (Input.GetKeyDown(KeyCode.Escape)) {
+                    m_Pause.GetComponent<PauseGame>().pause();
+                }
+
             } break;
 
             case InputMethod_t.X_INPUT: {
                 var prevState = m_GamePadState;
                 m_GamePadState = GamePad.GetState(m_PlayerIndex);
                 XInputPlayerMove();
+
+                if (prevState.Buttons.Start == ButtonState.Released &&
+                    m_GamePadState.Buttons.Start == ButtonState.Pressed) {
+                    m_Pause.GetComponent<PauseGame>().pause();
+                }
 
                 if (prevState.Buttons.A == ButtonState.Released && 
                     m_GamePadState.Buttons.A == ButtonState.Pressed) {

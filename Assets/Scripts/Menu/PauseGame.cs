@@ -26,7 +26,7 @@ public class PauseGame : MonoBehaviour {
         PauseMenu.GetComponent<RectTransform>().localPosition = pos;
     }
 
-    void Update () {
+/*    void Update () {
         //if you press escape on keyboard or start on gamepad
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("joybutton7")) {
             pause(); //run pause
@@ -36,8 +36,8 @@ public class PauseGame : MonoBehaviour {
         /*if (Input.GetButtonDown("joybutton7"))
         {
             pause();//run pause
-        }*/
-	}
+        }#1#
+	}*/
 
     public void pause()
     {
