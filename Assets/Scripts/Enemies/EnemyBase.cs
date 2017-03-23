@@ -50,6 +50,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
     private Renderer rend; // this will render the flash
     private Color storedColor; // store current color
+    private Color m_StoredEmissionColor;
 
     private Color m_LastPlayerHitColor;
 
@@ -70,6 +71,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
         rend = GetComponentInChildren<Renderer>(); // get renderer of first child
         storedColor = rend.material.GetColor("_Color");
+        storedColor = rend.material.GetColor("_EmissionColor");
 
         //particleController = GameObject.FindGameObjectWithTag("ParticleController").GetComponent<ParticleController>();
     }
@@ -122,6 +124,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
             if (flashCounter <= 0)  // when count down is finished
             {
                 rend.material.SetColor("_Color", storedColor); // reset the color to original
+                rend.material.SetColor("_EmissionColor", m_StoredEmissionColor);
             }
         }
     }
@@ -226,6 +229,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
         flashCounter = flashLength; // count down timer is set
         rend.material.SetColor("_Color", Color.red); // set material color to red
+        rend.material.SetColor("_EmissionColor", Color.red);
     }
 
     //take damage
@@ -239,6 +243,7 @@ public class EnemyBase : MonoBehaviour, IEnemy
 
         flashCounter = flashLength; // count down timer is set
         rend.material.SetColor("_Color", Color.red); // set material color to red
+        rend.material.SetColor("_EmissionColor", Color.red);
     }
 
     public void SetEnemyManagerIndex(EnemyManager manager) {
