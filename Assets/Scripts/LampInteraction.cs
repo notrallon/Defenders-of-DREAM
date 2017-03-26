@@ -37,6 +37,10 @@ public class LampInteraction : Interactable {
     private const float SMALL_LIGHT_TARGET_INTENSITY = 1.25f;
     private float m_SmallLightDefaultIntensity;
 
+    //private Color m_PlayerColor;
+
+    private ParticleSystem m_PlayerParticleSystem;
+
 
     protected override void Start() {
         base.Start();
@@ -61,6 +65,10 @@ public class LampInteraction : Interactable {
 
     public override void Interact() {
         Destroy(GetComponent<BoxCollider>());
+
+        m_GreatLamp.GetComponent<GhostKillerLight>().PlayerParticleSystem =
+            Player.GetComponent<PlayerInput>().PlayerParticleSystem;
+        m_GreatLamp.GetComponent<GhostKillerLight>().PlayerColor = Player.GetComponent<PlayerInput>().PlayerColor;
 
         // Start coroutine
         InvokeRepeating("LampFadeIn", 0f, 0.01f);

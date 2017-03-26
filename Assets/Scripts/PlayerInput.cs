@@ -31,6 +31,8 @@ public class PlayerInput : MonoBehaviour {
 
     public InputMethod_t InputMethod = InputMethod_t.X_INPUT;
 
+    public Color PlayerColor { get; private set; }
+
     private float footStepRate = 0.3f;
     private float m_nextStep = 0.5f;
     private float stepVolume = 0.05f;
@@ -54,6 +56,8 @@ public class PlayerInput : MonoBehaviour {
         m_RotateSpeed = DefaultRotateSpeed;
 
         m_Pause = GameObject.Find("PauseCanvas");
+
+        PlayerColor = GetComponentInChildren<Renderer>().materials[3].color;
 
         InteractablePopup interactablePopup = gameObject.AddComponent(typeof(InteractablePopup)) as InteractablePopup;
 

@@ -25,6 +25,10 @@ public class ParticleController : MonoBehaviour {
         m_SplatterParticles.GetComponent<SplatOnCollision>().PlayerColor = m_PlayerColor;
         
         m_SplatterParticles.transform.rotation = Quaternion.LookRotation(location.rotation.eulerAngles);
+        var rot = m_SplatterDecalParticles.transform.rotation;
+        rot.y = Random.Range(0, 360);
+        rot.x = -90;
+        m_SplatterDecalParticles.transform.rotation = rot;
         m_SplatterParticles.Emit(1);
     }
 

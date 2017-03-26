@@ -8,6 +8,9 @@ public class GhostKillerLight : MonoBehaviour {
     GameObject enemyObject;
     private float damage = 3000f;
 
+    public GameObject PlayerParticleSystem;
+    public Color PlayerColor;
+
     // Use this for initialization
     void Start () {
         LightCollider = gameObject.GetComponent<SphereCollider>();
@@ -21,13 +24,15 @@ public class GhostKillerLight : MonoBehaviour {
     void OnTriggerEnter(Collider col)
     {
         if (!col.gameObject.CompareTag("Enemy") && (!col.gameObject.CompareTag("PurpleGhost"))) return;
-        
-            enemyObject = col.gameObject;
+        enemyObject = col.gameObject;
 
-            var script = enemyObject.GetComponent<EnemyBase>();
-            script.TakeDamage(damage);
+        //var script = enemyObject.GetComponent<EnemyBase>();
+        //script.TakeDamage(damage);
 
-            Destroy(enemyObject);
-        
+        for (var i = 0; i < 10; i++) {
+            PlayerParticleSystem.GetComponent<ParticleController>().EmitSplatterAtLocation(enemyObject.transform, PlayerColor);
+        }
+
+        Destroy(enemyObject);
     }
 }
