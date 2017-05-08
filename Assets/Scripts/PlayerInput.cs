@@ -270,12 +270,20 @@ public class PlayerInput : MonoBehaviour {
 
         var movement = new Vector3(deltaMoveX, 0, deltaMoveZ);
 
+        GetComponent<Animator>().SetBool("Shoot", false);
+        m_RotateSpeed = DefaultRotateSpeed;
+
         // Rotate based on movement/aim
         Vector3 rotation;
         if (Mathf.Abs(deltaRotX) > 0 || Mathf.Abs(deltaRotZ) > 0) {
+            GetComponent<Animator>().SetBool("Shoot", true);
+            //GetComponent<FireProjectile>().Shoot();
+            GetComponent<PlayerWeaponController>().PerformWeaponAttack();
+
             // Rotate in relation to the axis of our right stick
             rotation = new Vector3(deltaRotX, 0, deltaRotZ);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(rotation), m_RotateSpeed * Time.deltaTime);
+            m_RotateSpeed = ShootingRotateSpeed;
         } else if (Mathf.Abs(movement.magnitude) > 0) {
             // Rotate in the direction we're moving
             rotation = movement;
@@ -328,7 +336,7 @@ public class PlayerInput : MonoBehaviour {
 
 
         // Shooting
-        if (Math.Abs(m_GamePadState.Triggers.Right) > 0) {
+       /* if (Math.Abs(m_GamePadState.Triggers.Right) > 0) {
             GetComponent<Animator>().SetBool("Shoot", true);
             //GetComponent<FireProjectile>().Shoot();
             GetComponent<PlayerWeaponController>().PerformWeaponAttack();
@@ -336,7 +344,7 @@ public class PlayerInput : MonoBehaviour {
         } else {
             GetComponent<Animator>().SetBool("Shoot", false);
             m_RotateSpeed = DefaultRotateSpeed;
-        }
+        }*/
     }
 
     private void InputManagerPlayerMove() {
