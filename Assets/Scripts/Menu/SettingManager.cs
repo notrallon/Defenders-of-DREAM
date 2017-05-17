@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
@@ -27,20 +28,27 @@ public class SettingManager : MonoBehaviour
     void OnEnable()
     {
         gameSettings = new GameSettings();
-        
-        fullscreenToggle.onValueChanged.AddListener(delegate { OnFullscreeenToggle(); });
-        resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChange(); });
-        textureQualityDropdown.onValueChanged.AddListener(delegate { OnTextireQualityChange(); });
-        antialiasingDropdown.onValueChanged.AddListener(delegate { OnAntialiasingChange(); });
-        vSyncDropdown.onValueChanged.AddListener(delegate { OnVSyncChange(); });
-        musicVolumeSlider.onValueChanged.AddListener(delegate { OnMusicVolumeChange(); });
-        applyButton.onClick.AddListener(delegate { onApplyButtonClick();  });
 
-        resolutions = Screen.resolutions;
-        foreach (Resolution resolution in resolutions)
-        {
-            resolutionDropdown.options.Add(new Dropdown.OptionData(resolution.ToString()));
+        try {
+            fullscreenToggle.onValueChanged.AddListener(delegate { OnFullscreeenToggle(); });
+            resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChange(); });
+            textureQualityDropdown.onValueChanged.AddListener(delegate { OnTextireQualityChange(); });
+            antialiasingDropdown.onValueChanged.AddListener(delegate { OnAntialiasingChange(); });
+            vSyncDropdown.onValueChanged.AddListener(delegate { OnVSyncChange(); });
+            musicVolumeSlider.onValueChanged.AddListener(delegate { OnMusicVolumeChange(); });
+            applyButton.onClick.AddListener(delegate { onApplyButtonClick();  });
+
+            resolutions = Screen.resolutions;
+            foreach (Resolution resolution in resolutions)
+            {
+                resolutionDropdown.options.Add(new Dropdown.OptionData(resolution.ToString()));
+            }
+        } catch (Exception e) {
+            Debug.Log("Error: " + e);
         }
+
+
+
         //resulotion index
        
     }
@@ -125,15 +133,21 @@ public class SettingManager : MonoBehaviour
             //Create default gameSettings
             gameSettings = new GameSettings();
         }
-        
-        musicVolumeSlider.value = AudioListener.volume = gameSettings.musicVolume;
-        antialiasingDropdown.value = gameSettings.antialiasing;
-        vSyncDropdown.value = gameSettings.vSync;
-        textureQualityDropdown.value = gameSettings.textureQuality;
-        resolutionDropdown.value = gameSettings.resolutionIndex;
-        fullscreenToggle.isOn = gameSettings.fullscreen;
 
-        resolutionDropdown.RefreshShownValue();
-        
+        try {
+            musicVolumeSlider.value = AudioListener.volume = gameSettings.musicVolume;
+            antialiasingDropdown.value = gameSettings.antialiasing;
+            vSyncDropdown.value = gameSettings.vSync;
+            textureQualityDropdown.value = gameSettings.textureQuality;
+            resolutionDropdown.value = gameSettings.resolutionIndex;
+            fullscreenToggle.isOn = gameSettings.fullscreen;
+            resolutionDropdown.RefreshShownValue();
+        } catch (Exception e) {
+            Debug.Log("Musicvolumeslider error");
+        }
+
+
+
+
     }
 }

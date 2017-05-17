@@ -29,6 +29,8 @@ public class PlayerInput : MonoBehaviour {
     private AudioClip m_StepSound;
     private AudioSource audio;
 
+    [SerializeField] private Sprite m_Sprite;
+
     public InputMethod_t InputMethod = InputMethod_t.X_INPUT;
 
     public Color PlayerColor { get; private set; }
@@ -51,6 +53,10 @@ public class PlayerInput : MonoBehaviour {
     // Particle system that takes care of ground splatter.
     public GameObject PlayerParticleSystem;
 
+    private void Awake() {
+        InteractablePopup interactablePopup = gameObject.AddComponent(typeof(InteractablePopup)) as InteractablePopup;
+    }
+
     // Use this for initialization
     private void Start () {
         m_RotateSpeed = DefaultRotateSpeed;
@@ -59,7 +65,11 @@ public class PlayerInput : MonoBehaviour {
 
         PlayerColor = GetComponentInChildren<Renderer>().materials[3].color;
 
-        InteractablePopup interactablePopup = gameObject.AddComponent(typeof(InteractablePopup)) as InteractablePopup;
+        //InteractablePopup interactablePopup = gameObject.AddComponent(typeof(InteractablePopup)) as InteractablePopup;
+
+        if (m_Sprite != null) {
+            GetComponent<InteractablePopup>().SetPopupImage(m_Sprite);
+        }
 
         // Instantiate the players particlesystem
         var ps = Instantiate(PlayerParticleSystem);

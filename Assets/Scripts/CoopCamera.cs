@@ -27,11 +27,15 @@ public class CoopCamera : MonoBehaviour {
     private float m_MaxZ;
     private float m_Distance;
 
+
+
     private void Start() {
         // Do an update to see how many player instances that are in the game to avoid errors.
         GameController.Instance.UpdatePlayers();
         GameController.Instance.FindAllPuzzles();
         Debug.Log(GameController.Instance.PuzzlesTotal);
+
+
 
         if (GetComponent<CameraShaker>() == null) {
             gameObject.AddComponent<CameraShaker>();
@@ -99,7 +103,9 @@ public class CoopCamera : MonoBehaviour {
         // Calculate fog density depending on distance.
         const int fog = 30;
         RenderSettings.fogDensity = (fog - m_Distance) * 0.003f;
-        Camera.main.farClipPlane = m_Distance * 2;
+        var clipPlane = m_Distance * 2;
+        clipPlane = Mathf.Max(clipPlane, 30);
+        Camera.main.farClipPlane = clipPlane;
         m_Distance /= m_CameraDistanceDivider;
 
         // Set the target camera position and tween to get a smooth motion.

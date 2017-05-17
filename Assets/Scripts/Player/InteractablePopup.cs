@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractablePopup : MonoBehaviour {
     private Canvas PopupCanvas;
@@ -26,18 +25,22 @@ public class InteractablePopup : MonoBehaviour {
 
     private Transform m_TargetTransform;
 
+	private void Awake() {
+		PopupCanvas = Instantiate(Resources.Load("UI/InteractablePopup", typeof(Canvas))) as Canvas;
+		if (PopupCanvas != null) {
+			PopupCanvas.enabled = false;
+
+			m_LastPosition = Vector3.zero;
+			m_PopupRenderer = PopupCanvas.GetComponentInChildren<CanvasRenderer>();
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 	    m_VScaleMin = Vector3.zero;
 	    m_VScaleMax = new Vector3(m_ScaleMax, m_ScaleMax, m_ScaleMax);
 
-	    PopupCanvas = Instantiate(Resources.Load("UI/InteractablePopup", typeof(Canvas))) as Canvas;
-	    if (PopupCanvas != null) {
-	        PopupCanvas.enabled = false;
 
-	        m_LastPosition = Vector3.zero;
-	        m_PopupRenderer = PopupCanvas.GetComponentInChildren<CanvasRenderer>();
-	    }
 	    m_Scale = m_PopupRenderer.transform.localScale;
 
         m_TargetTransform = transform;
@@ -56,6 +59,10 @@ public class InteractablePopup : MonoBehaviour {
 	        m_PopupRenderer.transform.position = Camera.main.WorldToScreenPoint(m_LastPosition);
 	    }
     }
+
+	public void SetPopupImage(Sprite spr) {
+		m_PopupRenderer.gameObject.transform.FindChild("BtnImage").GetComponent<Image>().sprite = spr;
+	}
 
     public void Activate(Transform trans) {
         m_TargetTransform = trans;
