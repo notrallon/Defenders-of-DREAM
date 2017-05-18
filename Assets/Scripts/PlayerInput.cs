@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using XInputDotNetPure;
 
@@ -29,7 +30,12 @@ public class PlayerInput : MonoBehaviour {
     private AudioClip m_StepSound;
     private AudioSource audio;
 
-    [SerializeField] private Sprite m_Sprite;
+    [SerializeField]
+    private Sprite m_Sprite;
+    [SerializeField]
+    private Sprite m_MoveSprite;
+
+    public Sprite InteractSprite { get; private set; }
 
     public InputMethod_t InputMethod = InputMethod_t.X_INPUT;
 
@@ -69,7 +75,10 @@ public class PlayerInput : MonoBehaviour {
 
         if (m_Sprite != null) {
             GetComponent<InteractablePopup>().SetPopupImage(m_Sprite);
+            InteractSprite = m_Sprite;
         }
+
+        StartCoroutine(ShowHowToWalk());
 
         // Instantiate the players particlesystem
         var ps = Instantiate(PlayerParticleSystem);
@@ -200,7 +209,9 @@ public class PlayerInput : MonoBehaviour {
                         Interact.Interact();
                         Interact = null;
                     }
-                    GetComponent<InteractablePopup>().Deactivate();
+                    if (hasMoved) {
+                        GetComponent<InteractablePopup>().Deactivate();
+                    }
                 }
 
                 if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -225,8 +236,10 @@ public class PlayerInput : MonoBehaviour {
                         Interact.Interact();
                         Interact = null;
                     }
-                    GetComponent<InteractablePopup>().Deactivate();
-                }
+                    if (hasMoved) {
+                        GetComponent<InteractablePopup>().Deactivate();
+                    }
+                    }
 
                 if (m_GamePadState.Buttons.Y == ButtonState.Pressed && 
                     prevState.Buttons.Y == ButtonState.Released) {
@@ -239,8 +252,13 @@ public class PlayerInput : MonoBehaviour {
             } break;
         }
 
-        if (Interact == null || Interact.GetComponent<BoxCollider>() == null) {
-            GetComponent<InteractablePopup>().Deactivate();
+        if ((Interact == null || Interact.GetComponent<BoxCollider>() == null) && hasMoved) {
+            var wpnController = GetComponent<PlayerWeaponController>();
+            if (wpnController.HasEquippedAWeapon && wpnController.HasShot) {
+                GetComponent<InteractablePopup>().Deactivate();
+            } else if (!wpnController.HasEquippedAWeapon && !wpnController.HasShot) {
+                GetComponent<InteractablePopup>().Deactivate();
+            }
         }
 
         GamePad.SetVibration(m_PlayerIndex, m_Vibration, m_Vibration);
@@ -279,6 +297,10 @@ public class PlayerInput : MonoBehaviour {
         var deltaRotZ = m_GamePadState.ThumbSticks.Right.Y;
 
         var movement = new Vector3(deltaMoveX, 0, deltaMoveZ);
+
+        if (!hasMoved) {
+            hasMoved = movement.magnitude > 0;
+        }
 
         GetComponent<Animator>().SetBool("Shoot", false);
         m_RotateSpeed = DefaultRotateSpeed;
@@ -365,6 +387,10 @@ public class PlayerInput : MonoBehaviour {
 
         var movement = new Vector3(deltaMoveX, 0, deltaMoveZ);
 
+        if (!hasMoved) {
+            hasMoved = movement.magnitude > 0;
+        }
+
         // Rotate based on movement/aim
         Vector3 targetRotation;
         if (Mathf.Abs(deltaRotX) > 0 || Mathf.Abs(deltaRotZ) > 0) {
@@ -435,5 +461,16 @@ public class PlayerInput : MonoBehaviour {
 
     public void SetVibration(float amount) {
         m_Vibration = amount;
+    }
+
+    public bool hasMoved { get; private set; }
+    private IEnumerator ShowHowToWalk() {
+        hasMoved = false;
+        yield return new WaitForSeconds(5);
+
+        if (!hasMoved) {
+            GetComponent<InteractablePopup>().SetPopupImage(m_MoveSprite);
+            GetComponent<InteractablePopup>().Activate(transform);
+        }
     }
 }

@@ -44,6 +44,7 @@ public class Interactable : MonoBehaviour {
         var playerInput = col.GetComponent<PlayerInput>();
         if (playerInput.Interact != null) return;
 
+        col.GetComponent<InteractablePopup>().SetPopupImage(col.GetComponent<PlayerInput>().InteractSprite);
         col.GetComponent<InteractablePopup>().Activate(transform);
 
         // Highlight each colour
@@ -67,7 +68,9 @@ public class Interactable : MonoBehaviour {
             m_Rend.materials[i].color = m_DefaultColours[i];
         }
         
-        col.GetComponent<InteractablePopup>().Deactivate();
+        if (col.GetComponent<PlayerInput>().hasMoved) {
+            col.GetComponent<InteractablePopup>().Deactivate();
+        }
 
         // The player is no longer interacting
         col.GetComponent<PlayerInput>().Interact = null;

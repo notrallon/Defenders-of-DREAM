@@ -28,7 +28,6 @@ public class MusicTrigger : MonoBehaviour {
 				//m_MusicController.FadeInNewSong(GetComponent<AudioSource>().clip, 0.5f);
 				StopCoroutine(FadeInSong(m_DefaultClip, GetComponent<AudioSource>(), m_AudioSource));
 				StartCoroutine(FadeInSong(GetComponent<AudioSource>().clip, m_AudioSource, GetComponent<AudioSource>()));
-				Debug.Log("Entering music trigger");
 			}
 		}
 	}
@@ -52,7 +51,8 @@ public class MusicTrigger : MonoBehaviour {
 
 		too.time = fromTime;
 
-		var oldVolume = from.volume;
+		var oldFromVolume = from.volume;
+        var oldTooVolume = too.volume;
 
 		too.loop = true;
 		from.loop = true;
@@ -62,19 +62,12 @@ public class MusicTrigger : MonoBehaviour {
 
 			var t = currentFadeInTime / m_FadeInTime;
 
-			from.volume = Mathf.Lerp(oldVolume, 0, t);
-			too.volume = Mathf.Lerp(0, m_MusicController.MaxMusicVolume, t);
+			from.volume = Mathf.Lerp(oldFromVolume, 0, t);
+			too.volume = Mathf.Lerp(oldTooVolume, m_MusicController.MaxMusicVolume, t);
 
 			yield return null;
 		}
-//		float sourceTime = source.time;
-//		m_AudioSource.Stop();
-//		m_AudioSource.clip = newClip;
-//		m_AudioSource.Play();
-//		m_AudioSource.volume = m_MusicController.MaxMusicVolume;
-//		m_AudioSource.time = sourceTime;
-//		source.Stop();
 
-//		from.Stop();
+		from.Stop();
 	}
 }

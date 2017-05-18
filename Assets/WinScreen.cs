@@ -7,6 +7,9 @@ public class WinScreen : MonoBehaviour {
     [SerializeField]
     private Button m_MainMenu;
 
+    [SerializeField]
+    private AudioClip m_MenuClip;
+
     private void Awake()
     {
         transform.FindChild("YouWon").gameObject.SetActive(false);
@@ -34,6 +37,13 @@ public class WinScreen : MonoBehaviour {
     void OnClickRestart()
     {
         GameController.Instance.ResetDefault();
+        var music = GameObject.FindGameObjectWithTag("Music");
+        var musicSource = music.GetComponent<AudioSource>();
+        musicSource.Stop();
+        musicSource.volume = music.GetComponent<bg_music>().MaxMusicVolume;
+        musicSource.clip = m_MenuClip;
+        musicSource.Play();
+        musicSource.loop = true;
         SceneManager.LoadScene(0);
     }
 

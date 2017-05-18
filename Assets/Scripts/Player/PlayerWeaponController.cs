@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class PlayerWeaponController : MonoBehaviour {
 
@@ -9,8 +10,15 @@ public class PlayerWeaponController : MonoBehaviour {
 
     private IWeapon m_InstancedWeapon;
 
+    public bool HasEquippedAWeapon { get; private set; }
+    public bool HasShot { get; private set; }
+
+    [SerializeField] private Sprite m_ShootSprite;
+
 	// Use this for initialization
     private void Start () {
+        HasShot = false;
+        HasEquippedAWeapon = false;
         // Get the players color material
         m_PlayerColorMaterial = GetComponentInChildren<Renderer>().materials[3];
     }
@@ -19,6 +27,9 @@ public class PlayerWeaponController : MonoBehaviour {
         if (EquippedWeapon != null) {
             WeaponThrow();
             //Destroy(PlayerHand.transform.GetChild(0).gameObject);
+        } else if (!HasEquippedAWeapon) {
+            HasEquippedAWeapon = true;
+            StartCoroutine(ShowHowToShoot());
         }
 
         EquippedWeapon = Instantiate(Resources.Load<GameObject>("Weapons/" + weaponToEquip.ObjectSlug));
@@ -31,6 +42,7 @@ public class PlayerWeaponController : MonoBehaviour {
 
     public void PerformWeaponAttack() {
         if (m_InstancedWeapon == null) return;
+        HasShot = true;
         m_InstancedWeapon.Attack(gameObject.transform.forward);
     }
 
@@ -47,5 +59,14 @@ public class PlayerWeaponController : MonoBehaviour {
         pickupThrow.GetComponent<Interactable>().SetPickupPlayerColor(m_PlayerColorMaterial);
         pickupThrow.GetComponent<Rigidbody>().AddForce(transform.forward * 100);
         Destroy(PlayerHand.transform.GetChild(0).gameObject);
+    }
+
+    private IEnumerator ShowHowToShoot() {
+        yield return new WaitForSeconds(5);
+
+        if (!HasShot) {
+            GetComponent<InteractablePopup>().SetPopupImage(m_ShootSprite);
+            GetComponent<InteractablePopup>().Activate(transform);
+        }
     }
 }
