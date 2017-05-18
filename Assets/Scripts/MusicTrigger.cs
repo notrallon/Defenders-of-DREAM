@@ -54,6 +54,9 @@ public class MusicTrigger : MonoBehaviour {
 
 		var oldVolume = from.volume;
 
+		too.loop = true;
+		from.loop = true;
+
 		while (currentFadeInTime < m_FadeInTime) {
 			currentFadeInTime += Time.deltaTime;
 
