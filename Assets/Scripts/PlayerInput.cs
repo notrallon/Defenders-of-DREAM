@@ -232,7 +232,7 @@ public class PlayerInput : MonoBehaviour {
 
                 if (prevState.Buttons.A == ButtonState.Released && 
                     m_GamePadState.Buttons.A == ButtonState.Pressed) {
-                    if (Interact != null) {
+                    if (Interact != null && Interact.GetComponent<BoxCollider>() != null) {
                         Interact.Interact();
                         Interact = null;
                     }
